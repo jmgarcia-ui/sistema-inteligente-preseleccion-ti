@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers.salud import router as router_salud
+from app.rutas.salud import router as router_salud
 
 app = FastAPI(
   title="API del sistema inteligente de preseleccion TI",

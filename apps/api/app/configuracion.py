@@ -10,6 +10,7 @@ RUTA_API = Path(__file__).resolve().parent.parent
 class Configuracion(BaseSettings):
   entorno: str = "desarrollo"
   database_url: str
+  frontend_url: str
 
   model_config = SettingsConfigDict(
     env_file=RUTA_API / ".env", #obtner ruta de .env

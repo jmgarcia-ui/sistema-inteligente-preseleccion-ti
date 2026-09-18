@@ -1,4 +1,4 @@
-from app.seguridad.contrasenas import generar_hash, verificar_contrasena
+from app.servicios.contrasenas import generar_hash, verificar_contrasena
 
 #definir test de python
 def test_generar_y_verificar_contrasena():

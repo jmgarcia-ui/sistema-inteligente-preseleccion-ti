@@ -4,8 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 #importa el modelo que representa la tabla usuarios
 from app.modelos import Usuario, Rol
-
-from app.seguridad.contrasenas import generar_hash 
+from app.servicios.contrasenas import generar_hash, verificar_contrasena
 
 def obtener_usuario_por_correo(sesion: Session, correo: str) -> Usuario | None:
   #quitar espacios del correo y convertir a minuscula
@@ -70,4 +69,28 @@ def crear_usuario_interno(
   return usuario
   
 
+def autenticar_usuario(sesion:Session, contrasena:str, correo:str) -> Usuario:
+  #buscar usuario por correo
+  usuario = obtener_usuario_por_correo(sesion, correo)
 
+  #rechazar acceso si correo no existe
+  if usuario is None:
+    return None
+  
+  #rechazar acceso si no esta activo
+  if not usuario.activo:
+    return None
+
+  #rechazar acceso a usuarios que han sido desactivados
+  if not usuario.correo:
+    return None
+
+  #comparar contraseña recibida con el hash almacenado
+  if not verificar_contrasena(contrasena, usuario.contrasena_hash):
+    return None
+
+  #devolver el usuarios si pasa todas las comprobaciones
+  return usuario
+
+def obtener_usuario_por_id(sesion: Session, id_usuario:int) -> Usuario | None:
+  return sesion.get(Usuario, id_usuario)

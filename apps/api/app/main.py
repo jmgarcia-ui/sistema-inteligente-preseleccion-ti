@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from app.rutas.salud import router as router_salud
 from app.configuracion import obtener_configuracion
 from fastapi.middleware.cors import CORSMiddleware
+from app.rutas.sesiones import router as router_sesiones
+from app.rutas.vacantes import router as router_vacantes
 
 app = FastAPI(
   title="API del sistema inteligente de preseleccion TI",
@@ -18,3 +20,5 @@ app.add_middleware(
 )
 
 app.include_router(router_salud)
+app.include_router(router_sesiones)
+app.include_router(router_vacantes)

@@ -1,6 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Boolean, DateTime, ForeignKey, String, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from app.modelos.rol import Rol
 
 from app.base_datos import Base
 
@@ -12,6 +13,8 @@ class Usuario(Base):
     nullable=False,
     index=True,
   )
+  rol: Mapped[Rol] = relationship()
+  
   nombres: Mapped[str] = mapped_column(
     String(100),
     nullable=False,

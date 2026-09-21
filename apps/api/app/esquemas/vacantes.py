@@ -44,7 +44,17 @@ class VacantePublicaRespuesta(BaseModel):
   creado_en: datetime
   #permite leer atributos de un objeto
   model_config = ConfigDict(from_attributes=True)
-  
+
+#respuesta solo para el candidato
+class VacanteRespuestaCandidato(BaseModel):
+  titulo: str
+  descripcion: str
+  requisitos:str
+  modalidad:str
+  ubicacion: str | None
+ #permite leer atributos de un objeto
+  model_config = ConfigDict(from_attributes=True)
+
 # actualizar solo los campos enviados (patch)
 class VacanteActualizar(BaseModel):
   titulo: str | None = Field(default=None, min_length=3, max_length=150)

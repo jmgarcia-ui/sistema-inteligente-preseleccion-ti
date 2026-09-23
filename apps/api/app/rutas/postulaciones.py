@@ -23,3 +23,7 @@ def crear(datos: PostulacionCrear, sesion: Annotated[Session, Depends(obtener_se
       raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(error))
   
   return PostulacionRespuestaCandidato.model_validate(postulacion)
+
+@router.get("/vacante/{id}", response_model= PostulacionRespuestaReclutador)
+def listar_postulaciones(id_vacante: int, sesion: Annotated[Session, Depends(obtener_sesion)]) -> PostulacionRespuestaReclutador:
+   pass

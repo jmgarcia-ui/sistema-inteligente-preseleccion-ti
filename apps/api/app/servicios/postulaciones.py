@@ -34,8 +34,7 @@ def crear_postulacion(sesion: Session, datos: PostulacionCrear) -> Postulacion:
     postulacion_ex = obtener_postulacion_existente(sesion, candidato.id, vacante.id)
     if postulacion_ex is not None:
       raise PostulacionDuplicadaError("Ya postulaste a esta vacante")
-
-
+    
   #crear postulacion
   postulacion = Postulacion(
     vacante = vacante,
@@ -46,3 +45,10 @@ def crear_postulacion(sesion: Session, datos: PostulacionCrear) -> Postulacion:
   sesion.refresh(candidato)
   sesion.refresh(postulacion)
   return postulacion
+
+def listar_postulaciones_por_vacante(sesion:Session, id_vacante:int) -> list[Postulacion]:
+  #construimos la consulta
+  consulta = select(Postulacion).where(Postulacion.id_vacante == id_vacante)
+  #ejecutar consulta
+  #.all() los convierte en una lista
+  return sesion.scalars(consulta).all()

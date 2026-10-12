@@ -1,0 +1,333 @@
+// Modelo de datos - Sistema inteligente de preselección TI
+// Motor: SQL Server. Herramienta interna de una sola empresa.
+
+// ---------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------
+
+Enum modalidad_vacante {
+  remoto
+  hibrido
+  presencial
+}
+
+Enum estado_vacante {
+  borrador
+  publicada
+  cerrada
+}
+
+Enum estado_postulacion {
+  recibida
+  en_revision
+  preseleccionada
+  descartada
+  retirada
+}
+
+Enum tipo_documento {
+  cv
+  portafolio
+  certificado
+  otro
+}
+
+Enum decision_postulacion {
+  preseleccionado
+  descartado
+}
+
+Enum estado_analisis {
+  pendiente
+  procesando
+  completado
+  fallido
+}
+
+Enum tipo_fuente_evidencia {
+  documento
+  github
+  linkedin
+  portafolio
+}
+
+Enum estado_evidencia {
+  sugerida
+  confirmada
+  rechazada
+}
+
+Enum tipo_notificacion {
+  nueva_postulacion
+  cambio_estado_postulacion
+  decision_postulacion
+  analisis_completado
+  nueva_evaluacion
+  vacante_por_vencer
+}
+
+Enum canal_notificacion {
+  sistema
+  correo
+}
+
+// ---------------------------------------------------------------
+// Usuarios internos
+// ---------------------------------------------------------------
+
+Table roles {
+  id int [pk, increment]
+  nombre varchar(100) [not null, unique]
+}
+
+Table usuarios {
+  id int [pk, increment]
+  id_rol int [not null]
+  nombres varchar(100) [not null]
+  apellidos varchar(100) [not null]
+  correo varchar(254) [not null, unique]
+  contrasena_hash varchar(255) [not null]
+  activo boolean [not null, default: true]
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    id_rol
+  }
+}
+
+// ---------------------------------------------------------------
+// Vacantes
+// ---------------------------------------------------------------
+
+Table vacantes {
+  id int [pk, increment]
+  id_creador int [not null]
+  titulo varchar(150) [not null]
+  descripcion text [not null]
+  modalidad modalidad_vacante [not null]
+  ubicacion varchar(150)
+  estado estado_vacante [not null, default: 'borrador']
+  fecha_limite date [not null]
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+  actualizado_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    id_creador
+    (estado, fecha_limite)
+  }
+
+  Note: 'Los requisitos se movieron a requisitos_vacante para poder vincular evidencia a cada uno.'
+}
+
+Table requisitos_vacante {
+  id int [pk, increment]
+  id_vacante int [not null]
+  descripcion varchar(500) [not null]
+  obligatorio boolean [not null, default: true]
+  orden int [not null]
+
+  indexes {
+    (id_vacante, orden) [unique]
+  }
+}
+
+// ---------------------------------------------------------------
+// Candidatos y postulaciones
+// ---------------------------------------------------------------
+
+Table candidatos {
+  id int [pk, increment]
+  nombres varchar(100) [not null]
+  apellidos varchar(100) [not null]
+  correo varchar(254) [not null, unique]
+  telefono varchar(30)
+  linkedin_url varchar(500)
+  github_url varchar(500)
+  portafolio_url varchar(500)
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+}
+
+Table postulaciones {
+  id int [pk, increment]
+  id_vacante int [not null]
+  id_candidato int [not null]
+  estado estado_postulacion [not null, default: 'recibida']
+  acepto_tratamiento_datos_en datetime [not null]
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+  actualizado_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    (id_vacante, id_candidato) [unique]
+    id_candidato
+    (id_vacante, estado)
+  }
+
+  Note: '''
+  estado es el estado actual. Al registrar una fila en decisiones se actualiza
+  estado en la misma transacción (preseleccionado -> preseleccionada,
+  descartado -> descartada). actualizado_en se mantiene con onupdate en SQLAlchemy.
+  '''
+}
+
+Table documentos {
+  id int [pk, increment]
+  id_postulacion int [not null]
+  tipo tipo_documento [not null]
+  nombre_archivo varchar(255) [not null]
+  ruta_blob varchar(1000) [not null, note: 'Ruta en Azure Blob Storage; el acceso se da con enlaces SAS temporales']
+  tipo_mime varchar(100) [not null]
+  tamano_bytes int [not null]
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    id_postulacion
+  }
+}
+
+// ---------------------------------------------------------------
+// Análisis con IA y evidencia
+// ---------------------------------------------------------------
+
+Table analisis {
+  id int [pk, increment]
+  id_postulacion int [not null]
+  estado estado_analisis [not null, default: 'pendiente']
+  modelo varchar(100) [note: 'Servicio o modelo de Azure AI utilizado']
+  error text
+  iniciado_en datetime
+  finalizado_en datetime
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    id_postulacion
+    (estado, creado_en)
+  }
+
+  Note: 'Una postulación puede reanalizarse; el análisis vigente es el último completado.'
+}
+
+Table evidencias {
+  id int [pk, increment]
+  id_analisis int [not null]
+  id_requisito int [not null]
+  tipo_fuente tipo_fuente_evidencia [not null]
+  id_documento int [note: 'Obligatorio cuando tipo_fuente = documento']
+  fuente_url varchar(1000) [note: 'Obligatorio cuando tipo_fuente es github, linkedin o portafolio']
+  fragmento text [not null, note: 'Texto que sustenta la evidencia']
+  confianza decimal(4,3) [note: 'Entre 0 y 1, reportada por la IA']
+  estado estado_evidencia [not null, default: 'sugerida']
+  id_revisor int [note: 'Usuario que confirmó o rechazó la evidencia']
+  revisado_en datetime
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    id_analisis
+    id_requisito
+    id_documento
+  }
+
+  Note: 'La IA solo sugiere evidencia; una persona la confirma o la rechaza.'
+}
+
+// ---------------------------------------------------------------
+// Revisión humana
+// ---------------------------------------------------------------
+
+Table evaluaciones {
+  id int [pk, increment]
+  id_postulacion int [not null]
+  id_evaluador int [not null]
+  puntaje decimal(5,2) [not null, note: 'Escala 0 a 100']
+  comentario text
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    (id_postulacion, id_evaluador) [unique]
+    id_evaluador
+  }
+}
+
+Table decisiones {
+  id int [pk, increment]
+  id_postulacion int [not null]
+  id_usuario int [not null]
+  decision decision_postulacion [not null]
+  motivo text
+  decidido_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    id_postulacion
+    id_usuario
+  }
+
+  Note: 'Historial de decisiones; la decisión vigente es la más reciente.'
+}
+
+// ---------------------------------------------------------------
+// Notificaciones y auditoría
+// ---------------------------------------------------------------
+
+Table notificaciones {
+  id int [pk, increment]
+  id_usuario int
+  id_candidato int
+  tipo tipo_notificacion [not null]
+  canal canal_notificacion [not null]
+  titulo varchar(200) [not null, note: 'Asunto cuando canal = correo']
+  mensaje text [not null]
+  leida boolean [not null, default: false]
+  enviada_en datetime
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    (id_usuario, leida)
+    id_candidato
+  }
+
+  Note: 'CHECK: exactamente uno de id_usuario o id_candidato tiene valor.'
+}
+
+Table auditoria {
+  id int [pk, increment]
+  id_usuario int
+  entidad varchar(100) [not null]
+  id_entidad int [not null]
+  accion varchar(100) [not null]
+  detalle text
+  direccion_ip varchar(45)
+  creado_en datetime [not null, default: `sysutcdatetime()`]
+
+  indexes {
+    (entidad, id_entidad)
+    id_usuario
+  }
+}
+
+// ---------------------------------------------------------------
+// Relaciones
+// (sin ON DELETE CASCADE: SQL Server rechaza múltiples rutas de cascada
+//  y las postulaciones no se borran, se marcan como retiradas)
+// ---------------------------------------------------------------
+
+Ref: usuarios.id_rol > roles.id
+Ref: vacantes.id_creador > usuarios.id
+Ref: requisitos_vacante.id_vacante > vacantes.id
+
+Ref: postulaciones.id_vacante > vacantes.id
+Ref: postulaciones.id_candidato > candidatos.id
+Ref: documentos.id_postulacion > postulaciones.id
+
+Ref: analisis.id_postulacion > postulaciones.id
+Ref: evidencias.id_analisis > analisis.id
+Ref: evidencias.id_requisito > requisitos_vacante.id
+Ref: evidencias.id_documento > documentos.id
+Ref: evidencias.id_revisor > usuarios.id
+
+Ref: evaluaciones.id_postulacion > postulaciones.id
+Ref: evaluaciones.id_evaluador > usuarios.id
+Ref: decisiones.id_postulacion > postulaciones.id
+Ref: decisiones.id_usuario > usuarios.id
+
+Ref: notificaciones.id_usuario > usuarios.id
+Ref: notificaciones.id_candidato > candidatos.id
+Ref: auditoria.id_usuario > usuarios.id

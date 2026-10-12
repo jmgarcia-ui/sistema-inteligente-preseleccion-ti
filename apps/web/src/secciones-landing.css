@@ -1,0 +1,804 @@
+/* Las secciones finales comparten la misma retícula editorial de la sección 01. */
+.seccion-editorial {
+  width: min(calc(100% - 60px), 1040px); /* Mantiene el ancho de la sección anterior. */
+  margin: 0 auto 28px; /* Centra cada escena y establece el ritmo vertical. */
+  display: grid; /* Coloca una vista del producto junto a su explicación. */
+  align-items: center; /* Centra ambos lados según el contenido más alto. */
+  gap: 26px; /* Deja una separación constante entre columnas. */
+}
+
+.seccion-editorial__mensaje {
+  min-width: 0; /* Permite dividir el texto sin empujar la cuadrícula. */
+  display: grid; /* Coloca el número junto al título. */
+  grid-template-columns: 42px minmax(0, 1fr); /* Reserva un ancho fijo para el número. */
+  align-items: start; /* Alinea número y título por su borde superior. */
+  gap: 16px; /* Separa el número del filete vertical. */
+}
+
+.seccion-editorial__numero {
+  color: #153d78; /* Usa el azul índigo de la secuencia. */
+  font-family: var(--fuente-editorial); /* Vincula los números con la voz editorial. */
+  font-size: 1.75rem; /* Mantiene los números visibles sin competir con el hero. */
+  line-height: 1; /* Elimina aire vertical de los números. */
+}
+
+.seccion-editorial__mensaje > div {
+  min-width: 0; /* Evita que el título invada la otra columna. */
+  padding-left: 18px; /* Separa texto y filete. */
+  border-left: 1px solid #1954a6; /* Repite el acento de la primera sección. */
+}
+
+.seccion-editorial__mensaje h2 {
+  margin: 0; /* Quita el margen nativo del encabezado. */
+  color: #202833; /* Prioriza el título con tinta carbón. */
+  font-family: var(--fuente-editorial); /* Conserva la tipografía editorial del mockup. */
+  font-size: clamp(1.3rem, 1.7vw, 1.65rem); /* Ajusta los títulos a la escala del mockup. */
+  font-weight: 400; /* Evita que estas secciones compitan con el hero. */
+  line-height: 1.12; /* Compacta las líneas del título. */
+}
+
+.seccion-editorial__mensaje p {
+  margin: 13px 0 0; /* Separa la explicación del título. */
+  color: #617187; /* Mantiene el texto de apoyo discreto. */
+  font-size: 0.84rem; /* Iguala la escala de la sección 01. */
+  line-height: 1.48; /* Facilita leer los párrafos cortos. */
+}
+
+/* 02 · Vista ilustrativa de candidatos. */
+.seccion-candidatos {
+  grid-template-columns: minmax(0, 1.36fr) minmax(0, 0.74fr); /* Da prioridad a la tabla del producto. */
+  padding: 0 20px; /* Alinea la tabla con las tarjetas de la sección anterior. */
+}
+
+.muestra-candidatos,
+.muestra-evidencias,
+.muestra-correo {
+  min-width: 0; /* Permite que cada mockup se contraiga sin desbordarse. */
+  margin: 0; /* Elimina el margen nativo de figure. */
+  color: #203554; /* Usa una tinta azul legible dentro del producto. */
+  background-color: #fff; /* Presenta la interfaz sobre una superficie blanca. */
+  border: 1px solid #dce6f2; /* Define el borde fino del mockup. */
+  border-radius: 4px; /* Conserva el radio pequeño de la referencia. */
+  box-shadow: 0 8px 20px rgba(24, 44, 75, 0.07); /* Eleva ligeramente el producto. */
+}
+
+.muestra-candidatos {
+  padding: 12px 14px 10px; /* Deja aire alrededor de filtros y filas. */
+}
+
+.muestra-candidatos__cabecera {
+  display: flex; /* Sitúa filtros y búsqueda en la misma línea. */
+  justify-content: space-between; /* Lleva la búsqueda al extremo derecho. */
+  align-items: start; /* Alinea la búsqueda con el título. */
+  gap: 12px; /* Evita contacto entre los dos grupos. */
+}
+
+.muestra-candidatos__cabecera > div {
+  min-width: 0; /* Permite reducir el grupo de filtros. */
+}
+
+.muestra-candidatos__cabecera strong {
+  font-size: 0.86rem; /* Da un poco más de presencia al nombre de la vista. */
+  font-weight: 600; /* Lo distingue de las pestañas. */
+}
+
+.muestra-candidatos__filtros {
+  margin-top: 4px; /* Acerca los filtros al título. */
+  display: flex; /* Organiza los estados en una línea. */
+  flex-wrap: wrap; /* Evita que los filtros se recorten. */
+  gap: 3px; /* Mantiene el grupo compacto. */
+}
+
+.muestra-candidatos__filtro {
+  padding: 6px 8px; /* Da un área clara a cada estado. */
+  color: #526987; /* Baja el contraste de los filtros inactivos. */
+  font-size: 0.67rem; /* Facilita leer los filtros de la miniatura. */
+  white-space: nowrap; /* Conserva cada etiqueta en una pieza. */
+}
+
+.muestra-candidatos__filtro b {
+  margin-left: 3px; /* Separa el recuento del estado. */
+  color: #1d477e; /* Hace visible el número. */
+  font-weight: 600; /* Diferencia el recuento. */
+}
+
+.muestra-candidatos__filtro--activo {
+  color: #1954a6; /* Identifica el filtro seleccionado. */
+  background-color: #eaf3fc; /* Marca el filtro con una superficie suave. */
+  border-radius: 3px; /* Conserva el lenguaje del producto. */
+}
+
+.muestra-candidatos__busqueda {
+  min-width: 130px; /* Mantiene reconocible la búsqueda. */
+  padding: 7px 8px; /* Da espacio al texto y al icono. */
+  display: flex; /* Coloca texto e icono en una fila. */
+  justify-content: space-between; /* Aparta el icono al extremo. */
+  gap: 8px; /* Separa el icono del texto. */
+  color: #7b8da7; /* Lo distingue de un campo activo. */
+  font-size: 0.65rem; /* Hace más legible la búsqueda ilustrativa. */
+  border: 1px solid #dce6f2; /* Sugiere el campo de búsqueda ilustrativo. */
+  border-radius: 3px; /* Suaviza el borde. */
+}
+
+.muestra-candidatos__busqueda svg {
+  flex: 0 0 auto; /* Impide que el icono se comprima. */
+  color: #1954a6; /* Refuerza la acción de búsqueda. */
+}
+
+.muestra-candidatos__tabla {
+  margin-top: 7px; /* Acerca la tabla a los filtros. */
+}
+
+.muestra-candidatos__fila {
+  min-height: 31px; /* Conserva filas compactas y alineadas. */
+  display: grid; /* Reparte los datos en columnas. */
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.9fr) minmax(0, 1fr) minmax(0, 0.95fr) 16px; /* Da más ancho a los nombres. */
+  align-items: center; /* Centra cada celda verticalmente. */
+  gap: 5px; /* Separa las columnas sin desperdiciar espacio. */
+  color: #57708f; /* Reduce el peso visual de los datos auxiliares. */
+  font-size: 0.66rem; /* Da un poco más de lectura a las filas. */
+  border-top: 1px solid #e8edf3; /* Ordena las filas con líneas finas. */
+}
+
+.muestra-candidatos__fila--titulos {
+  min-height: 24px; /* Diferencia la cabecera del resto de filas. */
+  color: #203554; /* Oscurece las etiquetas de columna. */
+  font-size: 0.64rem; /* Mantiene la cabecera discreta y legible. */
+  border-top: 0; /* No necesita línea superior. */
+}
+
+.muestra-candidatos__persona {
+  min-width: 0; /* Evita que los nombres largos rompan la tabla. */
+  display: flex; /* Alinea avatar y nombre. */
+  align-items: center; /* Centra ambos elementos. */
+  gap: 7px; /* Separa el avatar del nombre. */
+  overflow: hidden; /* Contiene nombres que no caben. */
+  color: #203554; /* Destaca la identidad del candidato. */
+  text-overflow: ellipsis; /* Indica nombres truncados en poco espacio. */
+  white-space: nowrap; /* Mantiene una altura de fila estable. */
+}
+
+.muestra-candidatos__persona b {
+  width: 22px; /* Hace los avatares uniformes. */
+  height: 22px; /* Hace los avatares uniformes. */
+  flex: 0 0 22px; /* Impide que un avatar se comprima. */
+  display: grid; /* Centra las iniciales. */
+  place-items: center; /* Centra las iniciales en ambos ejes. */
+  color: #1954a6; /* Conecta el avatar con el sistema azul. */
+  background-color: #e9f0f9; /* Da una superficie tenue al avatar. */
+  border-radius: 50%; /* Crea el avatar circular. */
+  font-size: 0.61rem; /* Ajusta las iniciales a la nueva escala. */
+}
+
+.muestra-candidatos__estado {
+  min-width: 77px; /* Mantiene alineadas las etiquetas de estado. */
+  padding: 4px 7px; /* Da forma a la pastilla. */
+  display: inline-flex; /* Alinea punto y texto. */
+  align-items: center; /* Centra el punto. */
+  gap: 5px; /* Separa punto y etiqueta. */
+  border-radius: 999px; /* Indica el estado con una pastilla. */
+  font-size: 0.62rem; /* Conserva el estado compacto pero más claro. */
+  font-style: normal; /* Evita la cursiva nativa de i. */
+  white-space: nowrap; /* Impide que el estado se divida. */
+}
+
+.muestra-candidatos__estado::before {
+  content: ""; /* Dibuja el punto del estado. */
+  width: 6px; /* Define el diámetro del punto. */
+  height: 6px; /* Define el diámetro del punto. */
+  flex: 0 0 6px; /* Evita que el punto se deforme. */
+  background-color: currentColor; /* Hace coincidir punto y etiqueta. */
+  border-radius: 50%; /* Convierte el punto en círculo. */
+}
+
+.muestra-candidatos__estado--revision {
+  color: #23813d; /* Relaciona revisión con verde. */
+  background-color: #e8f5e9; /* Suaviza el estado. */
+}
+
+.muestra-candidatos__estado--pendiente {
+  color: #ab7a18; /* Relaciona espera con ámbar. */
+  background-color: #fff4db; /* Suaviza el estado. */
+}
+
+.muestra-candidatos__estado--revisado {
+  color: #bd5252; /* Distingue el estado revisado del pendiente. */
+  background-color: #fde9e7; /* Mantiene la intensidad controlada. */
+}
+
+.muestra-candidatos__fila > svg {
+  color: #1954a6; /* Da al menú de fila el azul principal. */
+}
+
+.seccion-candidatos__cifra {
+  color: #1954a6 !important; /* Prioriza la cifra dentro del mensaje. */
+  font-family: var(--fuente-editorial); /* Une la cifra con los números de sección. */
+  font-size: 1.3rem !important; /* Hace visible la cantidad de postulaciones. */
+  line-height: 1 !important; /* Ajusta la línea a la cifra. */
+}
+
+.seccion-candidatos__cifra strong {
+  font-size: 2.4rem; /* Destaca el número 12. */
+  font-weight: 400; /* Conserva el carácter editorial. */
+}
+
+/* 03 · Perfil con requisitos y evidencia vinculada. */
+.seccion-evidencias {
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); /* Da prioridad al perfil ilustrativo. */
+  padding: 14px 20px; /* Encuadra texto y producto sobre el fondo azul. */
+  background-color: rgba(237, 245, 252, 0.94); /* Conserva el azul claro y protege el contenido de las rutas. */
+  box-shadow: 0 10px 30px rgba(24, 44, 75, 0.07); /* Separa la banda del papel con profundidad suave. */
+  border-radius: 5px; /* Iguala la banda de la sección 01. */
+}
+
+.muestra-evidencias {
+  overflow: hidden; /* Contiene la tabla dentro de la tarjeta. */
+}
+
+.muestra-evidencias__ruta {
+  padding: 9px 12px 0; /* Sitúa la ruta arriba del perfil. */
+  color: #617b9b; /* Reduce la jerarquía de la ruta. */
+  font-size: 0.65rem; /* Mejora la lectura de la ruta. */
+}
+
+.muestra-evidencias__ruta span {
+  margin-inline: 6px; /* Separa el indicador entre niveles. */
+}
+
+.muestra-evidencias__perfil {
+  padding: 8px 12px 10px; /* Alinea avatar, nombre y acciones. */
+  display: flex; /* Organiza la cabecera en una fila. */
+  align-items: center; /* Centra los elementos. */
+  gap: 9px; /* Mantiene distancias pequeñas. */
+}
+
+.muestra-evidencias__avatar {
+  width: 34px; /* Crea un avatar más visible que en la tabla. */
+  height: 34px; /* Mantiene la forma circular. */
+  flex: 0 0 34px; /* Impide que el avatar se comprima. */
+  display: grid; /* Centra las iniciales. */
+  place-items: center; /* Centra las iniciales en ambos ejes. */
+  color: #1954a6; /* Toma el acento azul. */
+  background-color: #e8f0fb; /* Separa el avatar del fondo blanco. */
+  border-radius: 50%; /* Redondea el avatar. */
+  font-size: 0.84rem; /* Refuerza un poco las iniciales. */
+  font-weight: 600; /* Refuerza la identidad. */
+}
+
+.muestra-evidencias__identidad {
+  min-width: 0; /* Deja que el nombre se ajuste en tabletas. */
+  margin-right: auto; /* Empuja estado y acción a la derecha. */
+  display: grid; /* Apila nombre y puesto. */
+  gap: 2px; /* Mantiene unido el bloque. */
+}
+
+.muestra-evidencias__identidad strong {
+  color: #202833; /* Da jerarquía al nombre. */
+  font-family: var(--fuente-editorial); /* Replica el perfil del original. */
+  font-size: 1rem; /* Da un poco más de jerarquía a la identidad. */
+  font-weight: 400; /* Conserva un tono editorial. */
+  white-space: nowrap; /* Mantiene el nombre en una línea. */
+}
+
+.muestra-evidencias__identidad span {
+  color: #617b9b; /* Diferencia el puesto del nombre. */
+  font-size: 0.66rem; /* Aclara el puesto bajo el nombre. */
+}
+
+.muestra-evidencias__estado {
+  padding: 6px 9px; /* Convierte el estado en una pastilla. */
+  color: #23813d; /* Señala la revisión con verde. */
+  background-color: #e8f5e9; /* Hace visible la pastilla sin saturar. */
+  border-radius: 999px; /* Crea el contorno ovalado. */
+  font-size: 0.64rem; /* Conserva el estado secundario y legible. */
+  white-space: nowrap; /* Conserva el estado en una línea. */
+}
+
+.muestra-evidencias__accion {
+  padding: 8px 10px; /* Da cuerpo al botón ilustrativo. */
+  color: #fff; /* Contrasta con el fondo índigo. */
+  background-color: #173d79; /* Usa el azul profundo del producto. */
+  border-radius: 3px; /* Repite las esquinas discretas. */
+  font-size: 0.63rem; /* Mejora la lectura de la acción ilustrativa. */
+  white-space: nowrap; /* Conserva la etiqueta entera. */
+}
+
+.muestra-evidencias__mas {
+  flex: 0 0 auto; /* Impide que el icono se reduzca. */
+  color: #1954a6; /* Usa el acento azul. */
+}
+
+.muestra-evidencias__pestanas {
+  padding: 0 12px; /* Alinea las pestañas con el perfil. */
+  display: flex; /* Coloca las secciones del perfil en fila. */
+  gap: 18px; /* Separa nombres de pestañas. */
+  overflow: hidden; /* Evita desbordes de las pestañas ilustrativas. */
+  color: #7890ad; /* Baja el contraste de pestañas inactivas. */
+  font-size: 0.65rem; /* Hace reconocibles las pestañas. */
+  white-space: nowrap; /* Evita saltos de línea. */
+  border-bottom: 1px solid #e4ebf3; /* Divide navegación y evidencia. */
+}
+
+.muestra-evidencias__pestanas span,
+.muestra-evidencias__pestanas strong {
+  padding-bottom: 8px; /* Aleja la etiqueta de la línea inferior. */
+}
+
+.muestra-evidencias__pestanas strong {
+  color: #173d79; /* Destaca la pestaña activa. */
+  border-bottom: 2px solid #173d79; /* Marca la sección Evidencias. */
+  font-weight: 600; /* Da peso a la pestaña activa. */
+}
+
+.muestra-evidencias__columnas {
+  padding: 11px 12px 12px; /* Enmarca los dos grupos de información. */
+  display: grid; /* Coloca requisitos y evidencias en columnas. */
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); /* Da más espacio a los nombres de evidencia. */
+  gap: 18px; /* Separa los grupos. */
+}
+
+.muestra-evidencias__columnas > div + div {
+  padding-left: 16px; /* Aparta la evidencia de la línea divisoria. */
+  border-left: 1px solid #e4ebf3; /* Explica la separación de datos. */
+}
+
+.muestra-evidencias__columnas h3 {
+  margin: 0 0 10px; /* Separa título y filas. */
+  color: #203554; /* Prioriza los nombres de columna. */
+  font-size: 0.71rem; /* Refuerza los títulos de columna. */
+  font-weight: 600; /* Diferencia cabecera y datos. */
+}
+
+.muestra-evidencias__columnas ul {
+  margin: 0; /* Elimina el margen predeterminado. */
+  padding: 0; /* Elimina la sangría predeterminada. */
+  display: grid; /* Apila las tres filas. */
+  gap: 10px; /* Da aire entre filas. */
+  list-style: none; /* Usa iconos en lugar de viñetas. */
+}
+
+.muestra-evidencias__columnas li {
+  min-width: 0; /* Permite que se ajusten los textos de evidencia. */
+  display: flex; /* Alinea icono y texto. */
+  align-items: center; /* Centra los iconos con cada fila. */
+  gap: 8px; /* Separa icono y etiqueta. */
+  color: #26354b; /* Mantiene alto contraste en la información. */
+  font-size: 0.68rem; /* Facilita recorrer los requisitos y evidencias. */
+}
+
+.muestra-evidencias__check {
+  width: 16px; /* Iguala el tamaño de los indicadores. */
+  height: 16px; /* Iguala el tamaño de los indicadores. */
+  flex: 0 0 16px; /* Evita que pierdan su forma. */
+  display: grid; /* Centra el símbolo de comprobación. */
+  place-items: center; /* Centra el símbolo en ambos ejes. */
+  color: #fff; /* Contrasta con el círculo. */
+  border-radius: 50%; /* Presenta el indicador circular. */
+  font-size: 0.61rem; /* Mantiene visible la verificación. */
+}
+
+.muestra-evidencias__check--confirmado {
+  background-color: #27943f; /* Identifica requisitos respaldados. */
+}
+
+.muestra-evidencias__check--revisar {
+  background-color: #ee5b43; /* Señala el requisito que necesita revisión. */
+}
+
+.muestra-evidencias__archivo {
+  flex: 0 0 auto; /* Mantiene visible cada icono de archivo. */
+}
+
+.muestra-evidencias__archivo--confirmado {
+  color: #27943f; /* Relaciona la fuente confirmada con verde. */
+}
+
+.muestra-evidencias__archivo--pendiente {
+  color: #e5a526; /* Distingue la fuente pendiente. */
+}
+
+.muestra-evidencias__archivo--revisar {
+  color: #e05757; /* Señala la fuente que requiere revisión. */
+}
+
+.muestra-evidencias__columnas li span:not(.muestra-evidencias__check) {
+  min-width: 0; /* Permite acortar nombres largos en el espacio disponible. */
+  display: grid; /* Apila nombre y procedencia. */
+  gap: 2px; /* Mantiene unidos ambos datos. */
+}
+
+.muestra-evidencias__columnas li strong {
+  font-weight: 500; /* Diferencia nombre y origen sin exceso. */
+}
+
+.muestra-evidencias__columnas li small {
+  color: #7b8da7; /* Reduce la jerarquía de la procedencia. */
+  font-size: 0.62rem; /* Conserva el metadato discreto y legible. */
+}
+
+.muestra-evidencias__externo {
+  margin-left: auto; /* Empuja el icono al extremo derecho. */
+  flex: 0 0 auto; /* Impide que se deforme. */
+  color: #1954a6; /* Sugiere enlace a la fuente de origen. */
+}
+
+/* 04 · Confirmación y comunicación ilustrativa. */
+.seccion-aprobacion {
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr); /* Da más ancho al correo. */
+  padding: 0 20px 16px; /* Alinea la escena con las anteriores. */
+}
+
+.muestra-correo {
+  position: relative; /* Sitúa el botón dentro del panel. */
+  padding: 12px 14px 44px; /* Reserva espacio al botón final. */
+}
+
+.muestra-correo h3 {
+  margin: 0 0 8px; /* Separa el título del formulario. */
+  color: #173d79; /* Marca el asunto del panel. */
+  font-size: 0.77rem; /* Da un poco más de jerarquía al asunto. */
+  font-weight: 600; /* Destaca el nombre de la candidata. */
+}
+
+.muestra-correo__fila {
+  margin-top: 4px; /* Separa los renglones del formulario. */
+  display: grid; /* Alinea etiqueta y valor. */
+  grid-template-columns: 42px minmax(0, 1fr); /* Mantiene una columna fija para Para y Asunto. */
+  align-items: center; /* Centra etiqueta y valor. */
+  gap: 8px; /* Separa etiqueta y campo. */
+}
+
+.muestra-correo__fila > span {
+  color: #7186a2; /* Baja el peso de las etiquetas. */
+  font-size: 0.65rem; /* Aclara las etiquetas del correo. */
+}
+
+.muestra-correo__fila > strong,
+.muestra-correo__fila > p {
+  min-width: 0; /* Evita que la dirección o el asunto desborden. */
+  margin: 0; /* Elimina márgenes nativos. */
+  padding: 5px 7px; /* Da espacio al contenido del campo. */
+  color: #4e6281; /* Diferencia los valores del encabezado. */
+  border: 1px solid #dce6f2; /* Simula campos revisables. */
+  border-radius: 3px; /* Iguala el resto del producto. */
+  font-size: 0.66rem; /* Mejora la lectura de los valores. */
+  font-weight: 400; /* Evita que los campos parezcan títulos. */
+  line-height: 1.3; /* Hace legible el mensaje en varias líneas. */
+  overflow-wrap: anywhere; /* Contiene direcciones largas. */
+}
+
+.muestra-correo__destinatario {
+  display: flex; /* Separa la dirección de su marca de validación. */
+  justify-content: space-between; /* Sitúa la marca al extremo. */
+  align-items: center; /* Centra el texto con la marca. */
+  gap: 6px; /* Evita que se superpongan. */
+  background-color: #eff8ef; /* Indica destinatario revisado. */
+}
+
+.muestra-correo__destinatario b {
+  width: 14px; /* Define el círculo de comprobación. */
+  height: 14px; /* Define el círculo de comprobación. */
+  flex: 0 0 14px; /* Evita que el círculo se comprima. */
+  display: grid; /* Centra la marca. */
+  place-items: center; /* Centra la marca en ambos ejes. */
+  color: #fff; /* Contrasta la marca. */
+  background-color: #27943f; /* Señala validación. */
+  border-radius: 50%; /* Da forma circular. */
+  font-size: 0.56rem; /* Ajusta la marca a la nueva escala. */
+}
+
+.muestra-correo__fila--mensaje {
+  align-items: start; /* Alinea Mensaje con el primer renglón. */
+}
+
+.muestra-correo__fila--mensaje > p {
+  min-height: 58px; /* Da espacio a las tres líneas del correo. */
+  border-color: #a776ff; /* Destaca el mensaje revisado en el mockup. */
+}
+
+.muestra-correo__accion {
+  position: absolute; /* Coloca la acción al pie derecho del panel. */
+  right: 14px; /* Alinea la acción con los campos. */
+  bottom: 10px; /* Deja un margen inferior breve. */
+  padding: 9px 12px; /* Da cuerpo al botón ilustrativo. */
+  color: #fff; /* Contrasta con el coral. */
+  background-color: #e85b3e; /* Replica el acento cálido de la referencia. */
+  border-radius: 3px; /* Conserva esquinas discretas. */
+  font-size: 0.68rem; /* Facilita leer la acción del ejemplo. */
+  font-weight: 500; /* Hace legible la acción. */
+}
+
+/* Principios: una banda breve que cierra el argumento. */
+.seccion-principios {
+  margin-top: 20px; /* Separa los principios de la última escena. */
+  padding: 26px 0; /* Da aire sobre y bajo las cuatro ideas. */
+  border-top: 1px solid #a9bfdc; /* Enmarca la banda con una línea azul fina. */
+  border-bottom: 1px solid #a9bfdc; /* Cierra la banda antes del pie. */
+  background-color: transparent; /* Deja pasar el papel continuo detrás de los principios. */
+}
+
+.seccion-principios__contenido {
+  width: min(calc(100% - 60px), 1040px); /* Alinea la banda con el cuerpo de la landing. */
+  margin-inline: auto; /* Centra las cuatro columnas. */
+  display: grid; /* Distribuye los principios en una fila. */
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* Da igual espacio a cada principio. */
+  gap: 26px; /* Separa las ideas. */
+}
+
+.seccion-principios__item {
+  min-width: 0; /* Permite ajustar el texto en columnas estrechas. */
+  padding-left: 18px; /* Aparta el texto de la línea azul. */
+  border-left: 1px solid #1954a6; /* Repite el acento lineal del diseño. */
+}
+
+.seccion-principios__item h2 {
+  margin: 0; /* Elimina el margen nativo del encabezado. */
+  color: #173d79; /* Da jerarquía al principio. */
+  font-size: 0.85rem; /* Mantiene la banda discreta. */
+  font-weight: 600; /* Separa el título de su explicación. */
+}
+
+.seccion-principios__item p {
+  margin: 4px 0 0; /* Acerca la explicación al título. */
+  color: #6d819d; /* Baja el peso del texto de apoyo. */
+  font-size: 0.74rem; /* Mantiene la escala secundaria. */
+  line-height: 1.42; /* Ayuda a leer textos de dos líneas. */
+}
+
+/* Pie claro con enlaces a las secciones de la página. */
+.pie-landing {
+  padding: 22px 0 26px; /* Da un cierre ligero a la landing. */
+  background-color: transparent; /* Continúa la textura crema hasta el pie. */
+}
+
+.pie-landing__contenido {
+  width: min(calc(100% - 60px), 1040px); /* Alinea marca y enlaces con el cuerpo. */
+  margin-inline: auto; /* Centra el pie. */
+  display: flex; /* Sitúa la marca y la navegación a los extremos. */
+  justify-content: space-between; /* Separa ambos grupos. */
+  align-items: center; /* Alinea la marca y los enlaces. */
+  gap: 20px; /* Evita que se toquen en anchos medianos. */
+}
+
+.pie-landing__marca {
+  color: #202833; /* Usa la tinta editorial de la marca. */
+  font-family: var(--fuente-editorial); /* Conserva la voz de la cabecera. */
+  font-size: 0.95rem; /* Mantiene la marca discreta. */
+  text-decoration: none; /* Retira el subrayado nativo. */
+}
+
+.pie-landing nav {
+  display: flex; /* Coloca los destinos en una línea. */
+  flex-wrap: wrap; /* Permite que se reacomoden si faltara ancho. */
+  gap: 22px; /* Da separación regular a los enlaces. */
+}
+
+.pie-landing nav a,
+.pie-landing nav span {
+  color: #6d819d; /* Baja el contraste de la navegación secundaria. */
+  font-size: 0.7rem; /* Mantiene el pie subordinado al contenido. */
+  text-decoration: none; /* Evita subrayados permanentes. */
+}
+
+.pie-landing nav a:hover {
+  color: #1954a6; /* Indica interacción sin cambiar la composición. */
+  text-decoration: underline; /* Refuerza el estado interactivo. */
+  text-underline-offset: 3px; /* Separa la línea del texto. */
+}
+
+/* El foco visible conserva accesibles los enlaces del pie. */
+.pie-landing a:focus-visible {
+  outline: 2px solid #1954a6; /* Muestra el foco con el acento principal. */
+  outline-offset: 4px; /* Lo aparta del texto. */
+}
+
+/* La retícula cambia antes de que las tablas y títulos se compriman. */
+@media (max-width: 800px) {
+  .seccion-editorial {
+    width: min(calc(100% - 40px), 760px); /* Conserva márgenes cómodos en tableta. */
+    grid-template-columns: minmax(0, 1fr); /* Apila explicación y producto. */
+    gap: 20px; /* Mantiene una relación clara entre ambos. */
+  }
+
+  .seccion-candidatos {
+    padding: 0; /* Usa el ancho completo de la columna. */
+  }
+
+  .seccion-candidatos .seccion-editorial__mensaje {
+    grid-row: 1; /* Presenta el título antes de la tabla. */
+  }
+
+  .seccion-evidencias {
+    padding: 18px; /* Conserva aire dentro de la banda azul. */
+  }
+
+  .seccion-aprobacion {
+    padding: 0 0 16px; /* Alinea la tarjeta de correo con las demás. */
+  }
+
+  .seccion-principios__contenido,
+  .pie-landing__contenido {
+    width: min(calc(100% - 40px), 760px); /* Alinea banda y pie con las secciones. */
+  }
+}
+
+/* Los teléfonos muestran los datos ilustrativos sin desplazamiento horizontal. */
+@media (max-width: 620px) {
+  .seccion-editorial {
+    width: calc(100% - 32px); /* Deja 16px de margen a cada lado. */
+  }
+
+  .seccion-editorial__mensaje {
+    grid-template-columns: 34px minmax(0, 1fr); /* Reduce la columna del número. */
+    gap: 10px; /* Acerca número y filete. */
+  }
+
+  .seccion-editorial__numero {
+    font-size: 1.7rem; /* Mantiene proporción con los títulos móviles. */
+  }
+
+  .seccion-editorial__mensaje > div {
+    padding-left: 12px; /* Alinea el texto con la sección 01 móvil. */
+  }
+
+  .seccion-editorial__mensaje h2 {
+    font-size: 1.4rem; /* Evita títulos dominantes en móvil. */
+  }
+
+  .muestra-candidatos {
+    overflow-x: auto; /* Permite consultar la tabla sin desbordar la página. */
+  }
+
+  .muestra-candidatos__cabecera,
+  .muestra-candidatos__tabla {
+    min-width: 510px; /* Preserva las columnas de la tabla ilustrativa. */
+  }
+
+  .muestra-evidencias__perfil {
+    flex-wrap: wrap; /* Baja el estado y la acción si no caben. */
+  }
+
+  .muestra-evidencias__pestanas {
+    gap: 12px; /* Reduce la separación de las pestañas. */
+    overflow-x: auto; /* Permite recorrer las pestañas en móvil. */
+  }
+
+  .muestra-evidencias__columnas {
+    grid-template-columns: minmax(0, 1fr); /* Apila requisitos y evidencias. */
+  }
+
+  .muestra-evidencias__columnas > div + div {
+    padding-left: 0; /* Retira la sangría de la segunda columna. */
+    padding-top: 12px; /* Separa la evidencia de los requisitos. */
+    border-left: 0; /* Retira el divisor vertical. */
+    border-top: 1px solid #e4ebf3; /* Introduce un divisor horizontal. */
+  }
+
+  .seccion-principios__contenido {
+    width: calc(100% - 32px); /* Alinea la banda a los márgenes móviles. */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Muestra dos principios por fila. */
+    gap: 20px; /* Separa las cuatro ideas. */
+  }
+
+  .pie-landing__contenido {
+    width: calc(100% - 32px); /* Alinea el pie al margen móvil. */
+    flex-direction: column; /* Sitúa la marca sobre los enlaces. */
+    align-items: flex-start; /* Mantiene ambos grupos a la izquierda. */
+  }
+
+  .pie-landing nav {
+    gap: 12px 18px; /* Deja espacio entre enlaces en varias líneas. */
+  }
+}
+
+/* Los móviles muy estrechos mantienen campos y principios legibles. */
+@media (max-width: 390px) {
+  .muestra-evidencias__accion {
+    padding: 7px; /* Libera espacio en la cabecera del perfil. */
+  }
+
+  .muestra-correo__fila {
+    grid-template-columns: 36px minmax(0, 1fr); /* Ajusta las etiquetas del correo. */
+    gap: 5px; /* Recupera ancho para los valores. */
+  }
+
+  .seccion-principios__contenido {
+    grid-template-columns: minmax(0, 1fr); /* Evita columnas demasiado angostas. */
+  }
+}
+
+
+
+/* Las vistas finales se incorporan con direcciones acordes al recorrido del producto. */
+.animacion-seccion--visible .muestra-candidatos {
+  animation: entrar-candidatos 620ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Sitúa las postulaciones en su lugar. */
+}
+
+@keyframes entrar-candidatos {
+  from { opacity: 0.72; transform: translateX(-16px); /* Parte cerca de su posición final. */ }
+  to { opacity: 1; transform: translateX(0); /* Presenta la tabla completa. */ }
+}
+
+.animacion-seccion--visible .muestra-evidencias {
+  animation: entrar-evidencias 620ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Acerca la evidencia al mensaje. */
+}
+
+@keyframes entrar-evidencias {
+  from { opacity: 0.72; transform: translateX(16px); /* Inicia la escena junto a su posición final. */ }
+  to { opacity: 1; transform: translateX(0); /* Termina alineada con la retícula. */ }
+}
+
+.animacion-seccion--visible .muestra-correo {
+  animation: entrar-confirmacion 660ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Revela el correo y su acción final. */
+}
+
+@keyframes entrar-confirmacion {
+  from { opacity: 0.72; clip-path: inset(0 0 10% 0); /* Comienza con el cierre aún recortado. */ }
+  to { opacity: 1; clip-path: inset(0 0 0 0); /* Completa el correo. */ }
+}
+
+.animacion-seccion--visible .seccion-principios__item {
+  animation: entrar-principio 440ms ease-out both; /* Presenta los principios uno tras otro. */
+}
+
+.animacion-seccion--visible .seccion-principios__item:nth-child(2) { animation-delay: 80ms; /* Sigue con control humano. */ }
+.animacion-seccion--visible .seccion-principios__item:nth-child(3) { animation-delay: 160ms; /* Sigue con protección de datos. */ }
+.animacion-seccion--visible .seccion-principios__item:nth-child(4) { animation-delay: 240ms; /* Cierra con el registro. */ }
+
+@keyframes entrar-principio {
+  from { opacity: 0.7; /* Mantiene reconocible cada idea desde el principio. */ }
+  to { opacity: 1; /* Completa la lectura de la banda. */ }
+}
+
+/* Cada escena responde al cursor sin convertir el producto ilustrativo en controles falsos. */
+.muestra-candidatos,
+.muestra-evidencias,
+.muestra-correo {
+  transition: border-color 220ms ease, box-shadow 220ms ease; /* Suaviza el énfasis de la escena activa. */
+}
+
+.muestra-candidatos__fila,
+.muestra-evidencias__columnas li {
+  transition: background-color 180ms ease; /* Resalta brevemente la información bajo el cursor. */
+}
+
+.seccion-principios__item {
+  transition: border-color 220ms ease, transform 220ms ease; /* Da respuesta al principio que se está leyendo. */
+}
+
+@media (hover: hover) {
+  .seccion-candidatos:hover .muestra-candidatos,
+  .seccion-evidencias:hover .muestra-evidencias,
+  .seccion-aprobacion:hover .muestra-correo {
+    border-color: #a8bfdc; /* Vincula la vista activa con la línea de proceso. */
+    box-shadow: 0 12px 25px rgba(24, 44, 75, 0.11); /* Aumenta la profundidad con suavidad. */
+  }
+
+  .muestra-candidatos__fila:not(.muestra-candidatos__fila--titulos):hover,
+  .muestra-evidencias__columnas li:hover {
+    background-color: #f2f7fc; /* Facilita seguir la fila de información. */
+  }
+
+  .seccion-principios__item:hover {
+    border-color: #547db3; /* Refuerza el filete del principio activo. */
+    transform: translateX(3px); /* Acompaña la lectura sin alterar la retícula. */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animacion-seccion--visible .muestra-candidatos,
+  .animacion-seccion--visible .muestra-evidencias,
+  .animacion-seccion--visible .muestra-correo,
+  .animacion-seccion--visible .seccion-principios__item {
+    animation: none; /* Omite entradas espaciales y escalonadas. */
+  }
+
+  .muestra-candidatos,
+  .muestra-evidencias,
+  .muestra-correo,
+  .muestra-candidatos__fila,
+  .muestra-evidencias__columnas li,
+  .seccion-principios__item {
+    transition: none; /* Mantiene los estados sin desplazamientos animados. */
+  }
+}

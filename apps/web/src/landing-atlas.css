@@ -1,0 +1,1147 @@
+:root {
+  --atlas-carbon: #111a18; /* Fondo de la franja de etapas. */
+  --atlas-papel: #fbfaf7; /* Crema principal compartido por todas las secciones neutras. */
+  --atlas-tinta: #101614; /* Color principal de texto. */
+  --atlas-verde: #52b69a; /* Acento actual de enlaces y línea del proceso. */
+  --atlas-verde-profundo: #0b604f; /* Color del botón principal al pasar el cursor. */
+  --atlas-coral: #df7054; /* Color de los puntos de las etapas. */
+  --atlas-linea-clara: rgba(243, 244, 241, 0.18); /* Bordes sobre el fondo oscuro. */
+}
+
+.atlas-landing{
+  min-height: 100vh;
+  overflow: clip;
+  background-color: var(--atlas-papel); /* Conserva el fondo crema bajo la retícula editorial. */
+}
+
+.portada{
+  position: relative; /* Mantiene el hero delante de la retícula de fondo. */
+  isolation: isolate; /* Separa el contenido del fondo gráfico. */
+  padding: 36px 24px 26px; /* Acerca el hero a la cabecera del diseño. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: 26px; /* Da una pausa breve entre el hero y la vista del producto. */
+  color: #1f2329;
+  text-align: center;
+  background-color: transparent; /* Deja visible la textura continua del fondo crema. */
+}
+
+.portada__contenido{
+  position: relative; /* Sitúa el mensaje por encima de las líneas decorativas. */
+  z-index: 1; /* Conserva nítidos los textos y botones. */
+  width: 100%;
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+.portada__etiqueta{
+  margin: 0 0 8px; /* Acerca la etiqueta al título. */
+  color: #254880;
+  font-size: 0.68rem; /* Reduce el texto auxiliar del hero. */
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.portada__titulo{
+  max-width: 780px; /* Controla el ancho del titular. */
+  margin: 0 auto;
+  color: #1f2329;
+  font-family: var(--fuente-editorial);
+  font-size: clamp(2.2rem, 4.1vw, 3.4rem); /* Recupera la presencia editorial del título original. */
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.portada__descripcion{
+  max-width: 620px; /* Mantiene cómoda la lectura. */
+  margin: 10px auto 0; /* Acerca el párrafo al titular. */
+  color: #4a4e55;
+  font-family: var(--fuente-interfaz);
+  font-size: 0.94rem; /* Reduce la tipografía exterior al producto. */
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.portada__acciones{
+  margin-top: 14px; /* Mantiene las acciones junto al texto. */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.boton-portada{
+  min-height: 44px; /* Mantiene una altura cómoda. */
+  padding-inline: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 0.8rem; /* Reduce el peso visual de los botones. */
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.boton-portada--primario{
+  color: #fff;
+  background-color: #1954a6;
+  border-color: #1954a6;
+}
+
+.boton-portada--secundario{
+  color: #1954a6;
+  background-color: #f4f8fc; /* Da al botón secundario una superficie azul uniforme. */
+  border-color: #8daed6; /* Usa un contorno azul suave que no compite con el botón principal. */
+}
+
+.boton-portada--primario:hover{
+  background-color: #164789; /* Oscurece el azul al pasar el cursor. */
+  border-color: #164789; /* Conserva el borde uniforme. */
+  transform: translateY(-2px); /* Indica interacción. */
+}
+
+.boton-portada--secundario:hover{
+  color: #164789; /* Mantiene el botón secundario distinto del principal. */
+  background-color: #e5eef9; /* Oscurece apenas el azul claro al pasar el cursor. */
+  border-color: #6f98cc; /* Refuerza el borde sin volverlo demasiado intenso. */
+  transform: translateY(-1px); /* Da una respuesta leve sin cambiar su jerarquía. */
+}
+.portada__visual{
+  position: relative; /* Apila el producto sobre los trazos. */
+  z-index: 1; /* Protege la legibilidad del mockup. */
+  width: min(100%, 1040px);
+  min-width: 0;
+  margin: 0;
+}
+
+.portada__captura{
+  width: 100%;
+  overflow: hidden;
+  background-color: #fff; /* Recupera el fondo original del producto. */
+  border: 1px solid #d7e1ec; /* Recupera el contorno claro original. */
+  border-radius: 12px;
+}
+
+.navegador-producto__barra{
+  height: 30px;
+  padding-inline: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: #f4f6f9;
+  border-bottom: 1px solid #d7e1ec;
+}
+
+.navegador-producto__controles{
+  display: flex;
+  gap: 5px;
+}
+
+.navegador-producto__punto{
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.navegador-producto__punto--rojo{
+  background-color: #ff5f57;
+}
+
+.navegador-producto__punto--amarillo{
+  background-color: #febc2e;
+}
+
+.navegador-producto__punto--verde{
+  background-color: #28c840;
+}
+
+.navegador-producto__direccion{
+  width: 45%;
+  height: 13px;
+  background-color: #e6ebf2;
+  border-radius: 999px;
+}
+
+.navegador-producto__pantalla{
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  background-color: #fff;
+  text-align: left;
+}
+
+.vista-producto__lateral{
+  padding: 20px 14px;
+  color: #fff;
+  background-color: #172a4d;
+}
+
+.vista-producto__marca{
+  margin: 0;
+  font-family: var(--fuente-editorial);
+  font-size: 0.98rem; /* Agranda apenas la marca dentro del producto. */
+  line-height: 1.1;
+}
+
+.vista-producto__menu{
+  margin-top: 28px;
+  display: grid;
+  gap: 4px;
+}
+
+.vista-producto__menu span{
+  padding: 8px 10px;
+  color: #e8eef7;
+  font-size: 0.79rem; /* Mejora la lectura del menú ilustrativo. */
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.vista-producto__menu .vista-producto__opcion-activa{
+  color: #172a4d;
+  background-color: #f7f9fc;
+  border-radius: 4px;
+}
+
+.vista-producto__contenido{
+  min-width: 0;
+  padding: 22px 26px;
+}
+
+.vista-producto__ruta{
+  margin: 0;
+  color: #647184;
+  font-size: 0.76rem; /* Hace más clara la ruta del producto. */
+}
+
+.vista-producto__encabezado{
+  margin-top: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.vista-producto__encabezado h2{
+  margin: 0;
+  color: #1f2329;
+  font-size: 1.34rem; /* Da una presencia ligeramente mayor al título interno. */
+  font-weight: 500;
+}
+
+.vista-producto__encabezado p{
+  margin: 6px 0 0;
+  color: #647184;
+  font-size: 0.8rem; /* Mejora la lectura de la ayuda interna. */
+}
+
+.vista-producto__estado{
+  height: fit-content;
+  padding: 5px 10px;
+  color: #825d16;
+  background-color: #fff2d7;
+  border-radius: 999px;
+  font-size: 0.72rem; /* Hace legible el estado sin dominar el encabezado. */
+  white-space: nowrap;
+}
+
+.vista-producto__columnas{
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 24px;
+}
+
+.vista-producto__formulario h3,
+.vista-producto__publicacion h3{
+  margin: 0 0 16px;
+  color: #1f2329;
+  font-size: 0.82rem; /* Sube levemente los títulos de cada columna. */
+  font-weight: 600;
+}
+
+.vista-producto__campo{
+  position: relative;
+  min-width: 0;
+  margin-bottom: 12px;
+  padding: 9px 30px 9px 10px;
+  border: 1px solid #dce4ee;
+  border-radius: 4px;
+}
+
+
+
+.vista-producto__etiqueta{
+  display: block;
+  margin-bottom: 4px;
+  color: #657184;
+  font-size: 0.68rem; /* Aclara las etiquetas de los campos. */
+}
+
+.vista-producto__valor{
+  display: block;
+  color: #26354b;
+  font-size: 0.77rem; /* Destaca un poco más los valores. */
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.vista-producto__campos-cortos{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.vista-producto__publicacion{
+  min-width: 0;
+  padding: 16px;
+  background-color: #eef5fc;
+  border: 1px solid #dce7f2;
+  border-radius: 5px;
+}
+
+.vista-producto__lista{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vista-producto__lista li{
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+
+
+.vista-producto__verificacion{
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background-color: #208b3c;
+  border-radius: 50%;
+}
+
+.vista-producto__verificacion--campo{
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  width: 14px;
+  height: 14px;
+  transform: translateY(-50%);
+}
+
+.vista-producto__detalle strong{
+  display: block;
+  color: #183052;
+  font-size: 0.8rem; /* Refuerza los nombres de la publicación. */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.vista-producto__detalle span{
+  display: block;
+  margin-top: 2px;
+  color: #617187;
+  font-size: 0.72rem; /* Mejora la lectura del detalle publicado. */
+  line-height: 1.4;
+}
+
+.vista-producto__acciones{
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.vista-producto__boton-vista,
+.vista-producto__boton-publicar{
+  padding: 7px 10px;
+  border-radius: 4px;
+  font-size: 0.72rem; /* Mantiene las acciones de la maqueta proporcionadas. */
+  font-weight: 600;
+}
+
+.vista-producto__boton-vista{
+  color: #204d91;
+  background-color: #fff;
+  border: 1px solid #cbd8ea;
+}
+
+.vista-producto__boton-publicar{
+  color: #fff;
+  background-color: #1954a6;
+  border: 1px solid #1954a6;
+}
+
+.franja-proceso{
+  position: relative;
+  padding: 18px 24px 28px;
+  color: #202833;
+  background: transparent; /* Las rutas discurren por los márgenes y dejan libre la línea de etapas. */
+}
+
+.franja-proceso__titulo-accesible{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.franja-proceso__lista{
+  width: min(90%, 840px);
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  list-style: none;
+}
+
+.franja-proceso__etapa{
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 11px max-content minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 8px;
+  row-gap: 4px;
+}
+
+.franja-proceso__etapa:not(:last-child)::after{
+  content: "";
+  grid-column: 3;
+  grid-row: 1;
+  align-self: center;
+  width: calc(100% + 18px);
+  height: 1px;
+  background-color: #a9bfdc;
+  pointer-events: none;
+}
+
+.franja-proceso__etapa h3{
+ grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  color: #202833;
+  font-size: 0.83rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.franja-proceso__punto{
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  width: 11px;
+  height: 11px;
+  background-color: #1954a6;
+  border-radius: 50%;
+}
+
+.franja-proceso__etapa p{
+  grid-column: 2 / 4;
+  grid-row: 2;
+  margin: 0;
+  color: #617187;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+/* Publicación: mensaje editorial y comparación Antes/Después del diseño aprobado. */
+.seccion-publicacion {
+  width: min(calc(100% - 60px), 1040px); /* Limita la sección y deja margen a ambos lados. */
+  margin: 0 auto 28px; /* Centra el bloque y lo separa de la siguiente sección. */
+  padding: 12px 20px; /* Mantiene la altura compacta del bloque original. */
+  display: grid; /* Coloca el mensaje y la comparación en columnas. */
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); /* Da al título y a las tarjetas las proporciones de la referencia. */
+  align-items: center; /* Centra verticalmente ambas columnas. */
+  gap: 20px; /* Acerca el mensaje a las tarjetas como en la referencia. */
+  background-color: rgba(237, 245, 252, 0.94); /* Eleva la banda azul y reduce las rutas detrás del texto. */
+  box-shadow: 0 10px 30px rgba(24, 44, 75, 0.07); /* Da una profundidad editorial ligera a la sección. */
+  border-radius: 5px; /* Suaviza discretamente las esquinas. */
+}
+
+.seccion-publicacion__mensaje {
+  min-width: 0; /* Permite que el texto se ajuste sin desbordarse. */
+  display: grid; /* Alinea el número con el bloque de texto. */
+  grid-template-columns: 42px minmax(0, 1fr); /* Reserva una columna fija para el 01. */
+  align-items: start; /* Sitúa número y título en la misma altura inicial. */
+  gap: 16px; /* Separa el número de la línea azul. */
+}
+
+.seccion-publicacion__numero {
+  color: #153d78; /* Destaca el número con el azul índigo. */
+  font-family: var(--fuente-editorial); /* Mantiene el acento editorial del original. */
+  font-size: 2rem; /* Hace visible el número sin competir con el hero. */
+  line-height: 1; /* Evita espacio vertical innecesario. */
+}
+
+.seccion-publicacion__mensaje > div {
+  min-width: 0; /* Deja que el título se divida dentro de su columna. */
+  padding-left: 18px; /* Separa el texto de la línea vertical. */
+  border-left: 1px solid #1954a6; /* Dibuja el acento editorial azul. */
+}
+
+.seccion-publicacion__mensaje h2 {
+  max-width: 360px; /* Reproduce las líneas cortas del título original. */
+  margin: 0; /* Elimina el margen predeterminado del encabezado. */
+  color: #202833; /* Usa un tono carbón legible. */
+  font-family: var(--fuente-editorial); /* Aplica la tipografía del título editorial. */
+  font-size: clamp(1.4rem, 1.8vw, 1.8rem); /* Reproduce las tres líneas del título original sin competir con el hero. */
+  font-weight: 400; /* Conserva la ligereza visual de la referencia. */
+  line-height: 1.12; /* Mantiene las líneas compactas. */
+}
+
+.seccion-publicacion__mensaje p {
+  max-width: 360px; /* Mantiene el párrafo alineado al ancho del título. */
+  margin: 12px 0 0; /* Separa el texto secundario del título. */
+  color: #617187; /* Reduce su peso visual respecto del título. */
+  font-size: 0.84rem; /* Mantiene una escala discreta. */
+  line-height: 1.5; /* Mejora la lectura en varias líneas. */
+}
+
+.seccion-publicacion__comparacion {
+  min-width: 0; /* Evita que las tarjetas empujen la cuadrícula exterior. */
+  display: grid; /* Organiza Antes, flecha y Después en una fila. */
+  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); /* Da el mismo ancho a ambas tarjetas. */
+  align-items: center; /* Centra la flecha entre las tarjetas. */
+  gap: 14px; /* Deja espacio a ambos lados de la flecha. */
+}
+
+.seccion-publicacion__antes,
+.seccion-publicacion__despues {
+  min-width: 0; /* Permite que el contenido se adapte al ancho disponible. */
+  min-height: 170px; /* Iguala las tarjetas con la altura compacta del original. */
+  height: 100%; /* Hace que las dos tarjetas ocupen la misma altura. */
+  padding: 11px; /* Conserva el margen interior compacto del original. */
+  background-color: #fff; /* Separa las tarjetas del fondo azul pálido. */
+  border: 1px solid #dce6f2; /* Delimita las tarjetas con una línea suave. */
+  border-radius: 4px; /* Redondea ligeramente las esquinas. */
+}
+
+.seccion-publicacion__antes h3,
+.seccion-publicacion__despues h3 {
+  margin: 0; /* Elimina el margen propio de los encabezados. */
+  color: #1954a6; /* Resalta las etiquetas Antes y Después. */
+  font-size: 0.8rem; /* Hace más claras las etiquetas de la comparación. */
+  font-weight: 600; /* Ayuda a distinguirlas del contenido. */
+}
+
+.seccion-publicacion__antes > p,
+.seccion-publicacion__despues > p:first-of-type {
+  margin: 5px 0 9px; /* Separa el subtítulo de la etiqueta y del contenido. */
+  color: #26354b; /* Usa un azul oscuro para el texto auxiliar. */
+  font-size: 0.69rem; /* Agranda apenas la explicación del mockup. */
+  line-height: 1.35; /* Evita que se junten las líneas cuando se envuelve. */
+}
+
+.seccion-publicacion__antes > div {
+  min-height: 111px; /* Da al texto bruto la altura visual del ejemplo. */
+  padding: 9px; /* Separa el texto del borde del campo. */
+  color: #34465f; /* Mantiene contraste sin usar negro puro. */
+  font-size: 0.69rem; /* Facilita leer el texto sin estructura. */
+  line-height: 1.45; /* Permite leer cómodamente el párrafo. */
+  border: 1px solid #dce6f2; /* Dibuja el campo de texto de la tarjeta Antes. */
+  border-radius: 3px; /* Suaviza levemente el campo. */
+}
+
+.seccion-publicacion__flecha {
+  position: relative; /* Permite ubicar la punta de la flecha. */
+  justify-self: center; /* Centra la flecha en su columna. */
+  width: 22px; /* Define la longitud del trazo horizontal. */
+  height: 1px; /* Hace fino el cuerpo de la flecha. */
+  background-color: #1954a6; /* Usa el mismo azul de los acentos. */
+}
+
+.seccion-publicacion__flecha::after {
+  content: ""; /* Crea la punta decorativa sin contenido adicional. */
+  position: absolute; /* Sitúa la punta al extremo del trazo. */
+  top: -4px; /* Centra la punta con el cuerpo de la flecha. */
+  right: 0; /* La coloca al final del trazo. */
+  width: 8px; /* Da tamaño horizontal a la punta. */
+  height: 8px; /* Da tamaño vertical a la punta. */
+  border-top: 1px solid #1954a6; /* Dibuja el borde superior de la punta. */
+  border-right: 1px solid #1954a6; /* Dibuja el borde lateral de la punta. */
+  transform: rotate(45deg); /* Orienta la punta hacia la derecha. */
+}
+
+.seccion-publicacion__despues > strong {
+  display: block; /* Coloca el nombre del puesto en su propia línea. */
+  color: #202833; /* Prioriza el nombre del puesto. */
+  font-size: 0.78rem; /* Refuerza ligeramente el nombre del puesto. */
+  line-height: 1.25; /* Mantiene compacto el encabezado. */
+}
+
+.seccion-publicacion__datos,
+.seccion-publicacion__despues ul {
+  display: flex; /* Coloca las etiquetas pequeñas en una fila. */
+  flex-wrap: wrap; /* Evita que las etiquetas se salgan en anchos reducidos. */
+  gap: 3px; /* Mantiene las etiquetas juntas en una sola fila. */
+}
+
+.seccion-publicacion__datos {
+  margin-top: 7px; /* Separa nivel y modalidad del nombre del puesto. */
+}
+
+.seccion-publicacion__datos span,
+.seccion-publicacion__despues li {
+  padding: 3px; /* Permite que las tres etiquetas inferiores quepan en una fila. */
+  color: #1954a6; /* Conecta las etiquetas con el color principal. */
+  background-color: #eaf3fc; /* Suaviza las etiquetas sobre el blanco. */
+  border-radius: 10px; /* Crea pastillas discretas como en la referencia. */
+  font-size: 0.6rem; /* Mantiene las etiquetas discretas con mejor lectura. */
+  line-height: 1.15; /* Evita altura innecesaria. */
+}
+
+.seccion-publicacion__despues > p:last-of-type {
+  margin: 9px 0 0; /* Separa la descripción de las etiquetas superiores. */
+  color: #34465f; /* Mantiene legible la descripción del puesto. */
+  font-size: 0.69rem; /* Mejora la legibilidad sin agrandar la tarjeta. */
+  line-height: 1.4; /* Facilita la lectura en varias líneas. */
+}
+
+.seccion-publicacion__despues ul {
+  margin: 10px 0 0; /* Separa las habilidades de la descripción. */
+  padding: 0; /* Elimina la sangría predeterminada de la lista. */
+  list-style: none; /* Sustituye las viñetas por etiquetas. */
+}
+/* Tablet: el producto pasa a una sola columna antes de comprimirse. */
+/* Tabletas: conserva el producto amplio y evita que el encabezado se comprima. */
+@media (max-width: 1100px) {
+  .portada {
+    padding: 24px clamp(20px, 3vw, 28px) 20px; /* Acerca la composición al encabezado en portátiles. */
+    gap: 24px; /* Conserva la nueva separación en portátiles. */
+  }
+
+  .portada__contenido {
+    max-width: 680px; /* Mantiene las líneas del hero fáciles de leer. */
+  }
+
+  .portada__visual {
+    width: min(100%, calc(100vw - 80px), 900px); /* Ajusta la anchura del producto al mockup en portátiles. */
+  }
+
+  .navegador-producto__pantalla {
+    grid-template-columns: clamp(136px, 17vw, 150px) minmax(0, 1fr); /* Ajusta la barra lateral al espacio útil. */
+  }
+
+  .vista-producto__contenido {
+    padding: 14px 18px; /* Compacta el mockup sin perder legibilidad. */
+  }
+
+  .vista-producto__encabezado {
+    flex-wrap: wrap; /* Baja las acciones cuando ya no caben al lado del título. */
+  }
+
+  .vista-producto__acciones {
+    flex-wrap: wrap; /* Permite acomodar las tres acciones. */
+    white-space: normal; /* Evita que una etiqueta fuerce el ancho. */
+  }
+
+  .franja-proceso {
+    padding: 22px 28px 28px; /* Conserva márgenes cómodos en tableta. */
+  }
+
+  .franja-proceso__lista {
+    gap: 16px; /* Reduce la separación entre las cinco etapas. */
+  }
+
+  .franja-proceso__etapa:not(:last-child)::after {
+    width: calc(100% + 16px); /* Lleva cada tramo hasta el siguiente punto. */
+  }
+}
+
+/* Cuando las dos columnas del producto dejan de caber, se apilan. */
+@media (max-width: 820px) {
+  .vista-producto__encabezado {
+    flex-direction: column; /* Coloca las acciones debajo del título. */
+    align-items: flex-start; /* Mantiene el texto alineado a la izquierda. */
+  }
+
+  .vista-producto__columnas {
+    grid-template-columns: minmax(0, 1fr); /* Da ancho completo a cada panel. */
+    gap: 18px; /* Separa el formulario de la publicación. */
+  }
+}
+
+/* El recorrido pasa a vertical antes de que sus nombres se encimen. */
+@media (max-width: 760px) {
+  .franja-proceso {
+    padding: 24px 22px 28px; /* Mantiene una columna legible. */
+  }
+
+  .franja-proceso__lista {
+    width: min(100%, 540px); /* Evita que el recorrido vertical sea demasiado ancho. */
+    grid-template-columns: minmax(0, 1fr); /* Apila las cinco etapas. */
+    gap: 0; /* Deja que la línea vertical conecte las etapas. */
+  }
+
+  .franja-proceso__etapa {
+    position: relative; /* Sirve de referencia para la línea vertical. */
+    grid-template-columns: 11px minmax(0, 1fr); /* Reserva una columna para el punto. */
+    grid-template-rows: auto auto; /* Coloca la descripción debajo del nombre. */
+    column-gap: 12px; /* Separa el punto del texto. */
+    padding-bottom: 22px; /* Da espacio hasta la siguiente etapa. */
+  }
+
+  .franja-proceso__etapa:last-child {
+    padding-bottom: 0; /* Evita espacio sobrante tras la última etapa. */
+  }
+
+  .franja-proceso__punto {
+    grid-column: 1; /* Mantiene el punto en la primera columna. */
+    grid-row: 1; /* Lo alinea con el nombre. */
+    align-self: start; /* Lo acerca a la primera línea del nombre. */
+    margin-top: 3px; /* Ajusta su alineación vertical. */
+  }
+
+  .franja-proceso__etapa h3 {
+    grid-column: 2; /* Sitúa el nombre a la derecha del punto. */
+    grid-row: 1; /* Lo deja en la primera fila. */
+    white-space: normal; /* Permite partir nombres si el teléfono es estrecho. */
+  }
+
+  .franja-proceso__etapa p {
+    grid-column: 2; /* Alinea la descripción con el nombre. */
+    grid-row: 2; /* La coloca en la segunda fila. */
+  }
+
+  .franja-proceso__etapa:not(:last-child)::after {
+    position: absolute; /* Convierte el tramo horizontal en una línea vertical. */
+    grid-column: auto; /* Retira la tercera columna del trazado horizontal. */
+    grid-row: auto; /* Evita que la retícula mueva la línea al borde derecho. */
+    top: 14px; /* Comienza debajo del punto. */
+    bottom: auto; /* Evita que la alineación de la retícula reduzca la línea a cero. */
+    height: calc(100% - 6px); /* Conecta este punto con el de la etapa siguiente. */
+    align-self: auto; /* Quita el centrado heredado del tramo horizontal. */
+    left: 5px; /* Centra la línea bajo el punto. */
+    width: 2px; /* Mantiene visible la conexión vertical. */
+
+  }
+}
+
+/* Teléfonos: conserva el contexto del producto en una cabecera compacta. */
+@media (max-width: 700px) {
+  .portada {
+    padding: 36px 18px 26px; /* Aprovecha el ancho sin pegar el contenido al borde. */
+    gap: 28px; /* Conserva una pausa suave también en teléfonos. */
+  }
+
+  .portada__titulo {
+    font-size: clamp(1.875rem, 4.8vw, 2rem); /* Evita el salto de tamaño al cruzar este punto de corte. */
+  }
+
+  .portada__descripcion {
+    font-size: 0.94rem; /* Conserva la lectura del párrafo en móvil. */
+    line-height: 1.55; /* Da aire a las líneas más cortas. */
+  }
+
+  .portada__acciones {
+    gap: 10px; /* Evita que los botones queden demasiado separados. */
+  }
+
+  .portada__visual {
+    width: 100%; /* Usa todo el ancho disponible del hero. */
+  }
+
+  .navegador-producto__pantalla {
+    grid-template-columns: minmax(0, 1fr); /* Pasa el contenido a una sola columna. */
+  }
+
+  .vista-producto__lateral {
+    padding: 12px 14px; /* Convierte el lateral en una barra superior compacta. */
+    display: flex; /* Alinea marca y sección activa en una fila. */
+    align-items: center; /* Centra verticalmente ambos elementos. */
+    justify-content: space-between; /* Lleva la sección activa a la derecha. */
+    flex-wrap: wrap; /* Evita desbordes en teléfonos estrechos. */
+    gap: 10px; /* Separa los elementos si deben pasar a otra línea. */
+  }
+
+  .vista-producto__menu {
+    margin-top: 0; /* Elimina el espacio del menú vertical. */
+    display: flex; /* Coloca la sección activa junto a la marca. */
+  }
+
+  .vista-producto__menu span:not(.vista-producto__opcion-activa) {
+    display: none; /* Oculta solo las opciones decorativas secundarias. */
+  }
+
+  .vista-producto__contenido {
+    padding: 18px; /* Mantiene aire alrededor de la información. */
+  }
+
+  .vista-producto__encabezado {
+    margin-top: 14px; /* Acerca el título a la ruta. */
+  }
+
+  .vista-producto__columnas {
+    margin-top: 16px; /* Acerca los paneles al encabezado. */
+  }
+
+  .vista-producto__ruta,
+  .vista-producto__encabezado p,
+  .vista-producto__etiqueta,
+  .vista-producto__detalle span {
+    font-size: 0.78rem; /* Evita que el texto auxiliar quede diminuto en móvil. */
+  }
+
+  .vista-producto__valor,
+  .vista-producto__detalle strong,
+  .vista-producto__formulario h3,
+  .vista-producto__publicacion h3 {
+    font-size: 0.86rem; /* Mejora la lectura de los datos clave. */
+  }
+
+  .vista-producto__detalle,
+  .vista-producto__valor {
+    overflow-wrap: anywhere; /* Impide que textos largos salgan de la maqueta. */
+  }
+}
+
+/* Teléfonos estrechos: reparte los controles y campos en una columna. */
+@media (max-width: 480px) {
+  .portada__acciones {
+    width: min(100%, 320px); /* Evita botones demasiado anchos. */
+    margin-inline: auto; /* Centra el grupo de acciones. */
+    display: grid; /* Coloca una acción debajo de la otra. */
+    grid-template-columns: minmax(0, 1fr); /* Hace que ambas usen el mismo ancho. */
+  }
+
+  .boton-portada {
+    width: 100%; /* Iguala el ancho de las acciones. */
+  }
+
+  .vista-producto__contenido {
+    padding: 16px 14px; /* Recupera espacio para los datos. */
+  }
+
+  .vista-producto__acciones {
+    gap: 6px; /* Permite que los botones se acomoden sin chocar. */
+  }
+
+  .vista-producto__campos-cortos {
+    grid-template-columns: minmax(0, 1fr); /* Evita tres campos demasiado estrechos. */
+  }
+
+  .vista-producto__publicacion {
+    padding: 14px; /* Ajusta el panel azul al ancho útil. */
+  }
+}
+/* Tabletas: el mensaje se coloca encima y las tarjetas conservan su comparación horizontal. */
+@media (max-width: 800px) {
+  .seccion-publicacion {
+    width: min(calc(100% - 40px), 760px); /* Deja márgenes laterales regulares. */
+    grid-template-columns: minmax(0, 1fr); /* Apila mensaje y comparación. */
+    gap: 24px; /* Separa las dos partes sin perder continuidad. */
+  }
+
+  .seccion-publicacion__mensaje h2,
+  .seccion-publicacion__mensaje p {
+    max-width: 560px; /* Aprovecha el nuevo ancho sin crear líneas excesivas. */
+  }
+}
+
+/* Teléfonos: Antes y Después se leen uno tras otro. */
+@media (max-width: 620px) {
+  .seccion-publicacion {
+    width: calc(100% - 32px); /* Protege los bordes de la pantalla. */
+    padding: 18px; /* Recupera espacio interior para el contenido. */
+    gap: 20px; /* Mantiene unido el mensaje con la comparación. */
+  }
+
+  .seccion-publicacion__comparacion {
+    grid-template-columns: minmax(0, 1fr); /* Da todo el ancho a cada tarjeta. */
+    gap: 12px; /* Separa las tarjetas y la flecha. */
+  }
+
+  .seccion-publicacion__antes,
+  .seccion-publicacion__despues {
+    min-height: 0; /* Deja que cada tarjeta tome la altura de su contenido. */
+  }
+
+  .seccion-publicacion__antes > div {
+    min-height: 0; /* El campo de texto deja de forzar altura en móvil. */
+  }
+
+  .seccion-publicacion__flecha {
+    margin: 4px 0; /* Deja aire entre la flecha y ambas tarjetas. */
+    transform: rotate(90deg); /* Indica que la lectura continúa hacia abajo. */
+  }
+}
+
+/* Teléfonos estrechos: el título y el número mantienen su jerarquía. */
+@media (max-width: 420px) {
+  .seccion-publicacion {
+    width: calc(100% - 24px); /* Conserva margen aun en pantallas estrechas. */
+    padding: 16px; /* Maximiza el espacio útil. */
+  }
+
+  .seccion-publicacion__mensaje {
+    grid-template-columns: 32px minmax(0, 1fr); /* Ajusta la columna del número. */
+    gap: 10px; /* Acerca el número a la línea vertical. */
+  }
+
+  .seccion-publicacion__numero {
+    font-size: 1.6rem; /* Evita que el número domine la tarjeta. */
+  }
+
+  .seccion-publicacion__mensaje > div {
+    padding-left: 12px; /* Conserva la separación respecto de la línea. */
+  }
+
+  .seccion-publicacion__mensaje h2 {
+    font-size: 1.4rem; /* Impide que el título se desborde. */
+  }
+}
+
+
+
+
+/* Portátiles: comprime los espacios internos del producto ilustrativo. */
+@media (min-width: 701px) and (max-width: 1100px) {
+  .vista-producto__lateral {
+    padding: 14px; /* Reduce la altura interior del lateral. */
+  }
+
+  .vista-producto__menu {
+    margin-top: 18px; /* Acerca las opciones a la marca. */
+  }
+
+  .vista-producto__formulario h3,
+  .vista-producto__publicacion h3 {
+    margin-bottom: 10px; /* Acerca los títulos a sus datos. */
+  }
+
+  .vista-producto__campo {
+    margin-bottom: 8px; /* Reduce la separación entre campos. */
+    padding-block: 6px; /* Disminuye la altura de cada campo. */
+  }
+
+  .vista-producto__publicacion {
+    padding: 12px; /* Ajusta el panel azul al contenido. */
+  }
+
+  .vista-producto__lista li {
+    margin-bottom: 10px; /* Acerca las tres ideas del panel. */
+  }
+}
+
+
+/* La flecha de la comparación acompaña la lectura de Antes a Después. */
+.seccion-publicacion__flecha {
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1); /* Suaviza el avance contextual. */
+}
+
+@media (hover: hover) and (min-width: 621px) {
+  .seccion-publicacion__comparacion:hover .seccion-publicacion__flecha {
+    transform: translateX(4px); /* Sugiere la transformación al recorrer la comparación. */
+  }
+}
+
+/* La retícula editorial acompaña la lectura sin competir con el contenido. */
+.atlas-landing {
+  --paso-reticula: 12px; /* Define celdas más pequeñas en escritorio. */
+  position: relative; /* Ancla las capas decorativas a toda la landing. */
+  isolation: isolate; /* Mantiene los patrones detrás de las secciones. */
+}
+
+.atlas-landing::before {
+  content: ""; /* Crea la capa de líneas de la retícula. */
+  position: absolute; /* Cubre toda la landing sin alterar el flujo. */
+  inset: 0; /* Ajusta la capa exactamente al área de la página. */
+  z-index: 0; /* Sitúa la cuadrícula debajo del contenido. */
+  pointer-events: none; /* Permite usar los controles que aparecen encima. */
+  background-image: linear-gradient(to right, rgba(39, 79, 130, 0.075) 1px, transparent 1px), linear-gradient(to bottom, rgba(39, 79, 130, 0.075) 1px, transparent 1px); /* Dibuja los ejes finos en azul mineral. */
+  background-size: var(--paso-reticula) var(--paso-reticula); /* Repite la celda a la medida indicada. */
+  opacity: 0.52; /* Mantiene la cuadrícula discreta. */
+  mask-image: linear-gradient(to right, #000, rgba(0, 0, 0, 0.55) 24%, rgba(0, 0, 0, 0.55) 76%, #000); /* Suaviza la trama detrás de la columna de lectura. */
+}
+
+/* Dos pequeñas esquinas se iluminan dentro de cada módulo amplio de la retícula. */
+.atlas-landing::after {
+  content: ""; /* Crea una segunda capa puramente decorativa. */
+  position: absolute; /* Extiende el motivo por toda la landing. */
+  inset: 0; /* Evita que el patrón aumente el ancho de la página. */
+  z-index: 0; /* Deja el motivo detrás de secciones y mockups. */
+  pointer-events: none; /* No bloquea enlaces ni selección de texto. */
+  background-image: url("/images/patron-reticula.svg"); /* Repite dos esquinas luminosas sin dibujar cuadros completos. */
+  background-repeat: repeat; /* Cubre el fondo sin estirar el motivo. */
+  background-size: calc(var(--paso-reticula) * 16) calc(var(--paso-reticula) * 16); /* Separa los trazos cada dieciséis celdas para evitar saturación. */
+  opacity: 0; /* Oculta el motivo entre los pulsos. */
+  mask-image: linear-gradient(to right, #000, rgba(0, 0, 0, 0.18) 28%, rgba(0, 0, 0, 0.18) 72%, #000); /* Protege el texto del centro. */
+  animation: pulso-patron 3s ease-in-out infinite; /* Enciende los bordes brevemente cada tres segundos. */
+  animation-play-state: paused; /* Pausa el efecto si la pestaña está oculta. */
+}
+
+.atlas-landing--activa::after {
+  animation-play-state: running; /* Reanuda los pulsos mientras la página se ve. */
+}
+
+@keyframes pulso-patron {
+  0%, 8%, 30%, 100% { opacity: 0; /* Deja las esquinas apagadas la mayor parte del ciclo. */ }
+  16% { opacity: 0.46; /* Muestra brevemente los trazos sobre las líneas existentes. */ }
+  23% { opacity: 0.2; /* Apaga suavemente el patrón antes de la pausa. */ }
+}
+.atlas-landing > section,
+.atlas-landing > footer {
+  position: relative; /* Coloca el contenido delante de las dos capas. */
+  z-index: 1; /* Conserva nítidos titulares, etapas y mockups. */
+}
+
+@media (max-width: 700px) {
+  .atlas-landing {
+    --paso-reticula: 10px; /* Reduce aún más las celdas en teléfonos. */
+  }
+  .atlas-landing::before {
+    opacity: 0.38; /* Baja el contraste de las líneas en pantallas estrechas. */
+    mask-image: linear-gradient(to right, #000, rgba(0, 0, 0, 0.5) 22%, rgba(0, 0, 0, 0.5) 78%, #000); /* Deja el texto central más limpio. */
+  }
+  .atlas-landing::after {
+    mask-image: linear-gradient(to right, #000, rgba(0, 0, 0, 0.1) 22%, rgba(0, 0, 0, 0.1) 78%, #000); /* Atenúa el motivo en la columna de lectura móvil. */
+  }
+}
+/* La entrada de la portada explica primero la promesa y después muestra el producto. */
+.portada__etiqueta,
+.portada__titulo,
+.portada__descripcion,
+.portada__acciones {
+  animation: aparecer-portada 620ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Ordena la lectura al cargar. */
+}
+
+.portada__titulo { animation-delay: 80ms; /* Da paso al titular tras la etiqueta. */ }
+.portada__descripcion { animation-delay: 150ms; /* Presenta la explicación después del titular. */ }
+.portada__acciones { animation-delay: 230ms; /* Cierra la secuencia con las acciones. */ }
+.portada__captura { animation: mostrar-producto 760ms 310ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Revela la vista del producto al final. */ }
+
+@keyframes aparecer-portada {
+  from { opacity: 0.35; transform: translateY(12px); /* Mantiene el contenido reconocible desde el primer instante. */ }
+  to { opacity: 1; transform: translateY(0); /* Termina en la posición natural. */ }
+}
+
+@keyframes mostrar-producto {
+  from { opacity: 0.72; clip-path: inset(0 0 8% 0); /* Descubre la maqueta desde arriba. */ }
+  to { opacity: 1; clip-path: inset(0 0 0 0); /* Deja visible el producto completo. */ }
+}
+
+/* Un tramo azul avanza entre puntos y cada estación responde cuando le corresponde. */
+.franja-proceso__etapa:not(:last-child)::after {
+  height: 2px; /* Da presencia a la conexión horizontal. */
+  background-image: linear-gradient(90deg, #b8cbe3 0%, #b8cbe3 35%, #1b5db2 48%, #1b5db2 58%, #b8cbe3 71%, #b8cbe3 100%); /* Dibuja un segmento móvil claramente azul. */
+  background-size: 280% 100%; /* Reserva un recorrido completo por cada conexión. */
+  animation: recorrer-etapas 4.5s linear infinite; /* Mantiene un ritmo fácil de percibir. */
+  animation-play-state: paused; /* Pausa la línea fuera de pantalla. */
+}
+
+.franja-proceso__punto {
+  animation: confirmar-etapa 4.5s ease-in-out infinite; /* Marca la llegada del avance a cada punto. */
+  animation-play-state: paused; /* Pausa los pulsos fuera de pantalla. */
+}
+
+.franja-proceso--activa .franja-proceso__etapa:not(:last-child)::after,
+.franja-proceso--activa .franja-proceso__punto {
+  animation-play-state: running; /* Mueve puntos y conexiones mientras la franja está visible. */
+}
+
+.franja-proceso__etapa:nth-child(2)::after,
+.franja-proceso__etapa:nth-child(2) .franja-proceso__punto { animation-delay: 700ms; /* Desplaza el avance a Publicación. */ }
+.franja-proceso__etapa:nth-child(3)::after,
+.franja-proceso__etapa:nth-child(3) .franja-proceso__punto { animation-delay: 1400ms; /* Desplaza el avance a Postulación. */ }
+.franja-proceso__etapa:nth-child(4)::after,
+.franja-proceso__etapa:nth-child(4) .franja-proceso__punto { animation-delay: 2100ms; /* Desplaza el avance a Evidencias. */ }
+.franja-proceso__etapa:nth-child(5) .franja-proceso__punto { animation-delay: 2800ms; /* Cierra el recorrido en Decisión. */ }
+
+@keyframes recorrer-etapas {
+  from { background-position: 100% 0; /* Sitúa el segmento al inicio de cada unión. */ }
+  to { background-position: -100% 0; /* Lo lleva hasta la estación siguiente. */ }
+}
+
+@keyframes confirmar-etapa {
+  0%, 82%, 100% { box-shadow: 0 0 0 0 rgba(25, 84, 166, 0); transform: scale(1); /* Deja cada punto estable entre avances. */ }
+  12% { box-shadow: 0 0 0 7px rgba(25, 84, 166, 0.20); transform: scale(1.35); /* Señala con claridad la estación activa. */ }
+  28% { box-shadow: 0 0 0 12px rgba(25, 84, 166, 0); transform: scale(1); /* Disipa el halo sin saltos. */ }
+}
+/* La publicación revela la transformación visual entre entrada y resultado. */
+.animacion-seccion--visible .seccion-publicacion__comparacion {
+  animation: revelar-publicacion 620ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Descubre ambas tarjetas como un proceso. */
+}
+
+@keyframes revelar-publicacion {
+  from { opacity: 0.72; clip-path: inset(0 10% 0 0); /* Conserva la comparación parcialmente visible. */ }
+  to { opacity: 1; clip-path: inset(0 0 0 0); /* Termina con los dos estados completos. */ }
+}
+
+@media (max-width: 760px) {
+  .franja-proceso__etapa:not(:last-child)::after {
+    background-image: linear-gradient(180deg, #b8cbe3 0%, #b8cbe3 35%, #1b5db2 48%, #1b5db2 58%, #b8cbe3 71%, #b8cbe3 100%); /* Orienta el segmento azul hacia abajo. */
+    background-size: 100% 280%; /* Da recorrido al segmento en la lista vertical. */
+    animation-name: recorrer-etapas-vertical; /* Mueve el brillo entre etapas móviles. */
+  }
+}
+
+@keyframes recorrer-etapas-vertical {
+  from { background-position: 0 100%; /* Inicia el brillo bajo el punto actual. */ }
+  to { background-position: 0 -100%; /* Lo lleva al punto siguiente. */ }
+}
+
+@media (hover: hover) {
+  .franja-proceso__etapa:hover h3 {
+    color: #1954a6; /* Relaciona el nombre con el punto que se está recorriendo. */
+  }
+
+  .seccion-publicacion__antes:hover,
+  .seccion-publicacion__despues:hover {
+    border-color: #9ab5d6; /* Muestra qué extremo de la transformación observa el visitante. */
+    box-shadow: 0 7px 18px rgba(24, 44, 75, 0.09); /* Da una profundidad breve a la tarjeta. */
+  }
+}
+
+.franja-proceso__etapa h3 {
+  transition: color 180ms ease; /* Evita un salto de color en los nombres. */
+}
+
+.seccion-publicacion__antes,
+.seccion-publicacion__despues {
+  transition: border-color 220ms ease, box-shadow 220ms ease; /* Une la respuesta de las dos tarjetas. */
+}
+
+/* La preferencia de movimiento reducido conserva contenido y estados sin desplazamientos. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; /* Evita desplazamientos suaves de las anclas. */ }
+  .atlas-landing::after { animation: none; opacity: 0; /* Omite los pulsos para quien prefiere menos movimiento. */ }
+  .portada__etiqueta,
+  .portada__titulo,
+  .portada__descripcion,
+  .portada__acciones,
+  .portada__captura { animation: none; /* Muestra la portada inmediatamente. */ }
+  .franja-proceso__etapa:not(:last-child)::after,
+  .franja-proceso__punto { animation: none; /* Conserva la línea y sus puntos estáticos. */ }
+  .animacion-seccion--visible .seccion-publicacion__comparacion { animation: none; /* Omite la revelación espacial. */ }
+  .seccion-publicacion__flecha,
+  .portada__captura,
+  .seccion-publicacion__antes,
+  .seccion-publicacion__despues { transition: none; /* Evita movimiento y profundidad animada. */ }
+}
+/* Las anclas dejan visible el inicio de cada sección bajo la navegación fija. */
+#producto,
+#flujo,
+#recursos,
+#principios,
+#contacto {
+  scroll-margin-top: 82px; /* Compensa la altura del encabezado anclado. */
+}

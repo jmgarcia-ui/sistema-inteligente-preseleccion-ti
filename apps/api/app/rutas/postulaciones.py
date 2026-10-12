@@ -24,6 +24,8 @@ def crear(datos: PostulacionCrear, sesion: Annotated[Session, Depends(obtener_se
   
   return PostulacionRespuestaCandidato.model_validate(postulacion)
 
-@router.get("/vacante/{id}", response_model= PostulacionRespuestaReclutador)
-def listar_postulaciones(id_vacante: int, sesion: Annotated[Session, Depends(obtener_sesion)]) -> PostulacionRespuestaReclutador:
-   pass
+
+
+#@router.get("/vacante/{id}", response_model= PostulacionRespuestaReclutador)
+#def listar_postulaciones(id_vacante: int, sesion: Annotated[Session, Depends(obtener_sesion)]) -> PostulacionRespuestaReclutador:
+#   pass

@@ -3,7 +3,7 @@ from app.modelos.postulacion import Postulacion
 from app.esquemas.postulaciones import PostulacionCrear
 from app.servicios.candidatos import obtener_candidato_por_correo, crear_candidato
 from app.servicios.vacantes import obtener_vacante_publica_por_id
-from sqlalchemy import select
+from sqlalchemy import select, func
 
 class VacanteNoDisponibleError(Exception):
   pass
@@ -38,7 +38,8 @@ def crear_postulacion(sesion: Session, datos: PostulacionCrear) -> Postulacion:
   #crear postulacion
   postulacion = Postulacion(
     vacante = vacante,
-    candidato = candidato
+    candidato = candidato,
+    acepto_tratamiento_datos_en = func.sysutcdatetime(),
   )
   sesion.add(postulacion)
   sesion.commit()
@@ -46,9 +47,9 @@ def crear_postulacion(sesion: Session, datos: PostulacionCrear) -> Postulacion:
   sesion.refresh(postulacion)
   return postulacion
 
-def listar_postulaciones_por_vacante(sesion:Session, id_vacante:int) -> list[Postulacion]:
+def listar_postulaciones_por_vacante(sesion:Session, id:int) -> list[Postulacion]:
   #construimos la consulta
-  consulta = select(Postulacion).where(Postulacion.id_vacante == id_vacante)
+  consulta = select(Postulacion).where(Postulacion.id_vacante == id)
   #ejecutar consulta
   #.all() los convierte en una lista
   return sesion.scalars(consulta).all()

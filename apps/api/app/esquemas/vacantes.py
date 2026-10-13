@@ -2,14 +2,31 @@ from datetime import date, datetime
 from pydantic import BaseModel, Field, field_validator, ConfigDict
 from app.modelos.vacante import EstadoVacante, ModalidadVacante
 
+
+#datos que envia el front al crear un requisito (post)
+class RequisitoCrear(BaseModel):
+  descripcion: str = Field(min_length=1, max_length=500)
+  obligatorio: bool = Field(default=True)
+  model_config = ConfigDict(str_strip_whitespace=True)
+
+
+class RequisitoRespuesta(BaseModel):
+  id: int
+  descripcion: str
+  obligatorio: bool
+  orden: int
+  #permite leer atributos de un objeto
+  model_config = ConfigDict(from_attributes=True)
+
 #datos que debe enviar el front al crear una vacante (post)
 class VacanteCrear(BaseModel):
   titulo: str = Field(min_length=3, max_length=150)
   descripcion: str = Field(min_length=20)
-  requisitos: str = Field(min_length=20)
+  requisitos: list[RequisitoCrear] = Field(min_length=1)
   modalidad: ModalidadVacante
   ubicacion: str | None = Field(default=None, max_length=150)
   fecha_limite: date
+  model_config = ConfigDict(str_strip_whitespace=True)
   @field_validator("fecha_limite")
   @classmethod
   def validar_fecha_limite(cls, fecha_limite: date) -> date:
@@ -23,12 +40,13 @@ class VacanteRespuesta(BaseModel):
   id_creador: int
   titulo: str
   descripcion: str
-  requisitos: str
+  requisitos: list[RequisitoRespuesta]
   modalidad: ModalidadVacante
   ubicacion: str | None
   estado: EstadoVacante
   fecha_limite: date
   creado_en: datetime
+  actualizado_en: datetime
   #permite leer atributos de un objeto
   model_config = ConfigDict(from_attributes=True)
 
@@ -37,7 +55,7 @@ class VacantePublicaRespuesta(BaseModel):
   id: int
   titulo: str
   descripcion: str
-  requisitos: str
+  requisitos: list[RequisitoRespuesta]
   modalidad: ModalidadVacante
   ubicacion: str | None
   fecha_limite: date
@@ -49,7 +67,7 @@ class VacantePublicaRespuesta(BaseModel):
 class VacanteRespuestaCandidato(BaseModel):
   titulo: str
   descripcion: str
-  requisitos:str
+  requisitos:list[RequisitoRespuesta]
   modalidad:str
   ubicacion: str | None
  #permite leer atributos de un objeto
@@ -59,11 +77,12 @@ class VacanteRespuestaCandidato(BaseModel):
 class VacanteActualizar(BaseModel):
   titulo: str | None = Field(default=None, min_length=3, max_length=150)
   descripcion: str | None = Field(default=None, min_length=20)
-  requisitos: str | None = Field(default=None, min_length=20)
+  requisitos: list[RequisitoCrear] | None = Field(default=None, min_length=1)
   modalidad: ModalidadVacante | None = None
   ubicacion: str | None = Field(default=None, max_length=150)
   estado: EstadoVacante | None = None
   fecha_limite: date | None = None
+  model_config = ConfigDict(str_strip_whitespace=True)
 
   @field_validator("fecha_limite")
   @classmethod
@@ -71,3 +90,4 @@ class VacanteActualizar(BaseModel):
     if fecha_limite is not None and fecha_limite <= date.today():
       raise ValueError("La fecha limite debe ser futura.")
     return fecha_limite
+

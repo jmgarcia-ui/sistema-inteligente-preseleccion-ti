@@ -51,8 +51,20 @@ class Postulacion(Base):
     server_default=text("'recibida'"),
   )
 
-  postulado_en: Mapped[datetime] = mapped_column(
+  acepto_tratamiento_datos_en: Mapped[datetime] = mapped_column(
+    DateTime,
+    nullable=False
+  )
+
+  creado_en: Mapped[datetime] = mapped_column(
     DateTime,
     nullable=False,
     server_default=func.sysutcdatetime(),
+  )
+
+  actualizado_en: Mapped[datetime] = mapped_column(
+    DateTime,
+    nullable=False,
+    server_default=func.sysutcdatetime(),
+    onupdate=func.sysutcdatetime()
   )

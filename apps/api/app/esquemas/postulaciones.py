@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
+from typing import Literal
 from app.esquemas.vacantes import VacanteRespuesta
 from app.esquemas.vacantes import VacanteRespuestaCandidato
 from app.modelos.postulacion import EstadoPostulacion
@@ -19,13 +20,14 @@ class CandidatoPostulacion(BaseModel):
 class PostulacionCrear(BaseModel):
   id_vacante: int = Field(gt=0)
   candidato: CandidatoPostulacion
+  acepta_tratamiento_datos: Literal[True]
 
 #datos que envia el backend
 class PostulacionRespuestaReclutador(BaseModel):
   vacante: VacanteRespuesta
   candidato: CandidatoPostulacion
   estado:EstadoPostulacion
-  postulado_en: datetime
+  creado_en: datetime
   #permite leer atributos de un objeto
   model_config = ConfigDict(from_attributes=True)
 
@@ -33,6 +35,6 @@ class PostulacionRespuestaCandidato(BaseModel):
   vacante:VacanteRespuestaCandidato
   candidato: CandidatoPostulacion
   estado:EstadoPostulacion
-  postulado_en: datetime
+  creado_en: datetime
   #permite leer atributos de un objeto
   model_config = ConfigDict(from_attributes=True)

@@ -1,8 +1,9 @@
 from enum import Enum
 from app.base_datos import Base
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import Date, DateTime, ForeignKey, String, Enum as EnumSQLAlchemy, Text, text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Date, DateTime, ForeignKey, String, Enum as EnumSQLAlchemy, Text, text, func
 from datetime import date, datetime
+
 
 class ModalidadVacante(str, Enum):
   REMOTO = "remoto"
@@ -26,8 +27,11 @@ class Vacante(Base):
       Text,nullable=False
   )
 
-  requisitos: Mapped[str]=mapped_column(
-      Text,nullable=False
+  #apuntar al atributo vacante de la clase requisitos_vacante
+  requisitos: Mapped[list["RequisitoVacante"]] = relationship(
+    back_populates="vacante",
+    cascade="all, delete-orphan",
+    order_by="RequisitoVacante.orden"
   )
 
   modalidad: Mapped[ModalidadVacante] = mapped_column(
@@ -62,6 +66,13 @@ class Vacante(Base):
     DateTime,
     nullable=False,
     server_default=text("sysutcdatetime()"),
+  )
+
+  actualizado_en: Mapped[datetime] = mapped_column(
+    DateTime,
+    nullable=False,
+    server_default=func.sysutcdatetime(),
+    onupdate=func.sysutcdatetime()
   )
 
   id_creador: Mapped[int] = mapped_column(

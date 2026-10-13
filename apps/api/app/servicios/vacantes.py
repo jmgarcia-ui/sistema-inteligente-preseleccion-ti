@@ -1,9 +1,23 @@
 from sqlalchemy.orm import Session
 from app.esquemas.vacantes import VacanteCrear, VacanteActualizar
 from app.modelos.vacante import EstadoVacante, Vacante
+from app.esquemas.vacantes import RequisitoCrear
+from app.modelos.requisito_vacante import RequisitoVacante
 from app.modelos.usuario import Usuario
 from sqlalchemy import select
 from datetime import date
+
+def construir_requisitos(requisitos: list[RequisitoCrear]) -> list[RequisitoVacante]:
+  datos_requisitos = []
+  for posicion, req in enumerate(requisitos, start=1):
+    requisito = RequisitoVacante(
+      descripcion=req.descripcion,
+      obligatorio= req.obligatorio,
+      orden= posicion
+    )
+    datos_requisitos.append(requisito)
+  return datos_requisitos
+
 
 def crear_vacante(sesion:Session, datos: VacanteCrear, id_creador: int) -> Vacante:
   #creamos el objeto
@@ -11,7 +25,7 @@ def crear_vacante(sesion:Session, datos: VacanteCrear, id_creador: int) -> Vacan
     id_creador=id_creador,
     titulo=datos.titulo,
     descripcion=datos.descripcion,
-    requisitos=datos.requisitos,
+    requisitos=construir_requisitos(datos.requisitos),
     modalidad=datos.modalidad,
     ubicacion=datos.ubicacion,
     fecha_limite=datos.fecha_limite,
@@ -22,7 +36,6 @@ def crear_vacante(sesion:Session, datos: VacanteCrear, id_creador: int) -> Vacan
   sesion.commit()
   #vacante recibe el id generado por sql server y el enum "borrador"
   sesion.refresh(vacante)
-
   return vacante
 
 def obtener_vacante_por_id(sesion: Session, id_vacante: int) -> Vacante | None:
@@ -33,12 +46,17 @@ def puede_editar_vacante(usuario: Usuario, vacante: Vacante) -> bool:
   return(usuario.rol.nombre == "administrador" or vacante.id_creador == usuario.id)
 
 def actualizar_vacante(sesion: Session, vacante:Vacante, datos:VacanteActualizar) -> Vacante:
-  #convertir objeto en un diccionario
-  #exclued_unset elimina campos que el fron no envio
   cambios = datos.model_dump(exclude_unset=True)
-  #actualizamos el objeto
+  requisitos_enviados = cambios.pop("requisitos", None)
+
   for campo, valor in cambios.items():
     setattr(vacante, campo, valor)
+
+  if requisitos_enviados is not None:
+    vacante.requisitos.clear()
+    sesion.flush()
+    vacante.requisitos = construir_requisitos(datos.requisitos)
+
   sesion.commit()
   sesion.refresh(vacante)
   return vacante

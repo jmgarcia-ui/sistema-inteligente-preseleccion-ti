@@ -29,3 +29,9 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .env
+
+#claude
+.claude/settings.local.json
+
+#claude/impeccable
+.claude/

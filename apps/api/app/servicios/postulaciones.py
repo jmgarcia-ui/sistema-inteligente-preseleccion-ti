@@ -47,9 +47,9 @@ def crear_postulacion(sesion: Session, datos: PostulacionCrear) -> Postulacion:
   sesion.refresh(postulacion)
   return postulacion
 
-def listar_postulaciones_por_vacante(sesion:Session, id_vacante:int) -> list[Postulacion]:
+def listar_postulaciones_por_vacante(sesion:Session, id:int) -> list[Postulacion]:
   #construimos la consulta
-  consulta = select(Postulacion).where(Postulacion.id_vacante == id_vacante)
+  consulta = select(Postulacion).where(Postulacion.id_vacante == id)
   #ejecutar consulta
   #.all() los convierte en una lista
   return sesion.scalars(consulta).all()

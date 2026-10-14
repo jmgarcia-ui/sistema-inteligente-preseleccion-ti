@@ -3,6 +3,7 @@ import { obtenerVacantePublica } from "../servicios/vacantes";
 import { useEffect, useState } from "react";
 import { NOMBRES_MODALIDAD, type VacantePublica } from "../tipos/vacantes";
 import { describirCierre } from "../utilidades/vacantes";
+import FormularioPostulacion from "../componentes/postulacion/FormularioPostulacion";
 
 export default function Postulacion() {
   const [vacante, setVacante] = useState<VacantePublica | null>(null);
@@ -54,6 +55,7 @@ export default function Postulacion() {
           </ul>
         </div>
       </div>
+      <FormularioPostulacion idVacante={vacante.id}/>
     </div>
   );
 }

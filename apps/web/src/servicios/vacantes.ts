@@ -8,3 +8,9 @@ export async function listarVacantesPublicas() {
   const { data } = await axios.get<VacantePublica[]>(`${urlApi}/vacantes`);
   return data;
 }
+
+//obtener vacante publica
+export async function obtenerVacantePublica(id_vacante: number){
+  const { data } = await axios.get<VacantePublica>(`${urlApi}/vacantes/${id_vacante}`)
+  return data;
+}

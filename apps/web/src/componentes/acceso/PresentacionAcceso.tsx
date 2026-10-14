@@ -1,35 +1,22 @@
-import IconoEtapaAcceso from "./IconoEtapaAcceso";
-
-const etapas = [
-  { clave: 'vacante', nombre: 'Vacante', descripcion: 'Define el perfil y centraliza las postulaciones.' },
-  { clave: 'evidencias', nombre: 'Evidencias', descripcion: 'Evalúa con criterios objetivos y en un solo lugar.' },
-  { clave: 'decision', nombre: 'Decisión', descripcion: 'Toma decisiones informadas y documentadas.' },
-] as const
+const ETAPAS = [
+  { nombre: "Vacante", descripcion: "Define el perfil con requisitos claros y recibe las postulaciones en un solo lugar." },
+  { nombre: "Evidencia", descripcion: "Revisa cada requisito junto a la evidencia del candidato y su origen." },
+  { nombre: "Decisión", descripcion: "Decide tú: el sistema sugiere y registra, nunca aprueba ni descarta." },
+];
 
 export default function PresentacionAcceso() {
   return (
     <div className="acceso__presentacion">
-      <div className="acceso__mensaje">
-        <p className="acceso__etiqueta">Personas / procesos / mejores decisiones</p>
-        <h1 id="titulo-acceso">Un proceso claro<br />empieza aquí<span>.</span></h1>
-        <p className="acceso__descripcion">Organiza la información. Conserva la decisión.</p>
-      </div>
-      <div className="acceso__recorrido">
-        <div className="acceso__recorrido-cabecera">
-          <span>Del perfil a la decisión</span>
-          <span aria-hidden="true">01 — 03</span>
-        </div>
-        <ol className="acceso__etapas" aria-label="Etapas del proceso de selección">
-          {etapas.map((etapa) => (
-            <li className="acceso__etapa" key={etapa.clave}>
-              <div className="acceso__icono-fondo"><IconoEtapaAcceso etapa={etapa.clave} /></div>
-              <strong>{etapa.nombre}</strong>
-              <p>{etapa.descripcion}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="acceso__recorrido-pie"><span aria-hidden="true" />La decisión permanece en manos del equipo.</p>
-      </div>
+      <h1 id="titulo-acceso">Tu espacio de selección</h1>
+      <p className="acceso__descripcion">Publica vacantes, revisa postulaciones con su evidencia y deja registrada cada decisión.</p>
+      <ol className="acceso__etapas" aria-label="Qué puedes hacer en tu espacio">
+        {ETAPAS.map(({ nombre, descripcion }) => (
+          <li className="acceso__etapa" key={nombre}>
+            <strong>{nombre}</strong>
+            <p>{descripcion}</p>
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }

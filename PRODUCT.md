@@ -45,6 +45,7 @@ La evidencia explica cada decisión: el sistema no puntúa ni descarta candidato
 
 - Nombre del producto: **sin definir**. "Atlas" aparece en el código (`LandingAtlas`) como nombre provisional; no tratarlo como marca confirmada.
 - Voz ya presente en la landing: sobria, directa, en español, frases cortas; habla de contexto, claridad y control humano, no de automatización mágica.
+- Dirección visual elegida para la landing (oct. 2026): el estándar de la categoría ejecutado con cuidado, sin rarezas; nivel de calidad de referencia: Ashby y Stripe.
 
 ## Evidence on Hand
 

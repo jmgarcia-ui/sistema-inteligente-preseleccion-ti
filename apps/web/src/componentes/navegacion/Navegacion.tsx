@@ -21,7 +21,7 @@ export default function Navegacion() {
   }, [temaOscuro]);
 
   useEffect(() => {
-    const pantallaGrande = window.matchMedia("(min-width: 1101px)");
+    const pantallaGrande = window.matchMedia("(min-width: 901px)");
     const cerrarAlAmpliar = () => {
       if (pantallaGrande.matches) setMenuAbierto(false);
     };

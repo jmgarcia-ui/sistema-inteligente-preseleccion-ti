@@ -1,6 +1,5 @@
 import "./App.css";
 import "./style/inicio-sesion.css";
-import "./tema-oscuro.css";
 import Navegacion from "./componentes/navegacion/Navegacion";
 import RutasApp from "./rutas/RutasApp";
 import UsuarioProvider from "./contexto/UsuarioProvider";

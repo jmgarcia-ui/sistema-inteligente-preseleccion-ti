@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr, ConfigDict
+from pydantic import BaseModel, Field, EmailStr, ConfigDict, model_validator
 from typing import Literal
 from app.esquemas.vacantes import VacanteRespuesta
 from app.esquemas.vacantes import VacanteRespuestaCandidato
@@ -21,6 +21,15 @@ class PostulacionCrear(BaseModel):
   id_vacante: int = Field(gt=0)
   candidato: CandidatoPostulacion
   acepta_tratamiento_datos: Literal[True]
+
+  @model_validator(mode="after")
+  def exigir_un_enlace(self):
+    enlaces = [self.candidato.linkedin_url, self.candidato.github_url, self.candidato.portafolio_url]
+    tiene_alguno = any(enlace and enlace.strip() for enlace in enlaces)
+    if not tiene_alguno:
+      raise ValueError("Agrega al menos un enlace: LinkedIn, GitHub o portafolio.")
+    return self
+
 
 #datos que envia el backend
 class PostulacionRespuestaReclutador(BaseModel):

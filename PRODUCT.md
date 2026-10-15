@@ -10,7 +10,7 @@ web
 
 - **Reclutadores** del equipo interno de una sola empresa que contrata perfiles de TI. Su trabajo: definir una vacante, publicarla, revisar las postulaciones que llegan y decidir quién avanza, con la evidencia a la vista.
 - **Administradores** de la empresa: gestionan usuarios y la operación del equipo de reclutamiento (roles existentes en el sistema: `administrador`, `reclutador`).
-- **Candidatos** de TI: encuentran vacantes publicadas (`/vacantes`) y postulan (`/postular/:vacantePublicaId`) sin cuenta, con sus datos de contacto y enlaces (LinkedIn, GitHub, portafolio).
+- **Candidatos** de TI: llegan a una vacante por el enlace directo que el reclutador adjunta al publicar el puesto en plataformas de empleo (LinkedIn, Computrabajo) o desde la lista pública de vacantes abiertas (`/vacantes`). En la página de cada vacante (`/vacantes/:id`) ven los detalles del puesto y, al lado, el formulario para postular sin crear cuenta, con sus datos de contacto y enlaces (LinkedIn, GitHub, portafolio).
 
 ## Product Purpose
 
@@ -26,7 +26,7 @@ La evidencia explica cada decisión: el sistema no puntúa ni descarta candidato
 
 - Herramienta interna de una sola empresa; no es un SaaS ni hay múltiples organizaciones.
 - La landing pública (`/`) existe para dar una presentación más profesional al sistema y servir de entrada (inicio de sesión, vacantes); no es una página de venta ni de captación de clientes.
-- Flujo: definir perfil → publicar vacante → recibir postulaciones → relacionar evidencia con requisitos → el equipo aprueba y comunica.
+- Flujo: definir perfil → publicar vacante → compartir su enlace en plataformas de empleo → recibir postulaciones → relacionar evidencia con requisitos → el equipo aprueba y comunica.
 - Estados de vacante: `borrador`, `publicada`, `cerrada`. Modalidad: `remoto`, `hibrido`, `presencial`; con fecha límite.
 - Estados de postulación: `recibida`, `en_revision`, `preseleccionada`, `descartada`, `retirada`. Un candidato postula una sola vez por vacante.
 - Fuentes de evidencia del candidato: CV/documentos, GitHub, LinkedIn, portafolio.
@@ -39,11 +39,13 @@ La evidencia explica cada decisión: el sistema no puntúa ni descarta candidato
 - Idioma del producto: español.
 - **Abierto:** qué servicios concretos de Azure AI se usarán y cómo se presenta el nivel de confianza de la evidencia.
 - **Abierto:** envío de correos al aprobar (descrito en la landing, aún no implementado).
+- **Abierto:** vacantes confidenciales que no aparezcan en la lista pública; registrar la plataforma de origen de cada postulación (`?origen=linkedin`).
 
 ## Brand Commitments
 
 - Nombre del producto: **sin definir**. "Atlas" aparece en el código (`LandingAtlas`) como nombre provisional; no tratarlo como marca confirmada.
 - Voz ya presente en la landing: sobria, directa, en español, frases cortas; habla de contexto, claridad y control humano, no de automatización mágica.
+- Dirección visual elegida para la landing (oct. 2026): el estándar de la categoría ejecutado con cuidado, sin rarezas; nivel de calidad de referencia: Ashby y Stripe.
 
 ## Evidence on Hand
 

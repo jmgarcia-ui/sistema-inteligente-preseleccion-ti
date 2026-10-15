@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import PresentacionAcceso from "../componentes/acceso/PresentacionAcceso";
 import PanelAcceso from "../componentes/acceso/PanelAcceso";
-import { useAnimacionAcceso } from "../hooks/useAnimacionAcceso";
 import { UsuarioContext } from "../contexto/UsuarioContext";
 import type { Credenciales } from "../tipos/sesion";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 export default function InicioSesion() {
 
   const [mensajeError, setMensajeError] = useState("");
-  useAnimacionAcceso();
   const navegar = useNavigate();
 
   const contexto = useContext(UsuarioContext)

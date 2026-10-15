@@ -1,638 +1,278 @@
-/* El acceso conserva el papel, la tinta índigo y el azul de la landing. */
-.encabezado-acceso {
-  width: 100%; /* Extiende el papel de la cabecera por toda la ventana. */
-  background-color: #fbfaf7; /* Continúa el fondo claro de la página. */
-}
-
-.encabezado-acceso__contenido {
-  width: min(1180px, calc(100% - 48px)); /* Comparte el ancho centrado del navbar de la landing. */
-  min-height: 68px; /* Iguala la altura del encabezado de la landing. */
-  margin-inline: auto; /* Centra el grupo de marca y regreso. */
-  display: flex; /* Sitúa marca y regreso en los extremos. */
-  align-items: center; /* Alinea ambos elementos verticalmente. */
-  justify-content: space-between; /* Abre espacio entre la marca y el enlace. */
-  gap: 24px; /* Evita que los enlaces se toquen en pantallas estrechas. */
-}
-
-.encabezado-acceso__regreso {
-  display: inline-flex; /* Alinea texto y flecha como una sola acción. */
-  align-items: center; /* Centra la flecha respecto al texto. */
-  gap: 10px; /* Deja respirar el icono. */
-  color: #1954a6; /* Usa el azul de las acciones de la landing. */
-  font-size: 0.78rem; /* Iguala la escala de los enlaces de la landing. */
-  text-decoration: none; /* Evita un subrayado permanente. */
-  transition: gap 220ms ease, color 220ms ease; /* Suaviza la respuesta al cursor. */
-}
-
-.encabezado-acceso__regreso:hover {
-  gap: 15px; /* Hace avanzar la flecha al explorar el enlace. */
-  color: #123f82; /* Refuerza el contraste en hover. */
-}
-
-.encabezado-acceso a:focus-visible {
-  outline: 2px solid #1954a6; /* Hace visible el foco del teclado. */
-  outline-offset: 5px; /* Separa el foco de los caracteres. */
-}
-
-/* La retícula y el pulso repiten el tratamiento de fondo de la landing. */
+/* Inicio de sesión: misma identidad que la landing, con el formulario como protagonista. */
 .acceso {
-  --paso-reticula: 12px; /* Comparte el tamaño de celda de escritorio. */
-  position: relative; /* Ancla las capas gráficas a esta sección. */
-  isolation: isolate; /* Ordena el fondo detrás de todo el contenido. */
-  min-height: calc(100dvh - 68px); /* Ocupa la pantalla restante bajo la cabecera reducida. */
-  padding: clamp(26px, 3vw, 48px) clamp(24px, 5vw, 96px); /* Acerca la composición a la escala de la landing. */
-  display: grid; /* Permite centrar la composición completa. */
-  align-items: center; /* Centra las dos columnas en alto. */
-  overflow: hidden; /* Recorta el motivo sin crear desplazamiento horizontal. */
-  color: #172a4d; /* Usa la tinta índigo del mockup. */
-  background-color: #fbfaf7; /* Mantiene el papel de la landing. */
-}
-
-.acceso::before,
-.acceso::after {
-  content: ''; /* Crea dos capas puramente visuales. */
-  position: absolute; /* Las extiende sin alterar el contenido. */
-  inset: 0; /* Cubre la sección de borde a borde. */
-  z-index: 0; /* Sitúa ambas capas bajo el contenido sin ocultarlas tras el papel. */
-  pointer-events: none; /* Permite interactuar con los controles. */
-}
-
-.acceso::before {
-  background-image: linear-gradient(to right, rgba(39, 79, 130, 0.075) 1px, transparent 1px), linear-gradient(to bottom, rgba(39, 79, 130, 0.075) 1px, transparent 1px); /* Dibuja las mismas líneas finas de la landing. */
-  background-size: var(--paso-reticula) var(--paso-reticula); /* Repite la retícula cada doce píxeles. */
-  opacity: 0.52; /* Evita que la trama compita con los textos. */
-  mask-image: linear-gradient(to right, #000, rgba(0, 0, 0, 0.45) 30%, rgba(0, 0, 0, 0.28) 70%, #000); /* Suaviza la trama bajo las columnas. */
-}
-
-.acceso::after {
-  background-image: url('/images/patron-reticula.svg'); /* Reutiliza el motivo de esquinas de la landing. */
-  background-repeat: repeat; /* Distribuye el motivo por toda la superficie. */
-  background-size: calc(var(--paso-reticula) * 16) calc(var(--paso-reticula) * 16); /* Espacia los pulsos entre módulos. */
-  opacity: 0; /* Apaga los trazos entre pulsos. */
-  mask-image: linear-gradient(to right, #000, rgba(0, 0, 0, 0.18) 28%, rgba(0, 0, 0, 0.18) 72%, #000); /* Protege el área principal de lectura. */
-  animation: pulso-reticula-acceso 3s ease-in-out infinite; /* Repite el ritmo de la landing cada tres segundos. */
-  animation-play-state: paused; /* Pausa el pulso cuando la pestaña no está visible. */
-}
-
-.acceso--activa::after {
-  animation-play-state: running; /* Activa los pulsos mientras se mira el login. */
+  min-height: calc(100dvh - 69px);
+  padding: 72px 0;
+  display: grid;
+  align-items: center;
+  background-color: var(--fondo-2);
 }
 
 .acceso__interior {
-  position: relative; /* Coloca las columnas delante de la retícula. */
-  z-index: 1; /* Protege textos y campos de los pulsos. */
-  width: min(100%, 1180px); /* Usa el mismo ancho de contenido que el encabezado de la landing. */
-  margin-inline: auto; /* Centra las dos columnas. */
-  display: grid; /* Construye la distribución principal. */
-  grid-template-columns: minmax(0, 1.06fr) minmax(390px, 0.94fr); /* Mantiene ambas columnas equilibradas a menor escala. */
-  align-items: center; /* Enfrenta el contenido a la altura central del panel. */
-  gap: clamp(32px, 4.5vw, 64px); /* Separa columnas sin crear un vacío excesivo. */
+  width: min(1080px, calc(100% - 48px));
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  align-items: center;
+  gap: 72px;
 }
 
-.acceso__presentacion {
-  min-width: 0; /* Permite que la columna se adapte sin desbordar. */
-  display: flex; /* Distribuye mensaje y etapas en vertical. */
-  flex-direction: column; /* Conserva el orden de lectura del mockup. */
-  gap: clamp(32px, 4vh, 50px); /* Vincula el recorrido con el mensaje principal. */
-}
-
-.acceso__mensaje {
-  animation: entrar-mensaje-acceso 750ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Revela primero la promesa. */
-}
-
-.acceso__etiqueta {
-  margin: 0 0 22px; /* Mantiene una pausa moderada antes del titular. */
-  color: #356bb5; /* Señala el contexto sin competir con el título. */
-  font-size: 0.7rem; /* Mantiene la etiqueta discreta. */
-  font-weight: 600; /* Conserva legibilidad con mayúsculas. */
-  letter-spacing: 0.14em; /* Separa los caracteres como en el diseño. */
-  line-height: 1.5; /* Permite que la etiqueta envuelva en móvil. */
-  text-transform: uppercase; /* Replica la composición del mockup. */
-}
-
-.acceso__mensaje h1 {
-  max-width: 700px; /* Evita una línea excesivamente larga. */
-  margin: 0; /* Elimina el margen automático del encabezado. */
-  color: #111f43; /* Da el mayor contraste al mensaje principal. */
-  font-family: var(--fuente-editorial); /* Repite el carácter editorial de la marca. */
-  font-size: clamp(2.2rem, 3.2vw, 3.4rem); /* Iguala el tope de tamaño del hero de la landing. */
-  font-weight: 500; /* Suaviza el peso como en el hero de la landing. */
-  letter-spacing: -0.025em; /* Ajusta la lectura de la tipografía de exhibición. */
-  line-height: 1.04; /* Une las dos líneas del mensaje. */
-}
-
-.acceso__mensaje h1 span {
-  color: #1769d2; /* Añade el punto azul del mockup. */
+.acceso__presentacion h1 {
+  margin: 0;
+  font-size: clamp(2.1rem, 3.6vw, 2.9rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
 .acceso__descripcion {
-  max-width: 650px; /* Mantiene la frase en una medida cómoda. */
-  margin: 14px 0 0; /* Acerca la explicación al titular. */
-  color: #405b89; /* Da un segundo nivel claro de jerarquía. */
-  font-size: 0.94rem; /* Iguala la descripción del hero de la landing. */
-  line-height: 1.5; /* Facilita la lectura de una o dos líneas. */
-}
-
-/* El recorrido concentra la parte gráfica sin oscurecer toda la página. */
-.acceso__recorrido {
-  position: relative; /* Contiene los detalles gráficos dentro del módulo. */
-  overflow: hidden; /* Recorta los trazos decorativos en las esquinas. */
-  padding: 22px 22px 18px; /* Da aire al título, los hitos y el cierre. */
-  border: 1px solid #cbdced; /* Dibuja un límite delicado sobre el papel. */
-  border-radius: 12px; /* Acompaña las esquinas del formulario. */
-  background: linear-gradient(135deg, #edf4fb 0%, #f6f9fc 63%, #eaf2fa 100%); /* Alterna azules claros sin competir con el contenido. */
-  box-shadow: 0 14px 36px rgba(28, 67, 115, 0.055); /* Separa suavemente el recorrido del fondo. */
-  animation: entrar-etapa-acceso 760ms 130ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Revela el bloque después del titular. */
-}
-
-.acceso__recorrido::before {
-  content: ''; /* Crea una trama editorial dentro del módulo. */
-  position: absolute; /* No altera la disposición del contenido. */
-  inset: 0; /* Cubre el área del recorrido. */
-  pointer-events: none; /* Deja libre cualquier interacción. */
-  background-image: linear-gradient(to right, rgba(38, 91, 154, 0.045) 1px, transparent 1px); /* Repite líneas verticales muy tenues. */
-  background-size: 34px 100%; /* Da un ritmo más amplio que la retícula del fondo. */
-  mask-image: linear-gradient(to bottom, #000, transparent 70%); /* Desvanece la trama antes de los textos inferiores. */
-}
-
-.acceso__recorrido-cabecera {
-  position: relative; /* Coloca el rótulo por encima de la trama. */
-  z-index: 1; /* Mantiene nítidos ambos textos. */
-  display: flex; /* Lleva el nombre y la numeración a los extremos. */
-  align-items: center; /* Comparte la misma línea base visual. */
-  justify-content: space-between; /* Refuerza el carácter de ficha corporativa. */
-  gap: 12px; /* Evita que los textos se junten en espacios estrechos. */
-  padding-bottom: 15px; /* Separa el rótulo de las etapas. */
-  border-bottom: 1px solid #cfdeed; /* Ordena la lectura antes del gráfico. */
-  color: #315784; /* Mantiene el rótulo por debajo de los nombres de etapa. */
-  font-size: 0.68rem; /* Usa una escala discreta de sistema. */
-  font-weight: 600; /* Hace legible el rótulo pequeño. */
-  letter-spacing: 0.08em; /* Aporta un ritmo editorial. */
-  text-transform: uppercase; /* Lo distingue de los textos descriptivos. */
-}
-
-.acceso__recorrido-cabecera span:last-child {
-  color: #1b5ba9; /* Destaca la progresión en azul. */
-  white-space: nowrap; /* Conserva la numeración en una línea. */
+  max-width: 44ch;
+  margin: 16px 0 0;
+  color: var(--texto);
+  font-size: 18px;
+  text-wrap: pretty;
 }
 
 .acceso__etapas {
-  position: relative; /* Ancla el trazo continuo detrás de los hitos. */
-  margin: 0; /* Elimina la separación por defecto de la lista. */
-  padding: 22px 0 18px; /* Da espacio entre los hitos y los límites del módulo. */
-  display: grid; /* Alinea las tres etapas por columnas. */
-  grid-template-columns: repeat(3, minmax(0, 1fr)); /* Da a cada hito el mismo espacio. */
-  gap: 14px; /* Separa los textos sin romper el recorrido. */
-  list-style: none; /* Los iconos sustituyen los números de la lista. */
-}
-
-.acceso__etapas::before,
-.acceso__etapas::after {
-  content: ''; /* Dibuja la conexión continua de los tres pasos. */
-  position: absolute; /* La coloca bajo los círculos sin ocupar espacio. */
-  top: 63px; /* Centra el trazo respecto a los iconos. */
-  left: 16.67%; /* Comienza en el centro del primer hito. */
-  width: 66.66%; /* Termina en el centro del último hito. */
-  height: 2px; /* Mantiene el recorrido fino y preciso. */
-  pointer-events: none; /* El trazo nunca bloquea los hitos. */
-}
-
-.acceso__etapas::before {
-  background-color: #bbd0e7; /* Deja visible la estructura cuando no hay movimiento. */
-}
-
-.acceso__etapas::after {
-  width: 23%; /* Ilumina un tramo corto de la conexión. */
-  background: linear-gradient(90deg, transparent, #2875c8 45%, transparent); /* Crea una señal luminosa sobria. */
-  animation: recorrer-etapas-acceso 4.8s ease-in-out infinite; /* Hace viajar la señal por el recorrido. */
-  animation-play-state: paused; /* Evita movimiento en pestañas inactivas. */
-}
-
-.acceso--activa .acceso__etapas::after {
-  animation-play-state: running; /* Activa el recorrido cuando se ve la página. */
+  max-width: 480px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--borde);
 }
 
 .acceso__etapa {
-  position: relative; /* Sirve de ancla a la línea entre hitos. */
-  z-index: 1; /* Sitúa los iconos sobre el trazo animado. */
-  min-width: 0; /* Permite envolver las descripciones largas. */
-  text-align: center; /* Centra icono, nombre y descripción. */
-  animation: entrar-etapa-acceso 680ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Introduce el recorrido tras el mensaje. */
+  padding: 16px 0;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  border-bottom: 1px solid var(--borde);
 }
-
-.acceso__etapa:nth-child(1) { animation-delay: 180ms; /* Revela primero la vacante. */ }
-.acceso__etapa:nth-child(2) { animation-delay: 280ms; /* Continúa con evidencias. */ }
-.acceso__etapa:nth-child(3) { animation-delay: 380ms; /* Termina en la decisión. */ }
-
-.acceso__icono-fondo {
-  width: 82px; /* Acerca los hitos a la escala compacta de la landing. */
-  height: 82px; /* Mantiene el contenedor circular. */
-  margin: 0 auto 11px; /* Centra el dibujo y lo separa del nombre. */
-  display: grid; /* Facilita centrar el SVG. */
-  place-items: center; /* Centra el dibujo en ambos ejes. */
-  border-radius: 50%; /* Crea el disco del mockup. */
-  border: 1px solid #c1d6ec; /* Define el disco sobre la línea del recorrido. */
-  background-color: #f5f9fd; /* Mantiene la línea oculta tras el icono. */
-  transition: transform 260ms ease, background-color 260ms ease, border-color 260ms ease; /* Da respuesta leve al cursor. */
-}
-
-.acceso__etapa:hover .acceso__icono-fondo {
-  transform: translateY(-4px); /* Eleva el hito sin mover su texto. */
-  border-color: #87b0df; /* Refuerza suavemente el contorno activo. */
-  background-color: #e8f2fd; /* Aumenta sutilmente la presencia del disco. */
-}
-
-.acceso__icono {
-  width: 58px; /* Deja margen dentro del círculo más pequeño. */
-  height: 58px; /* Mantiene los tres dibujos a la misma escala. */
-  stroke: #111f43; /* Dibuja el trazo principal en índigo. */
-  stroke-width: 2.2; /* Equilibra el peso de los tres pictogramas. */
-  stroke-linecap: round; /* Redondea los extremos del trazo. */
-  stroke-linejoin: round; /* Suaviza las uniones de líneas. */
-}
-
-.acceso__trazo-azul { stroke: #1769d2; /* Destaca los puntos activos dentro de los dibujos. */ }
-.acceso__punto-azul { fill: #1769d2; /* Llena las pequeñas marcas de información. */ stroke: none; /* Evita un borde oscuro sobre los puntos. */ }
-.acceso__sello-azul { fill: #1769d2; /* Identifica la validación del proceso. */ stroke: none; /* Mantiene el sello limpio. */ }
-.acceso__marca-blanca { stroke: #fff; /* Contrasta la confirmación sobre el sello azul. */ stroke-width: 2.3; /* Hace legible el check a tamaño reducido. */ }
 
 .acceso__etapa strong {
-  display: block; /* Coloca la descripción bajo el nombre. */
-  color: #111f43; /* Conserva la jerarquía de los hitos. */
-  font-family: var(--fuente-editorial); /* Usa la voz editorial del diseño. */
-  font-size: 1.08rem; /* Mantiene los hitos subordinados al titular. */
-  font-weight: 600; /* Da definición a cada etapa. */
+  display: block;
+  font-size: 16px;
 }
 
 .acceso__etapa p {
-  max-width: 165px; /* Evita párrafos demasiado anchos bajo cada icono. */
-  margin: 6px auto 0; /* Separa el texto del nombre y centra el bloque. */
-  color: #4a6592; /* Atenúa la explicación respecto a la etapa. */
-  font-size: 0.82rem; /* Iguala la escala secundaria de las secciones. */
-  line-height: 1.42; /* Conserva claridad en varias líneas. */
+  max-width: 46ch;
+  margin: 0;
+  color: var(--texto);
+  font-size: 15px;
 }
 
-.acceso__recorrido-pie {
-  position: relative; /* Lo mantiene delante de la trama decorativa. */
-  z-index: 1; /* Preserva la claridad del mensaje. */
-  margin: 0; /* Evita separación extra al pie del módulo. */
-  padding-top: 14px; /* Da aire después de las etapas. */
-  display: flex; /* Alinea la marca y el texto en una línea. */
-  align-items: center; /* Centra la marca con la tipografía. */
-  gap: 9px; /* Separa la marca del mensaje. */
-  border-top: 1px solid #cfdeed; /* Cierra la ficha con el mismo trazo superior. */
-  color: #315784; /* Mantiene este principio como apoyo. */
-  font-size: 0.76rem; /* Asegura que no compita con las etapas. */
-  line-height: 1.45; /* Permite una segunda línea legible. */
-}
-
-.acceso__recorrido-pie span {
-  width: 7px; /* Dibuja un punto de referencia pequeño. */
-  height: 7px; /* Mantiene el punto circular. */
-  flex: 0 0 auto; /* Evita que se comprima al envolver el texto. */
-  border-radius: 50%; /* Redondea la marca. */
-  background-color: #2875c8; /* Conecta el cierre con el trazo activo. */
-}
-
-/* El formulario es una sola superficie limpia y fácil de recorrer. */
+/* Panel del formulario. */
 .acceso__panel {
-  position: relative; /* Permite añadir profundidad sin alterar los campos. */
-  min-width: 0; /* Evita desbordes dentro de la segunda columna. */
-  padding: clamp(38px, 3.8vw, 54px) clamp(28px, 3vw, 44px); /* Da más altura al panel sin ensancharlo. */
-  border: 1px solid #c9daf0; /* Define la tarjeta con un único borde delicado. */
-  border-radius: 12px; /* Suaviza las esquinas sin convertirla en píldora. */
-  background-color: rgba(255, 255, 255, 0.94); /* Protege los campos de la retícula posterior. */
-  box-shadow: 0 22px 54px rgba(29, 62, 104, 0.09); /* Da profundidad moderada al área de trabajo. */
-  animation: entrar-panel-acceso 820ms 140ms cubic-bezier(0.16, 1, 0.3, 1) both; /* Presenta el formulario tras el mensaje. */
-}
-
-.acceso__panel-cabecera {
-  margin-bottom: 34px; /* Separa la identificación del título del formulario. */
-  padding-bottom: 18px; /* Da espacio antes de la línea divisoria. */
-  display: flex; /* Alinea contexto y rol en una fila. */
-  align-items: center; /* Centra ambos textos verticalmente. */
-  justify-content: space-between; /* Lleva cada dato a un extremo. */
-  gap: 12px; /* Permite que envuelvan sin tocarse. */
-  border-bottom: 1px solid #d7e3f2; /* Ordena el encabezado del panel. */
-  color: #42618e; /* Sitúa la información contextual en segundo plano. */
-  font-size: 0.68rem; /* Mantiene la escala discreta. */
-  font-weight: 600; /* Asegura legibilidad en tamaños pequeños. */
-  letter-spacing: 0.09em; /* Refuerza el lenguaje editorial. */
-  text-transform: uppercase; /* Diferencia esta línea del formulario. */
-}
-
-.acceso__panel-cabecera span:last-child {
-  padding: 7px 10px; /* Da espacio alrededor del rol. */
-  border: 1px solid #cbdcf0; /* Define una insignia discreta. */
-  border-radius: 999px; /* Suaviza el contorno de la insignia. */
-  color: #1954a6; /* Relaciona el rol con la acción principal. */
-  background-color: #f3f7fc; /* Separa la insignia del blanco del panel. */
-  white-space: nowrap; /* Conserva el nombre del rol en una línea. */
+  padding: 36px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  box-shadow: var(--sombra);
 }
 
 .acceso__panel h2 {
-  margin: 0; /* Retira el margen nativo del encabezado. */
-  color: #111f43; /* Da peso al título del formulario. */
-  font-family: var(--fuente-editorial); /* Replica la tipografía del mockup. */
-  font-size: clamp(1.65rem, 2vw, 2.1rem); /* Evita competir con el título principal. */
-  font-weight: 500; /* Mantiene el título editorial ligero. */
-  line-height: 1.12; /* Compacta el título sin apretarlo. */
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .acceso__subtitulo {
-  margin: 8px 0 34px; /* Deja una pausa más clara antes de los campos. */
-  color: #4a6592; /* Mantiene el texto secundario en azul grisáceo. */
-  font-size: 0.94rem; /* Iguala la descripción de la landing. */
-  line-height: 1.5; /* Conserva claridad si ocupa dos líneas. */
+  margin: 6px 0 0;
+  color: var(--texto);
+  font-size: 15px;
 }
 
 .acceso__formulario {
-  display: flex; /* Apila los controles en orden de uso. */
-  flex-direction: column; /* Coloca un campo debajo del otro. */
-  gap: 20px; /* Da más ritmo vertical entre los controles. */
+  margin-top: 28px;
+  display: grid;
+  gap: 18px;
 }
 
 .acceso__campo {
-  display: flex; /* Agrupa etiqueta y entrada. */
-  flex-direction: column; /* Coloca la etiqueta encima del campo. */
-  gap: 11px; /* Separa ligeramente la etiqueta del campo. */
+  display: grid;
+  gap: 8px;
 }
 
 .acceso__campo label {
-  color: #172a4d; /* Mantiene las etiquetas claramente legibles. */
-  font-size: 0.9rem; /* Evita que compitan con el encabezado. */
-  font-weight: 500; /* Aporta definición sin saturación. */
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .acceso__entrada {
-  position: relative; /* Sirve de referencia al icono de contraseña. */
+  position: relative;
 }
 
 .acceso__entrada input {
-  width: 100%; /* Ocupa toda la anchura disponible. */
-  min-height: 52px; /* Da más aire vertical al texto sin ampliar la tipografía. */
-  padding: 13px 46px 13px 15px; /* Reserva espacio para el icono del campo privado. */
-  border: 1px solid #c5d8f0; /* Delimita el input sin una caja pesada. */
-  border-radius: 8px; /* Mantiene el lenguaje suave del panel. */
-  outline: none; /* Sustituye el foco nativo por uno coherente abajo. */
-  color: #172a4d; /* Usa el mismo tono que las etiquetas. */
-  background-color: #fff; /* Mantiene una superficie limpia para escribir. */
-  font-size: 0.85rem; /* Integra el texto de entrada a la escala compacta. */
-  transition: border-color 180ms ease, box-shadow 180ms ease; /* Suaviza los cambios de foco. */
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  color: var(--tinta);
+  font-size: 15px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 10px;
+  transition: border-color 0.18s, box-shadow 0.18s;
 }
 
 .acceso__entrada input::placeholder {
-  color: #6a84aa; /* Diferencia el ejemplo del valor escrito con contraste suficiente. */
+  color: var(--apoyo);
 }
 
-.acceso__entrada input:focus-visible {
-  border-color: #1954a6; /* Refuerza el límite del campo activo. */
-  box-shadow: 0 0 0 3px rgba(25, 84, 166, 0.13); /* Añade una señal de foco clara. */
+.acceso__entrada input:hover {
+  border-color: var(--apoyo);
+}
+
+.acceso__entrada input:focus {
+  border-color: var(--azul);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--azul-claro);
+}
+
+/* Deja lugar al botón de mostrar contraseña. */
+.acceso__entrada input[type="password"],
+.acceso__entrada:has(.acceso__mostrar-contrasena) input {
+  padding-right: 48px;
 }
 
 .acceso__mostrar-contrasena {
-  position: absolute; /* Lo integra al extremo derecho del campo. */
-  top: 50%; /* Lo ubica en el centro vertical. */
-  right: 11px; /* Deja margen con el borde del input. */
-  width: 38px; /* Ofrece una zona cómoda para pulsar. */
-  height: 38px; /* Igual altura que anchura para un objetivo cuadrado. */
-  padding: 0; /* Evita desplazar el icono. */
-  display: grid; /* Centra el ojo en su zona interactiva. */
-  place-items: center; /* Alinea el icono en los dos ejes. */
-  transform: translateY(-50%); /* Corrige el origen superior del botón. */
-  border: 0; /* Evita una segunda caja dentro del campo. */
-  border-radius: 6px; /* Hace suave su estado de foco. */
-  color: #3f69a8; /* Repite el azul del icono oficial. */
-  background: transparent; /* Deja visible el fondo del campo. */
-  cursor: pointer; /* Comunica que permite mostrar la contraseña. */
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--apoyo);
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color 0.18s, background-color 0.18s;
 }
 
-.acceso__mostrar-contrasena:focus-visible {
-  outline: 2px solid #1954a6; /* Hace visible el foco del botón. */
-  outline-offset: 2px; /* Despega el anillo del icono. */
+.acceso__mostrar-contrasena:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+.acceso__mostrar-contrasena svg {
+  width: 19px;
+  height: 19px;
 }
 
 .acceso__recuperacion {
-  margin: -2px 0 0; /* Mantiene la ayuda próxima al campo sin apretarla. */
-  color: #1769d2; /* Reproduce el enlace azul del mockup. */
-  font-size: 0.84rem; /* Mantiene el texto como ayuda secundaria. */
-  text-align: right; /* Lo coloca bajo el lado derecho del campo. */
+  margin: -6px 0 0;
+  color: var(--apoyo);
+  font-size: 14px;
+  text-align: right;
 }
 
 .acceso__enviar {
-  min-height: 52px; /* Iguala la nueva altura de los campos. */
-  margin-top: 6px; /* Diferencia la acción de los campos. */
-  padding-inline: 24px; /* Conserva márgenes si el texto cambia. */
-  display: inline-flex; /* Une el texto y la flecha en una acción. */
-  align-items: center; /* Centra la flecha respecto al texto. */
-  justify-content: center; /* Centra el contenido del botón. */
-  gap: 10px; /* Separa la flecha de la etiqueta. */
-  border: 1px solid #1954a6; /* Integra el borde al color del botón. */
-  border-radius: 7px; /* Da una esquina sobria. */
-  color: #fff; /* Contrasta el texto con el fondo azul. */
-  background-color: #1954a6; /* Usa el azul principal de la landing. */
-  font-size: 0.85rem; /* Mantiene la llamada a la acción proporcionada. */
-  font-weight: 600; /* Refuerza la llamada a la acción. */
-  cursor: pointer; /* Indica que el botón es pulsable. */
-  transition: background-color 180ms ease, transform 180ms ease; /* Suaviza la interacción. */
-}
-
-.acceso__enviar svg {
-  transition: transform 180ms ease; /* Hace que la flecha responda con suavidad. */
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  background-color: var(--azul);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.18s, transform 0.12s;
 }
 
 .acceso__enviar:hover {
-  transform: translateY(-2px); /* Añade una respuesta leve al cursor. */
-  background-color: #164789; /* Oscurece el botón manteniendo contraste. */
+  background-color: var(--azul-hondo);
 }
 
-.acceso__enviar:hover svg {
-  transform: translateX(4px); /* Indica avance sin desplazar el texto. */
+.acceso__enviar:active {
+  transform: scale(0.98);
 }
 
-.acceso__enviar:focus-visible {
-  outline: 2px solid #1954a6; /* Hace visible el foco al usar teclado. */
-  outline-offset: 4px; /* Separa el foco del borde del botón. */
+.acceso__error {
+  margin: 0;
+  padding: 12px 14px;
+  color: #b91c1c;
+  font-size: 14px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+}
+
+html[data-tema="oscuro"] .acceso__error {
+  color: #fca5a5;
+  background-color: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
 }
 
 .acceso__contacto {
-  margin: 8px 0 0; /* Separa el pie de la acción principal. */
-  padding-top: 22px; /* Da más aire bajo la línea divisoria. */
-  border-top: 1px solid #d7e3f2; /* Delimita el cierre del formulario. */
-  color: #4a6592; /* Mantiene el aviso en segundo plano. */
-  font-size: 0.83rem; /* Se ajusta a la escala de ayuda. */
-  line-height: 1.5; /* Permite que envuelva con claridad. */
-  text-align: center; /* Centra el mensaje final. */
+  margin: 4px 0 0;
+  padding-top: 18px;
+  color: var(--apoyo);
+  font-size: 14px;
+  text-align: center;
+  border-top: 1px solid var(--borde);
 }
 
 .acceso__contacto span {
-  color: #1769d2; /* Señala visualmente la futura vía de contacto. */
+  color: var(--tinta);
+  font-weight: 600;
 }
 
-@keyframes pulso-reticula-acceso {
-  0%, 8%, 30%, 100% { opacity: 0; /* Deja la retícula quieta entre pulsos. */ }
-  16% { opacity: 0.46; /* Ilumina brevemente algunas esquinas. */ }
-  23% { opacity: 0.2; /* Apaga el motivo con suavidad. */ }
+/* Entrada breve: el formulario se asienta al llegar. */
+@keyframes acceso-llegar {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
 }
 
-@keyframes recorrer-etapas-acceso {
-  0%, 15% { transform: translateX(0); /* Espera brevemente en la primera etapa. */ opacity: 0; /* Enciende el trazo sin un salto brusco. */ }
-  24% { opacity: 1; /* Vuelve visible la señal. */ }
-  77% { opacity: 1; /* Mantiene la señal durante el recorrido. */ }
-  90%, 100% { transform: translateX(290%); /* Llega al extremo de la tercera etapa. */ opacity: 0; /* Desaparece antes de reiniciar. */ }
+.acceso__presentacion,
+.acceso__panel {
+  animation: acceso-llegar 0.6s var(--curva) both;
 }
 
-@keyframes entrar-mensaje-acceso {
-  from { opacity: 0.25; /* Empieza visible sin un salto brusco. */ transform: translateY(18px); /* Acerca el mensaje desde abajo. */ }
-  to { opacity: 1; /* Termina en plena legibilidad. */ transform: translateY(0); /* Llega a su posición natural. */ }
+.acceso__panel {
+  animation-delay: 0.1s;
 }
 
-@keyframes entrar-etapa-acceso {
-  from { opacity: 0.25; /* Evita un comienzo invisible. */ transform: translateY(12px); /* Da dirección al recorrido. */ }
-  to { opacity: 1; /* Revela cada etapa completamente. */ transform: translateY(0); /* Deja el hito en su sitio. */ }
-}
-
-@keyframes entrar-panel-acceso {
-  from { opacity: 0.3; /* Mantiene el panel perceptible desde el inicio. */ transform: translateY(20px); /* Lo acerca de forma suave. */ }
-  to { opacity: 1; /* Presenta el formulario completo. */ transform: translateY(0); /* Lo deja en su posición. */ }
-}
-
-@media (max-width: 1100px) {
-  .encabezado-acceso__contenido {
-    width: calc(100% - 40px); /* Iguala los márgenes del navbar de la landing en portátil. */
-    min-height: 56px; /* Iguala la altura compacta del navbar de la landing. */
-  }
+@media (max-width: 900px) {
   .acceso {
-    min-height: calc(100dvh - 56px); /* Ajusta la página a la cabecera compacta. */
+    min-height: calc(100dvh - 61px);
+    padding: 40px 0 64px;
+    align-items: start;
   }
+
   .acceso__interior {
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr); /* Conserva las dos columnas mientras caben. */
-    gap: 36px; /* Recupera espacio para el contenido. */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
   }
-  .acceso__presentacion {
-    gap: 42px; /* Reduce el vacío entre mensaje y recorrido. */
-  }
-  .acceso__icono-fondo {
-    width: 74px; /* Ajusta los hitos a la columna más estrecha. */
-    height: 74px; /* Mantiene el círculo proporcionado. */
-  }
-  .acceso__icono {
-    width: 52px; /* Reduce el dibujo junto con su fondo. */
-    height: 52px; /* Evita recortes dentro del círculo. */
-  }
-  .acceso__etapas::before,
-  .acceso__etapas::after {
-    top: 59px; /* Sigue el centro de los círculos reducidos. */
+
+  /* En pantallas angostas el formulario va primero. */
+  .acceso__panel {
+    order: -1;
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 720px) {
   .acceso__interior {
-    width: min(100%, 680px); /* Limita el ancho de la composición apilada. */
-    grid-template-columns: minmax(0, 1fr); /* Pone relato y formulario uno debajo del otro. */
-    gap: 48px; /* Separa ambos bloques con claridad. */
+    width: calc(100% - 32px);
   }
-  .acceso__presentacion {
-    gap: 42px; /* Acerca el recorrido al mensaje. */
-  }
-  .acceso__etiqueta {
-    margin-bottom: 24px; /* Reduce la pausa antes del título. */
-  }
-  .acceso__panel {
-    width: 100%; /* Usa el ancho disponible sin desbordes. */
-  }
-}
 
-@media (max-width: 560px) {
-  .encabezado-acceso__contenido {
-    width: calc(100% - 32px); /* Iguala los márgenes del navbar de la landing en móvil. */
-  }
-  .encabezado-acceso__regreso {
-    gap: 5px; /* Acerca la flecha al texto en móvil. */
-    font-size: 0.77rem; /* Mantiene el enlace dentro del ancho. */
-    white-space: nowrap; /* Impide que se rompa en dos líneas. */
-  }
-  .acceso {
-    --paso-reticula: 10px; /* Repite la celda móvil de la landing. */
-    min-height: calc(100dvh - 56px); /* Continúa bajo la cabecera móvil. */
-    padding: 38px 20px 54px; /* Deja espacio superior e inferior equilibrado. */
-  }
-  .acceso__mensaje h1 {
-    font-size: clamp(1.875rem, 4.8vw, 2rem); /* Iguala el título móvil del hero de la landing. */
-  }
-  .acceso__descripcion {
-    margin-top: 18px; /* Acerca el apoyo al título. */
-  }
-  .acceso__recorrido {
-    padding: 18px 16px 16px; /* Conserva el ritmo del módulo en móvil. */
-  }
-  .acceso__etapas {
-    grid-template-columns: minmax(0, 1fr); /* Convierte los hitos en una lista vertical. */
-    gap: 17px; /* Da ritmo entre filas. */
-  }
-  .acceso__etapas::before {
-    top: 54px; /* Arranca bajo el centro del primer icono. */
-    bottom: 54px; /* Termina antes del borde inferior del último icono. */
-    left: 32px; /* Sigue el eje de los círculos móviles. */
-    width: 1px; /* Reduce la conexión a un trazo vertical. */
-    height: auto; /* Permite que top y bottom determinen su longitud. */
-  }
-  .acceso__etapas::after {
-    display: none; /* Evita un recorrido horizontal en la lista vertical. */
-  }
-  .acceso__etapa {
-    display: grid; /* Alinea icono y texto en una fila. */
-    grid-template-columns: 66px minmax(0, 1fr); /* Reserva una columna fija al dibujo. */
-    column-gap: 15px; /* Separa ilustración y lectura. */
-    text-align: left; /* Facilita recorrer las tres etapas. */
-  }
-  .acceso__icono-fondo {
-    width: 66px; /* Adapta el círculo a una fila compacta. */
-    height: 66px; /* Conserva el formato redondo. */
-    margin: 0; /* Alinea el círculo con el borde de la lista. */
-    grid-row: span 2; /* El icono acompaña nombre y descripción. */
-  }
-  .acceso__icono {
-    width: 49px; /* Encaja el dibujo dentro del nuevo círculo. */
-    height: 49px; /* Conserva el mismo tamaño en todos. */
-  }
-  .acceso__etapa strong {
-    align-self: end; /* Acerca el título a su descripción. */
-  }
-  .acceso__etapa p {
-    max-width: none; /* Permite usar la anchura de lectura restante. */
-    margin: 3px 0 0; /* Coloca el texto justo debajo del nombre. */
-  }
   .acceso__panel {
-    padding: 34px 22px; /* Conserva la nueva altura también en teléfonos. */
+    padding: 26px 22px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .acceso::after,
-  .acceso__mensaje,
-  .acceso__recorrido,
-  .acceso__etapas::after,
-  .acceso__etapa,
+  .acceso__presentacion,
   .acceso__panel {
-    animation: none; /* Respeta la preferencia de reducir movimiento. */
+    animation: none;
   }
-  .acceso__icono-fondo,
-  .acceso__enviar,
-  .acceso__enviar svg,
-  .encabezado-acceso__regreso {
-    transition: none; /* Evita movimientos provocados por el cursor. */
-  }
-  .acceso__etapa:hover .acceso__icono-fondo,
-  .acceso__enviar:hover,
-  .acceso__enviar:hover svg {
-    transform: none; /* Evita desplazamientos incluso al pasar el cursor. */
-  }
-}
 
-/* Comunica un error de acceso junto al formulario. */
-.acceso__error {
-  margin: 0; /* Mantiene el mensaje dentro del ritmo del formulario. */
-  color: #a5363a; /* Distingue el error sin alterar los colores de los botones. */
-  font-size: 0.82rem; /* Usa la escala secundaria del acceso. */
+  .acceso__enviar:active {
+    transform: none;
+  }
 }

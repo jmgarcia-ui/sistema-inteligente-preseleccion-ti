@@ -9,6 +9,7 @@ export default function Postulacion() {
   const [vacante, setVacante] = useState<VacantePublica | null>(null);
   const [noDisponible, setNoDisponible] = useState(false);
   const [hayError, setHayError] = useState(false);
+  const [intento, setIntento] = useState(0);
   const { idVacante } = useParams();
   const id = Number(idVacante);
 
@@ -19,7 +20,21 @@ export default function Postulacion() {
         if (error.response?.status === 404) setNoDisponible(true);
         else setHayError(true);
       });
-  }, [id]);
+  }, [id, intento]);
+
+  function reintentar(){
+    setHayError(false);
+    setIntento((anterior)=> anterior + 1);
+  }
+
+  if(hayError){
+    return (
+      <div>
+        <p>No pudimos cargar la vacante</p>
+        <button onClick={reintentar}>Reintentar</button>
+      </div>
+    );
+  }
 
   if (noDisponible)
     return (

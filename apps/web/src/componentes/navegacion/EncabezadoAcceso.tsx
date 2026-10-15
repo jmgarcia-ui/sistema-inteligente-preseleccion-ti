@@ -1,22 +1,20 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import BotonTema from "./BotonTema";
+import MarcaSitio from "./MarcaSitio";
 
 type Propiedades = { temaOscuro: boolean; alternarTema: () => void };
 
 export default function EncabezadoAcceso({ temaOscuro, alternarTema }: Propiedades) {
   return (
-    <header className="encabezado-acceso">
-      <div className="encabezado-acceso__contenido">
-        <Link className="marca-sitio" to="/" aria-label="Ir a la página de inicio">
-          <span>Reclutamiento</span>
-          <strong>Inteligente</strong>
-        </Link>
-        <div className="encabezado-acceso__acciones">
+    <header className="encabezado-sitio encabezado-sitio--acceso">
+      <div className="envoltura encabezado-sitio__fila">
+        <MarcaSitio />
+        <div className="encabezado-sitio__acciones">
           <BotonTema temaOscuro={temaOscuro} alCambiar={alternarTema} />
-          <Link className="encabezado-acceso__regreso" to="/">
+          <Link className="encabezado-sitio__regreso" to="/">
+            <ArrowLeft size={16} strokeWidth={2} aria-hidden="true" />
             Volver al inicio
-            <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
           </Link>
         </div>
       </div>

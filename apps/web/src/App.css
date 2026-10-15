@@ -1,272 +1,210 @@
-/* Cabecera clara del diseño de la landing. */
+/* Encabezado compartido por las páginas públicas y el acceso. */
 .encabezado-sitio {
-  position: sticky; /* Mantiene el encabezado visible y sirve de referencia al menú desplegable. */
-  top: 0; /* Ancla la navegación al borde superior durante el scroll. */
-  z-index: 50; /* Mantiene la navegación y su menú sobre toda la landing. */
-  width: 100%; /* Ocupa todo el ancho de la ventana. */
-  background-color: rgba(251, 250, 247, 0.76); /* Deja entrever discretamente la página bajo la barra fija. */
-  backdrop-filter: blur(16px) saturate(1.08); /* Difumina el contenido que pasa por detrás de la navegación. */
-  -webkit-backdrop-filter: blur(16px) saturate(1.08); /* Conserva el efecto en navegadores WebKit. */
-  box-shadow: 0 4px 18px rgba(24, 44, 75, 0.08); /* Separa con suavidad la barra fija del contenido. */
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--encabezado);
+  backdrop-filter: saturate(1.4) blur(10px);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--borde);
 }
 
-.encabezado-sitio__contenido {
-  width: min(1180px, calc(100% - 48px)); /* Limita el ancho y conserva márgenes laterales. */
-  min-height: 68px; /* Da altura cómoda al encabezado. */
-  margin-inline: auto; /* Centra el contenido. */
-  display: grid; /* Distribuye marca, enlaces y acceso. */
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); /* Centra los enlaces respecto al ancho total, con marca y acceso en extremos equilibrados. */
-  column-gap: 24px; /* Separa los tres grupos. */
-  align-items: center; /* Alinea los grupos verticalmente. */
+.encabezado-sitio__fila {
+  min-height: 68px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 24px;
+}
+
+.encabezado-sitio--acceso .encabezado-sitio__fila {
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 
 .marca-sitio {
-  display: flex; /* Organiza las dos palabras de la marca. */
-  flex-direction: column; /* Coloca cada palabra en una línea. */
-  color: #202833; /* Usa tinta oscura sobre marfil. */
-  font-family: var(--fuente-editorial); /* Conserva la voz editorial de la marca. */
-  font-size: 0.96rem; /* Mantiene la marca discreta. */
-  font-weight: 400; /* Evita que compita con el hero. */
-  line-height: 0.94; /* Acerca las dos líneas. */
-  text-decoration: none; /* Retira el subrayado de enlace. */
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--tinta);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
-.marca-sitio strong {
-  font-weight: 400; /* Iguala el peso de ambas palabras. */
+.marca-sitio__signo {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background-color: var(--azul);
+  border-radius: 8px;
 }
 
 .navegacion-principal {
-  justify-self: center; /* Centra el grupo de enlaces. */
-  display: flex; /* Coloca los enlaces en una fila. */
-  align-items: center; /* Alinea sus centros verticales. */
-  gap: 28px; /* Da una separación regular. */
+  display: flex;
+  gap: 30px;
 }
 
 .navegacion-principal a {
-  position: relative; /* Permite ubicar el indicador inferior. */
-  padding-block: 10px; /* Amplía la zona interactiva. */
-  color: #263d65; /* Usa azul índigo sobrio. */
-  font-size: 0.78rem; /* Reduce su protagonismo frente al hero. */
-  font-weight: 500; /* Conserva legibilidad con el tamaño menor. */
-  line-height: 1; /* Evita altura adicional. */
-  text-decoration: none; /* Retira el subrayado nativo. */
-  transition: color 180ms ease; /* Suaviza el cambio al pasar el cursor. */
+  position: relative;
+  padding-block: 8px;
+  color: var(--texto);
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.18s;
 }
 
-.navegacion-principal a::after {
-  content: ""; /* Crea el indicador decorativo. */
-  position: absolute; /* Lo coloca debajo del enlace. */
-  right: 0; /* Lo extiende hasta el borde derecho. */
-  bottom: 4px; /* Deja un pequeño espacio bajo el texto. */
-  left: 0; /* Lo extiende desde el borde izquierdo. */
-  height: 2px; /* Mantiene el indicador fino. */
-  background-color: #1954a6; /* Usa el azul de las acciones. */
-  transform: scaleX(0); /* Lo oculta inicialmente. */
-  transform-origin: left; /* Hace que aparezca desde la izquierda. */
-  transition: transform 180ms ease; /* Anima su entrada. */
+.navegacion-principal a:hover,
+.navegacion-principal a.active {
+  color: var(--tinta);
 }
 
-.navegacion-principal a:hover {
-  color: #174788; /* Destaca el enlace bajo el cursor. */
-}
-
-.navegacion-principal a:hover::after {
-  transform: scaleX(1); /* Muestra el indicador completo. */
-}
-
-.accion-encabezado {
-  justify-self: end; /* Lleva el acceso al extremo derecho. */
-  min-height: 40px; /* Mantiene una altura cómoda. */
-  padding-inline: 20px; /* Da espacio a ambos lados del texto. */
-  display: inline-flex; /* Permite centrar el texto. */
-  align-items: center; /* Centra verticalmente el texto. */
-  justify-content: center; /* Centra horizontalmente el texto. */
-  color: #fff; /* Contrasta con el azul del botón. */
-  background-color: #1954a6; /* Aplica el azul del diseño elegido. */
-  border: 1px solid #1954a6; /* Integra el borde al botón. */
-  border-radius: 3px; /* Conserva esquinas discretas. */
-  font-size: 0.77rem; /* Evita competir con el título. */
-  font-weight: 600; /* Mantiene legibilidad. */
-  line-height: 1; /* Evita altura de línea adicional. */
-  white-space: nowrap; /* Impide que se parta el texto. */
-  text-decoration: none; /* Retira el subrayado nativo. */
-  transition: background-color 180ms ease, transform 180ms ease; /* Suaviza la interacción. */
-}
-
-.accion-encabezado:hover {
-  background-color: #164789; /* Oscurece el botón al pasar el cursor. */
-  transform: translateY(-1px); /* Señala que se puede pulsar. */
-}
-
-.encabezado-sitio__acciones,
-.encabezado-acceso__acciones {
-  display: flex; /* Reúne el tema y la acción principal en un solo grupo. */
-  align-items: center; /* Centra ambos controles en la cabecera. */
-  justify-content: flex-end; /* Mantiene el grupo en el extremo derecho. */
-  gap: 10px; /* Separa los controles sin alejar los enlaces centrales. */
+/* La página actual se marca con una línea bajo el enlace. */
+.navegacion-principal a.active::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--azul);
+  border-radius: 2px;
 }
 
 .encabezado-sitio__acciones {
-  justify-self: end; /* Ocupa la última columna de la cuadrícula principal. */
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.encabezado-sitio__regreso {
+  min-height: 38px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: color 0.18s, background-color 0.18s;
+}
+
+.encabezado-sitio__regreso:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
 }
 
 .boton-tema {
-  width: 40px; /* Ofrece un objetivo cómodo sin dominar la navegación. */
-  height: 40px; /* Mantiene la misma proporción en ambos temas. */
-  padding: 0; /* Centra el icono sin espacio nativo. */
-  display: inline-grid; /* Permite centrar el icono con precisión. */
-  place-items: center; /* Alinea el sol o la luna en ambos ejes. */
-  flex: 0 0 auto; /* Impide que el control se comprima en móvil. */
-  border: 1px solid #cbd8e8; /* Define un contorno ligero en el tema claro. */
-  border-radius: 4px; /* Sigue la geometría sobria de los botones. */
-  color: #263d65; /* Conecta el icono con la tinta del navbar. */
-  background-color: rgba(255, 255, 255, 0.46); /* Mantiene visible el papel translúcido. */
-  cursor: pointer; /* Indica que se puede alternar el tema. */
-  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease; /* Suaviza el cambio bajo el cursor. */
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: var(--texto);
+  background-color: transparent;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.18s, border-color 0.18s, background-color 0.18s;
 }
 
 .boton-tema:hover {
-  border-color: #8daed6; /* Refuerza el límite del control activo. */
-  color: #1954a6; /* Usa el azul de interacción de la landing. */
-  background-color: #edf4fb; /* Añade una respuesta clara sin elevarlo. */
-}
-
-.boton-tema:focus-visible {
-  outline: 2px solid #1954a6; /* Hace visible el foco de teclado. */
-  outline-offset: 3px; /* Separa el anillo del contorno. */
-}
-
-.marca-sitio:focus-visible,
-.navegacion-principal a:focus-visible,
-.accion-encabezado:focus-visible,
-.boton-menu:focus-visible {
-  outline: 2px solid #1954a6; /* Muestra el foco al navegar con teclado. */
-  outline-offset: 4px; /* Separa el foco del elemento. */
+  color: var(--tinta);
+  border-color: var(--borde-fuerte);
+  background-color: var(--fondo-2);
 }
 
 .boton-menu {
-  display: none; /* Solo aparece en pantallas angostas. */
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: none;
+  place-content: center;
+  gap: 4px;
+  background: transparent;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-@media (max-width: 1100px) {
-  .encabezado-sitio__contenido {
-    width: calc(100% - 40px); /* Conserva 20px a cada lado. */
-    min-height: 56px; /* Acerca la cabecera a la altura de la referencia. */
-    grid-template-columns: minmax(0, 1fr) auto auto; /* Reserva lugar para marca, menú y acceso visible. */
-    column-gap: 12px; /* Separa los botones sin desperdiciar espacio. */
-  }
+.boton-menu span {
+  width: 16px;
+  height: 2px;
+  display: block;
+  background-color: var(--tinta);
+  border-radius: 2px;
+  transition: transform 0.25s var(--curva), opacity 0.2s;
+}
 
-  .encabezado-sitio__acciones {
-    grid-column: 3; /* Mantiene el acceso visible al extremo derecho. */
+.boton-menu[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.boton-menu[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.boton-menu[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 900px) {
+  .encabezado-sitio__fila {
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 60px;
   }
 
   .boton-menu {
-    grid-column: 2; /* Coloca el menú antes del acceso. */
-    width: 44px; /* Da al menú un área táctil cómoda. */
-    height: 44px; /* Da al menú un área táctil cómoda. */
-    padding: 0; /* Elimina el espacio interior nativo. */
-    display: flex; /* Permite ordenar las líneas. */
-    flex-direction: column; /* Apila las tres líneas. */
-    align-items: center; /* Centra las líneas horizontalmente. */
-    justify-content: center; /* Centra las líneas verticalmente. */
-    gap: 4px; /* Separa las líneas. */
-    color: #263d65; /* Usa tinta azul sobre el fondo claro. */
-    background: transparent; /* Mantiene visible el marfil. */
-    border: 1px solid #cbd5e2; /* Delimita el botón discretamente. */
-    border-radius: 3px; /* Iguala el radio del acceso. */
-    cursor: pointer; /* Indica interacción. */
+    display: grid;
   }
 
-  .boton-menu span {
-    width: 18px; /* Define el largo de cada línea. */
-    height: 2px; /* Define el grosor de cada línea. */
-    background-color: currentColor; /* Toma el color del botón. */
-    transition: transform 180ms ease, opacity 180ms ease; /* Suaviza la animación a X. */
-  }
-
-  .boton-menu[aria-expanded="true"] span:first-child {
-    transform: translateY(6px) rotate(45deg); /* Forma la primera diagonal. */
-  }
-
-  .boton-menu[aria-expanded="true"] span:nth-child(2) {
-    opacity: 0; /* Oculta la línea central. */
-  }
-
-  .boton-menu[aria-expanded="true"] span:last-child {
-    transform: translateY(-6px) rotate(-45deg); /* Forma la segunda diagonal. */
-  }
-
+  /* El menú se despliega bajo el encabezado. */
   .navegacion-principal {
-    position: absolute; /* Superpone el panel debajo del encabezado. */
-    top: 100%; /* Empieza justo debajo de la cabecera. */
-    right: 0; /* Alcanza el borde derecho. */
-    left: 0; /* Alcanza el borde izquierdo. */
-    display: none; /* Permanece cerrado hasta pulsar el menú. */
-    max-height: calc(100dvh - 64px); /* Evita que el panel salga de una pantalla baja. */
-    overflow-y: auto; /* Permite desplazarse si los enlaces no caben. */
-    flex-direction: column; /* Apila los enlaces. */
-    align-items: stretch; /* Extiende cada enlace al ancho disponible. */
-    gap: 0; /* Retira los espacios de escritorio. */
-    padding: 8px 20px 18px; /* Da aire dentro del panel. */
-    background-color: #fbfaf7; /* Continúa el fondo claro. */
-    border-bottom: 1px solid #e1e7ee; /* Delimita el panel. */
-    box-shadow: 0 14px 24px rgba(24, 44, 75, 0.12); /* Separa el panel del contenido. */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    padding: 8px 24px 16px;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    background-color: var(--fondo);
+    border-bottom: 1px solid var(--borde);
+    box-shadow: 0 16px 30px -24px rgba(15, 23, 42, 0.45);
   }
 
   .navegacion-principal--abierta {
-    display: flex; /* Muestra el panel cuando React añade esta clase. */
+    display: flex;
   }
 
   .navegacion-principal a {
-    min-height: 44px; /* Da altura cómoda para tocar. */
-    padding: 12px 4px; /* Da espacio al texto. */
-    display: flex; /* Permite alinear el enlace. */
-    align-items: center; /* Centra el texto verticalmente. */
-    font-size: 0.9rem; /* Facilita la lectura del menú móvil. */
-    border-bottom: 1px solid #e1e7ee; /* Separa cada opción. */
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    border-bottom: 1px solid var(--borde);
   }
 
-  .navegacion-principal a::after {
-    display: none; /* Omite el indicador de escritorio. */
+  .navegacion-principal a:last-child {
+    border-bottom: 0;
+  }
+
+  .navegacion-principal a.active::after {
+    display: none;
   }
 }
 
-/* Ajusta los tres elementos cuando el ancho del teléfono es limitado. */
-@media (max-width: 560px) {
-  .encabezado-sitio__acciones {
-    gap: 6px; /* Conserva espacio para marca y menú en teléfonos. */
-  }
-  .boton-tema {
-    width: 36px; /* Compacta el control sin perder su zona táctil. */
-    height: 36px; /* Mantiene el icono centrado en móvil. */
-  }
-  .encabezado-sitio__contenido {
-    width: calc(100% - 32px); /* Mantiene 16px de margen a cada lado. */
-    column-gap: 8px; /* Reduce la separación entre menú y acceso. */
-  }
-
+@media (max-width: 480px) {
   .marca-sitio {
-    font-size: 0.86rem; /* Conserva la marca en dos líneas sin desplazar las acciones. */
+    font-size: 0;
+    gap: 0;
   }
 
-  .accion-encabezado {
-    min-height: 44px; /* Iguala la altura táctil del menú. */
-    padding-inline: 12px; /* Evita que el acceso ocupe demasiado ancho. */
-    font-size: 0.72rem; /* Conserva el texto en una sola línea. */
-  }
-}
-
-@media (max-width: 390px) {
-  .encabezado-sitio__contenido {
-    width: calc(100% - 28px); /* Conserva espacio útil en móviles estrechos. */
-  }
-
-  .marca-sitio {
-    font-size: 0.8rem; /* Permite acomodar la marca y las dos acciones. */
-  }
-
-  .accion-encabezado {
-    padding-inline: 9px; /* Recupera espacio horizontal para el menú. */
-    font-size: 0.68rem; /* Mantiene visible la etiqueta completa. */
+  .encabezado-sitio__regreso {
+    padding: 0 8px;
   }
 }

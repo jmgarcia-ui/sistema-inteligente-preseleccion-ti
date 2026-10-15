@@ -1,20 +1,19 @@
 <!doctype html>
 <html lang="es">
-  
   <head>
     <meta charset="UTF-8" />
     <script>
+      //aplica el tema guardado antes del primer pintado para evitar un destello
       try { document.documentElement.dataset.tema = localStorage.getItem('tema-visual') === 'oscuro' ? 'oscuro' : 'claro' }
       catch { document.documentElement.dataset.tema = 'claro' }
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Preselección de talento TI con evidencia en cada requisito. Vacantes abiertas y acceso para el equipo de selección." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;500;600&display=swap"
-      rel="stylesheet"/>
-    <title>sistema-inteligente-preseleccion-ti</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <title>Reclutamiento Inteligente</title>
   </head>
   <body>
     <div id="root"></div>

@@ -117,20 +117,23 @@ function FormularioPostulacion({ idVacante }: Propiedades) {
       <input id="correo" type="email" value={correo} aria-invalid={Boolean(errores.correo)} aria-describedby={errores.correo ? "correo-error" : undefined} onChange={(evento) => setCorreo(evento.target.value)} />
       <br />
       {errores.correo && <p id="correo-error">{errores.correo}</p>}
-      <label htmlFor="telefono">Teléfono:</label>
+      <label htmlFor="telefono">Teléfono (opcional):</label>
       <input id="telefono" type="tel" value={telefono} onChange={(evento) => setTelefono(evento.target.value)} />
       <br />
+      <p>Agrega al menos un enlace: LinkedIn, GitHub o portafolio.</p>
       <label htmlFor="linkedin">LinkedIn:</label>
       <input id="linkedin" type="url" value={linkedin} onChange={(evento) => setLinkedin(evento.target.value)} />
       <br />
-      <label htmlFor="portafolio">Portafolio (opcional)</label>
+      <label htmlFor="portafolio">Portafolio:</label>
       <input id="portafolio" type="url" value={portafolio} onChange={(evento) => setPortafolio(evento.target.value)} />
       <br />
-      <label htmlFor="github">gitHub (opcional)</label>
+      <label htmlFor="github">GitHub:</label>
       <input id="github" type="url" value={github} onChange={(evento) => setGithub(evento.target.value)} />
       <br />
       {errores.enlaces && <p role="alert">{errores.enlaces}</p>}
-      <label htmlFor="acepta-terminos">Acepto los términos y condiciones</label>
+      <label htmlFor="acepta-terminos">
+        Acepto que el equipo de selección use mis datos para evaluar mi postulación a este puesto.
+      </label>
       <input
         id="acepta-terminos"
         type="checkbox"

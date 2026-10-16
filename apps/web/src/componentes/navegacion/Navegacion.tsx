@@ -29,9 +29,12 @@ export default function Navegacion() {
     return () => pantallaGrande.removeEventListener("change", cerrarAlAmpliar);
   }, []);
 
-  return pathname === "/iniciar-sesion" ? (
-    <EncabezadoAcceso temaOscuro={temaOscuro} alternarTema={alternarTema} />
-  ) : (
+  if (pathname.startsWith("/reclutador")) 
+    return null; // el panel trae su propio encabezado
+  if (pathname === "/iniciar-sesion") 
+    return <EncabezadoAcceso temaOscuro={temaOscuro} alternarTema={alternarTema} />;
+  
+  return (
     <EncabezadoSitio
       menuAbierto={menuAbierto}
       temaOscuro={temaOscuro}

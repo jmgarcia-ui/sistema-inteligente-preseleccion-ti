@@ -9,10 +9,14 @@ export async function autenticar(credenciales: Credenciales) {
     credenciales,
   );
 
-  const { data: usuario } = await axios.get<UsuarioAutenticado>(
-    `${urlApi}/autenticacion/yo`,
-    { headers: { Authorization: `${respuestaToken.tipo_token} ${respuestaToken.token_acceso}` } },
-  );
-
+  const usuario = await obtenerUsuarioActual(respuestaToken)
   return { token: respuestaToken, usuario };
+}
+
+export async function obtenerUsuarioActual(token: RespuestaToken) {
+  const { data: usuario } = await axios.get<UsuarioAutenticado>(`${urlApi}/autenticacion/yo`, {
+    headers: { Authorization: `${token.tipo_token} ${token.token_acceso}` },
+  });
+
+  return usuario;
 }

@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict
-from app.modelos.vacante import EstadoVacante
+from app.modelos.vacante import EstadoVacante, ModalidadVacante
 
 #una fila de la tabla "Tus vacantes, estado por estado"
 #se llena a mano en la ruta: "conteos" no existe en el modelo Vacante
@@ -17,6 +17,12 @@ class VacanteTitulo(BaseModel):
   titulo: str
   #permite leer atributos de un objeto
   model_config = ConfigDict(from_attributes=True)
+
+class VacanteGestion(VacanteResumen):
+  modalidad: ModalidadVacante
+  ubicacion: str | None
+  creado_en: datetime
+
 
 #datos del candidato que se ven en la cola
 #los nombres de los campos deben ser iguales a los del modelo Candidato

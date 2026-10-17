@@ -6,7 +6,7 @@ from app.autorizacion import obtener_gestor_vacantes
 from app.base_datos import obtener_sesion
 from app.esquemas.vacantes import VacanteCrear, VacanteRespuesta, VacanteActualizar,VacantePublicaRespuesta
 from app.modelos import Usuario
-from app.servicios.vacantes import crear_vacante, actualizar_vacante, obtener_vacante_por_id,puede_editar_vacante, listar_vacantes_publicas, obtener_vacante_publica_por_id
+from app.servicios.vacantes import crear_vacante, actualizar_vacante, obtener_vacante_por_id,puede_editar_vacante, listar_vacantes_publicas, obtener_vacante_publica_por_id, VacanteVencidaError
 
 router = APIRouter(
   prefix="/vacantes",
@@ -21,7 +21,6 @@ def crear(datos: VacanteCrear, sesion: Annotated[Session, Depends(obtener_sesion
 
 @router.patch("/{id_vacante}", response_model=VacanteRespuesta)
 def actualizar(id_vacante: int, datos: VacanteActualizar, sesion: Annotated[Session, Depends(obtener_sesion)], usuario: Annotated[Usuario, Depends(obtener_gestor_vacantes)]) -> VacanteRespuesta:
-
   #obtener vacante
   vacante = obtener_vacante_por_id(sesion, id_vacante)
   if vacante is None:
@@ -31,7 +30,11 @@ def actualizar(id_vacante: int, datos: VacanteActualizar, sesion: Annotated[Sess
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="No tienes permiso para editar esta vacante")
 
   #actualizar vacante
-  vacante_actualizada = actualizar_vacante(sesion, vacante, datos)
+  try:
+    vacante_actualizada = actualizar_vacante(sesion, vacante, datos)
+  except VacanteVencidaError as error:
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(error))
+  
   return VacanteRespuesta.model_validate(vacante_actualizada)
 
 @router.get("", response_model=list[VacantePublicaRespuesta])

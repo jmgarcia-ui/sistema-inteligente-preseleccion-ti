@@ -1,12 +1,14 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.autorizacion import obtener_gestor_vacantes
 from app.base_datos import obtener_sesion
-from app.esquemas.panel import PostulacionRevisar, ResumenPanel, VacanteResumen
+from app.esquemas.vacantes import VacanteRespuesta
+from app.esquemas.panel import PostulacionRevisar, ResumenPanel, VacanteGestion, VacanteResumen
 from app.modelos import Usuario
 from app.servicios.panel import contar_postulaciones, listar_por_revisar, listar_vacantes_panel
+from app.servicios.vacantes import listar_vacantes, obtener_vacante_por_id, puede_editar_vacante
 
 router = APIRouter(
   prefix="/panel",
@@ -39,3 +41,36 @@ def obtener_resumen(sesion: Annotated[Session, Depends(obtener_sesion)], usuario
     ],
     por_revisar=[PostulacionRevisar.model_validate(postulacion) for postulacion in por_revisar],
   )
+
+@router.get("/vacantes", response_model=list[VacanteGestion])
+def resumen_mis_vacantes(sesion: Annotated[Session, Depends(obtener_sesion)], usuario: Annotated[Usuario, Depends(obtener_gestor_vacantes)]) -> list[VacanteGestion ]:
+
+  vacantes = listar_vacantes(sesion, usuario)
+  ids_vacante = [vacante.id for vacante in vacantes]
+  conteos = contar_postulaciones(sesion, ids_vacante)
+
+  return [
+    VacanteGestion(
+      id=vacante.id,
+      titulo=vacante.titulo,
+      estado=vacante.estado,
+      modalidad=vacante.modalidad,
+      ubicacion=vacante.ubicacion,
+      fecha_limite=vacante.fecha_limite,
+      creado_en=vacante.creado_en,
+      conteos=conteos.get(vacante.id, {}),
+    )
+    for vacante in vacantes
+  ]
+
+
+#una vacante completa para el formulario de editar, en cualquier estado (también borradores)
+@router.get("/vacantes/{id_vacante}", response_model=VacanteRespuesta)
+def obtener_mi_vacante(id_vacante: int, sesion: Annotated[Session, Depends(obtener_sesion)], usuario: Annotated[Usuario, Depends(obtener_gestor_vacantes)]) -> VacanteRespuesta:
+  vacante = obtener_vacante_por_id(sesion, id_vacante)
+  if vacante is None:
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Vacante no encontrada")
+  #solo su creador o un administrador puede verla para editarla
+  if not puede_editar_vacante(usuario, vacante):
+    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="No tienes permiso para ver esta vacante")
+  return VacanteRespuesta.model_validate(vacante)

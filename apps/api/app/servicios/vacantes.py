@@ -7,6 +7,10 @@ from app.modelos.usuario import Usuario
 from sqlalchemy import select
 from datetime import date
 
+#se lanza cuando alguien intenta publicar una vacante cuya fecha límite ya pasó
+class VacanteVencidaError(Exception):
+  pass
+
 def construir_requisitos(requisitos: list[RequisitoCrear]) -> list[RequisitoVacante]:
   datos_requisitos = []
   for posicion, req in enumerate(requisitos, start=1):
@@ -47,6 +51,12 @@ def puede_editar_vacante(usuario: Usuario, vacante: Vacante) -> bool:
 
 def actualizar_vacante(sesion: Session, vacante:Vacante, datos:VacanteActualizar) -> Vacante:
   cambios = datos.model_dump(exclude_unset=True)
+  la_publican = cambios.get("estado") == EstadoVacante.PUBLICADA
+  fecha_final = cambios.get("fecha_limite", vacante.fecha_limite)
+
+  if la_publican and fecha_final < date.today():
+    raise  VacanteVencidaError("La fecha límite ya pasó. Elige una nueva fecha para publicarla.")
+
   requisitos_enviados = cambios.pop("requisitos", None)
 
   for campo, valor in cambios.items():
@@ -69,6 +79,14 @@ def listar_vacantes_publicas(sesion: Session) -> list[Vacante]:
   #.all() los convierte en una lista
   return sesion.scalars(consulta).all()
 
+
+def listar_vacantes(sesion: Session, usuario: Usuario) -> list[Vacante]:
+  consulta = select(Vacante).order_by(Vacante.creado_en.desc())
+  if usuario.rol.nombre != "administrador":
+    consulta = consulta.where(Vacante.id_creador == usuario.id)
+
+  return sesion.scalars(consulta).all()
+
 def obtener_vacante_publica_por_id(sesion: Session, id_vacante: int) -> Vacante | None:
   #crear la consulta
   consulta = select(Vacante).where(
@@ -79,3 +97,4 @@ def obtener_vacante_publica_por_id(sesion: Session, id_vacante: int) -> Vacante 
 
   #ejecutar consulta
   return sesion.scalar(consulta)
+

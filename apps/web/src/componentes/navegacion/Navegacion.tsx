@@ -2,23 +2,15 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import EncabezadoAcceso from "./EncabezadoAcceso";
 import EncabezadoSitio from "./EncabezadoSitio";
+import useTema from "../../hooks/useTema";
 
 export default function Navegacion() {
   const { pathname } = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const [temaOscuro, setTemaOscuro] = useState(() => document.documentElement.dataset.tema === "oscuro");
+  //el tema se comparte con el panel del reclutador
+  const { temaOscuro, alternarTema } = useTema();
   const cerrarMenu = () => setMenuAbierto(false);
   const alternarMenu = () => setMenuAbierto((actual) => !actual);
-  const alternarTema = () => setTemaOscuro((actual) => !actual);
-
-  useEffect(() => {
-    document.documentElement.dataset.tema = temaOscuro ? "oscuro" : "claro";
-    try {
-      window.localStorage.setItem("tema-visual", temaOscuro ? "oscuro" : "claro");
-    } catch {
-      /* El cambio sigue disponible si el navegador bloquea el almacenamiento. */
-    }
-  }, [temaOscuro]);
 
   useEffect(() => {
     const pantallaGrande = window.matchMedia("(min-width: 901px)");

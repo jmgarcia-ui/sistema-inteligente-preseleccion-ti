@@ -1,0 +1,367 @@
+/* Marco del panel del reclutador: índice a la izquierda sobre gris, hoja blanca a la derecha. */
+.panel {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  min-height: 100dvh;
+  background-color: var(--fondo-2);
+}
+
+/* ---- Índice ---- */
+.panel__indice {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px 16px;
+}
+
+.panel__marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 8px 0;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  border-radius: 8px;
+}
+
+.panel__marca b,
+.panel__marca small {
+  display: block;
+  line-height: 1.2;
+}
+
+.panel__marca small {
+  color: var(--apoyo);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.panel__signo {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background-color: var(--azul);
+  border-radius: 8px;
+}
+
+.panel__nav {
+  display: grid;
+  gap: 2px;
+  margin-top: 28px;
+}
+
+.panel__enlace {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 0 10px;
+  color: var(--texto);
+  font-size: 14.5px;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.panel__enlace svg {
+  color: var(--apoyo);
+  transition: color 0.15s;
+}
+
+.panel__enlace:hover,
+.panel__enlace:hover svg {
+  color: var(--tinta);
+}
+
+/* La sección actual es la única que "sale" a la hoja */
+.panel__enlace[aria-current="page"] {
+  color: var(--tinta);
+  background-color: var(--superficie);
+  border-color: var(--borde);
+  box-shadow: var(--sombra-suave);
+}
+
+.panel__enlace[aria-current="page"] svg {
+  color: var(--azul-texto);
+}
+
+.panel__pie {
+  display: grid;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--borde);
+}
+
+.panel__util {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 10px;
+  color: var(--texto);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.panel__util svg {
+  color: var(--apoyo);
+}
+
+.panel__util:hover {
+  color: var(--tinta);
+}
+
+/* ---- Cuenta ---- */
+.panel__cuenta {
+  position: relative;
+  margin-top: 6px;
+}
+
+.panel__cuenta-boton {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.panel__cuenta-boton:hover,
+.panel__cuenta-boton[aria-expanded="true"] {
+  background-color: var(--superficie);
+  border-color: var(--borde);
+}
+
+.panel__cuenta-boton > svg {
+  color: var(--apoyo);
+  transition: transform 0.2s var(--curva);
+}
+
+.panel__cuenta-boton[aria-expanded="true"] > svg {
+  transform: rotate(180deg);
+}
+
+.panel__iniciales {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--fondo);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  background-color: var(--tinta);
+  border-radius: 8px;
+}
+
+.panel__quien {
+  min-width: 0;
+}
+
+.panel__quien b {
+  display: block;
+  overflow: hidden;
+  font-size: 13.5px;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel__quien span {
+  display: block;
+  overflow: hidden;
+  color: var(--apoyo);
+  font-size: 12.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel__menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 60;
+  padding: 6px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  box-shadow: 0 16px 30px -24px rgba(15, 23, 42, 0.45), var(--sombra-suave);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.2s var(--curva), visibility 0s 0.2s;
+}
+
+.panel__menu--abierto {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.15s, transform 0.2s var(--curva);
+}
+
+.panel__menu button {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.panel__menu button:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+/* ---- Hoja ---- */
+.panel__hoja {
+  min-width: 0;
+  background-color: var(--superficie);
+  border-left: 1px solid var(--borde);
+}
+
+.panel__contenido {
+  max-width: 1640px;
+  padding: 36px 48px 88px;
+}
+
+/* La barra superior solo existe en pantallas medianas y en celular */
+.panel__barra {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .panel__contenido {
+    padding: 32px 36px 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  .panel {
+    display: block;
+  }
+
+  .panel__indice {
+    display: none;
+  }
+
+  .panel__hoja {
+    min-height: 100dvh;
+    border-left: 0;
+  }
+
+  .panel__barra {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 58px;
+    padding: 0 16px;
+    background-color: var(--encabezado);
+    border-bottom: 1px solid var(--borde);
+    backdrop-filter: blur(10px);
+  }
+
+  .panel__barra .panel__marca {
+    padding: 0;
+  }
+
+  .panel__barra-acciones {
+    display: flex;
+    gap: 8px;
+  }
+
+  .panel__icono {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    color: var(--texto);
+    background-color: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .panel__menu-movil {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    display: grid;
+    gap: 2px;
+    padding: 8px 16px 14px;
+    background-color: var(--fondo-2);
+    border-bottom: 1px solid var(--borde);
+    box-shadow: 0 16px 30px -24px rgba(15, 23, 42, 0.45);
+    animation: panel-caer 0.2s var(--curva) both;
+  }
+
+  .panel__menu-movil .panel__enlace {
+    min-height: 46px;
+  }
+
+  .panel__contenido {
+    padding: 24px 16px 64px;
+  }
+}
+
+@keyframes panel-caer {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel__menu,
+  .panel__menu--abierto,
+  .panel__cuenta-boton > svg {
+    transition: none;
+  }
+
+  .panel__menu-movil {
+    animation: none;
+  }
+}

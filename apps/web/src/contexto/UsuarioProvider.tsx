@@ -1,7 +1,7 @@
 import type { JSX } from "react/jsx-runtime";
 import { UsuarioContext } from "./UsuarioContext";
 import { autenticar, obtenerUsuarioActual } from "../servicios/autenticacion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Credenciales, RespuestaToken, UsuarioAutenticado } from "../tipos/sesion";
 
 type props = {
@@ -33,11 +33,12 @@ function UsuarioProvider({ children }: props) {
     localStorage.setItem(CLAVE_TOKEN, JSON.stringify(respuesta.token));
   }
 
-  function cerrarSesion(){
+  //useCallback mantiene la misma función entre renders: así puede ir en las dependencias de un useEffect
+  const cerrarSesion = useCallback(() => {
     setUsuario(null);
     setToken(null);
-    localStorage.removeItem(CLAVE_TOKEN)
-  }
+    localStorage.removeItem(CLAVE_TOKEN);
+  }, []);
 
   useEffect(() => {
     const guardado = leerToken()

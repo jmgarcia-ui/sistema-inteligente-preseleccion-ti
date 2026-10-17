@@ -15,7 +15,9 @@ export function describirCierre(fechaLimite: string) {
   const dias = Math.round((cierre.getTime() - hoy.getTime()) / 86_400_000);
   const fecha = cierre.toLocaleDateString("es", { day: "numeric", month: "short" });
 
-  if (dias <= 0) return { texto: "Cierra hoy", proximo: true };
+  //la lista pública no muestra vencidas; el panel sí
+  if (dias < 0) return { texto: `Cerró el ${fecha}`, proximo: false };
+  if (dias === 0) return { texto: "Cierra hoy", proximo: true };
   if (dias === 1) return { texto: "Cierra mañana", proximo: true };
   if (dias <= DIAS_CIERRE_PROXIMO) return { texto: `Cierra en ${dias} días · ${fecha}`, proximo: true };
   return { texto: `Cierra el ${fecha}`, proximo: false };

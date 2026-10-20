@@ -1,0 +1,1131 @@
+/* Mis vacantes: la lista con filtros y el editor para crear o editar una vacante. */
+
+/* ================= Lista ================= */
+.mis-vacantes__cabecera {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mis-vacantes__cabecera h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.mis-vacantes__cabecera p {
+  margin: 8px 0 0;
+  color: var(--texto);
+  font-size: 15.5px;
+}
+
+.mis-vacantes__cabecera p b {
+  color: var(--tinta);
+}
+
+/* Filtros por estado y búsqueda, sobre un filete común */
+.mis-vacantes__filtros {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.mis-vacantes__pestanas {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.mis-vacantes__pestana {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  color: var(--texto);
+  font-size: 14.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.mis-vacantes__pestana:hover {
+  color: var(--tinta);
+}
+
+.mis-vacantes__pestana span {
+  min-width: 22px;
+  height: 20px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 6px;
+  color: var(--apoyo);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background-color: var(--fondo-2);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+}
+
+.mis-vacantes__pestana[aria-pressed="true"] {
+  color: var(--azul-texto);
+}
+
+.mis-vacantes__pestana[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  bottom: -1px;
+  left: 8px;
+  height: 2px;
+  background-color: var(--azul);
+  border-radius: 2px;
+}
+
+.mis-vacantes__pestana[aria-pressed="true"] span {
+  color: #fff;
+  background-color: var(--azul);
+  border-color: var(--azul);
+}
+
+.mis-vacantes__buscar {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.mis-vacantes__buscar svg {
+  position: absolute;
+  top: 50%;
+  left: 11px;
+  color: var(--apoyo);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.mis-vacantes__buscar input {
+  width: 260px;
+  min-height: 36px;
+  padding: 0 12px 0 34px;
+  color: var(--tinta);
+  font-size: 14px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 8px;
+}
+
+.mis-vacantes__buscar input::placeholder {
+  color: var(--apoyo);
+}
+
+.mis-vacantes__buscar input:focus {
+  outline: none;
+  border-color: var(--azul);
+  box-shadow: 0 0 0 3px var(--azul-claro);
+}
+
+.mis-vacantes__error {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  color: var(--ambar);
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--ambar-claro);
+  border-radius: 10px;
+}
+
+.mis-vacantes__sin-coincidencias {
+  margin: 0;
+  padding: 28px 0;
+  color: var(--texto);
+}
+
+.mis-vacantes__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cada vacante es una fila: qué es, cuándo cierra, cómo va y qué hacer */
+.fila-vacante {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) 160px minmax(180px, 0.9fr) 190px;
+  gap: 28px;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.fila-vacante__titulo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.fila-vacante__titulo a {
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  transition: color 0.15s;
+}
+
+.fila-vacante__titulo a:hover {
+  color: var(--azul-texto);
+}
+
+.fila-vacante__meta {
+  margin: 4px 0 0;
+  color: var(--apoyo);
+  font-size: 13.5px;
+}
+
+.fila-vacante--cerrada .fila-vacante__titulo a,
+.fila-vacante--cerrada .fila-vacante__cifras b {
+  color: var(--texto);
+}
+
+.fila-vacante__cierre b {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.fila-vacante__cierre small {
+  display: block;
+  color: var(--apoyo);
+  font-size: 12.5px;
+}
+
+.fila-vacante__cierre--pronto b {
+  color: var(--ambar);
+}
+
+.fila-vacante__cifras {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fila-vacante__cifras b {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.fila-vacante__cifras b span {
+  margin-left: 4px;
+  color: var(--apoyo);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.fila-vacante__cifras small {
+  color: var(--ambar);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fila-vacante__cifras small.fila-vacante__al-dia {
+  color: var(--apoyo);
+  font-weight: 600;
+}
+
+.fila-vacante__sin-postulaciones {
+  color: var(--apoyo);
+  font-size: 13.5px;
+}
+
+.fila-vacante__acciones {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+/* Publicada pero vencida: ya no recibe postulaciones; se sugiere cerrarla o extenderla */
+.fila-vacante__alerta {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: -6px;
+  padding: 10px 14px;
+  color: var(--ambar);
+  font-size: 13.5px;
+  font-weight: 600;
+  background-color: var(--ambar-claro);
+  border-radius: 10px;
+}
+
+.fila-vacante__alerta button,
+.fila-vacante__alerta a {
+  padding: 0;
+  color: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+/* Menú ⋮ con las acciones menos frecuentes */
+.mas-acciones {
+  position: relative;
+}
+
+.mas-acciones__boton {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--texto);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.mas-acciones__boton:hover,
+.mas-acciones__boton[aria-expanded="true"] {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+  border-color: var(--borde);
+}
+
+.mas-acciones__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 30;
+  width: 230px;
+  padding: 6px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  box-shadow: 0 16px 30px -24px rgba(15, 23, 42, 0.45), var(--sombra-suave);
+  animation: mis-vacantes-asomar 0.16s var(--curva) both;
+}
+
+.mas-acciones__menu a,
+.mas-acciones__menu button {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.mas-acciones__menu a:hover,
+.mas-acciones__menu button:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+.mas-acciones__menu svg {
+  color: var(--apoyo);
+}
+
+@keyframes mis-vacantes-asomar {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Aviso flotante tras copiar, publicar o cerrar */
+.mis-vacantes__toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  color: var(--fondo);
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--tinta);
+  border-radius: 10px;
+  box-shadow: var(--sombra);
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.3s var(--curva);
+}
+
+.mis-vacantes__toast--visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.mis-vacantes__toast svg {
+  color: var(--verde);
+}
+
+/* Sin vacantes: enseña qué hacer */
+.mis-vacantes__vacio {
+  max-width: 640px;
+  margin-top: 28px;
+  padding: 40px 0;
+  border-top: 1px solid var(--tinta);
+}
+
+.mis-vacantes__vacio h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.mis-vacantes__vacio p {
+  margin: 8px 0 0;
+  color: var(--texto);
+}
+
+.mis-vacantes__vacio ol {
+  display: grid;
+  gap: 10px;
+  margin: 20px 0 24px;
+  padding: 0;
+  list-style: none;
+  counter-reset: paso;
+}
+
+.mis-vacantes__vacio li {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 12px;
+  align-items: start;
+  color: var(--texto);
+  font-size: 14.5px;
+  counter-increment: paso;
+}
+
+.mis-vacantes__vacio li::before {
+  content: counter(paso);
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  color: var(--azul-texto);
+  font-size: 12px;
+  font-weight: 800;
+  background-color: var(--azul-claro);
+  border-radius: 50%;
+}
+
+.mis-vacantes__vacio li b {
+  color: var(--tinta);
+}
+
+.mis-vacantes__aviso {
+  max-width: 560px;
+  padding: 32px 0;
+}
+
+.mis-vacantes__aviso h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.mis-vacantes__aviso p {
+  margin: 10px 0 22px;
+  color: var(--texto);
+}
+
+/* ================= Editor ================= */
+.editor-vacante__volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: -6px;
+  padding: 6px 10px 6px 6px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.editor-vacante__volver:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+.editor-vacante h1 {
+  margin: 12px 0 0;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.editor-vacante__sub {
+  margin: 8px 0 0;
+  color: var(--texto);
+}
+
+/* Formulario a la izquierda; a la derecha, así la verá el candidato */
+.form-vacante {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+  gap: 48px;
+  align-items: start;
+  margin-top: 8px;
+}
+
+.form-vacante__campos {
+  display: grid;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.form-vacante__resumen-error {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 0;
+  padding: 12px 14px;
+  color: var(--rojo);
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--rojo-claro);
+  border-radius: 10px;
+}
+
+.form-vacante__resumen-error svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.form-vacante__bloque {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.form-vacante__bloque legend {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  border-bottom: 1px solid var(--tinta);
+}
+
+.form-vacante__bloque legend small {
+  color: var(--apoyo);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.form-vacante__campo {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.form-vacante__campo > label,
+.form-vacante__etiqueta {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.form-vacante__campo > label span {
+  color: var(--apoyo);
+  font-weight: 500;
+}
+
+.form-vacante__campo input,
+.form-vacante__campo textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  color: var(--tinta);
+  font-size: 15px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-vacante__campo textarea {
+  min-height: 140px;
+  padding: 12px 14px;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.form-vacante__campo input:hover,
+.form-vacante__campo textarea:hover {
+  border-color: var(--apoyo);
+}
+
+.form-vacante__campo input:focus,
+.form-vacante__campo textarea:focus {
+  outline: none;
+  border-color: var(--azul);
+  box-shadow: 0 0 0 4px var(--azul-claro);
+}
+
+.form-vacante__campo input::placeholder,
+.form-vacante__campo textarea::placeholder {
+  color: var(--apoyo);
+}
+
+.form-vacante__campo--error input,
+.form-vacante__campo--error textarea {
+  border-color: var(--rojo);
+  box-shadow: 0 0 0 4px var(--rojo-claro);
+}
+
+.form-vacante__pie-campo {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--apoyo);
+  font-size: 12.5px;
+}
+
+.form-vacante__pie-campo span:last-child {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.form-vacante__error {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  margin: 0;
+  color: var(--rojo);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.form-vacante__error svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.form-vacante__fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+/* Modalidad: las tres opciones a la vista */
+.form-vacante__segmentado {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 4px;
+  background-color: var(--fondo-2);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 10px;
+}
+
+.form-vacante__segmentado label {
+  position: relative;
+  min-height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.form-vacante__segmentado input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-vacante__segmentado label:has(input:checked) {
+  color: var(--tinta);
+  background-color: var(--superficie);
+  box-shadow: var(--sombra-suave);
+}
+
+.form-vacante__segmentado label:has(input:focus-visible) {
+  outline: 2px solid var(--azul);
+  outline-offset: 1px;
+}
+
+/* Requisitos: una lista ordenable; cada uno es imprescindible o deseable */
+.form-vacante__requisitos {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.requisito-editable {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 8px 8px 10px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  transition: border-color 0.15s;
+}
+
+.requisito-editable:focus-within {
+  border-color: var(--azul);
+}
+
+.requisito-editable__n {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  color: var(--azul-texto);
+  font-size: 12px;
+  font-weight: 800;
+  background-color: var(--azul-claro);
+  border-radius: 50%;
+}
+
+.requisito-editable input {
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 4px;
+  color: var(--tinta);
+  font-size: 14.5px;
+  background: transparent;
+  border: 0;
+}
+
+.requisito-editable input:focus {
+  outline: none;
+}
+
+.requisito-editable input::placeholder {
+  color: var(--apoyo);
+}
+
+.requisito-editable__tipo {
+  display: inline-flex;
+  padding: 3px;
+  background-color: var(--fondo-2);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+.requisito-editable__tipo button {
+  min-height: 28px;
+  padding: 0 10px;
+  color: var(--apoyo);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.requisito-editable__tipo button[aria-pressed="true"] {
+  color: var(--tinta);
+  background-color: var(--superficie);
+  box-shadow: var(--sombra-suave);
+}
+
+.requisito-editable__mover {
+  display: flex;
+  gap: 2px;
+}
+
+.requisito-editable__mover button {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: var(--texto);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.requisito-editable__mover button:hover:not(:disabled) {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+  border-color: var(--borde);
+}
+
+.requisito-editable__mover button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.form-vacante__agregar {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 12px;
+  color: var(--azul-texto);
+  font-size: 14px;
+  font-weight: 700;
+  background: transparent;
+  border: 1px dashed var(--borde-fuerte);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.form-vacante__agregar:hover {
+  border-color: var(--azul);
+}
+
+/* Pie fijo: las acciones siempre a la vista */
+.form-vacante__pie {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 0;
+  background-color: var(--superficie);
+  border-top: 1px solid var(--borde);
+}
+
+.form-vacante__pie p {
+  max-width: 42ch;
+  margin: 0;
+  color: var(--apoyo);
+  font-size: 13px;
+}
+
+.form-vacante__botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.boton--fantasma {
+  color: var(--texto);
+  background: transparent;
+}
+
+.boton--fantasma:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+.form-vacante__mensaje {
+  margin: 0;
+  padding: 12px 14px;
+  color: var(--ambar);
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--ambar-claro);
+  border-radius: 10px;
+}
+
+/* Vista previa: así la verá el candidato */
+.previa-vacante {
+  position: sticky;
+  top: 24px;
+  margin-top: 20px;
+}
+
+.previa-vacante__titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  border-bottom: 1px solid var(--tinta);
+}
+
+.previa-vacante__titulo small {
+  color: var(--apoyo);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.previa-vacante__marco {
+  margin-top: 16px;
+  overflow: hidden;
+  background-color: var(--fondo-2);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  box-shadow: var(--sombra);
+}
+
+.previa-vacante__ruta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  color: var(--apoyo);
+  font-size: 12.5px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.previa-vacante__ruta i {
+  width: 8px;
+  height: 8px;
+  background-color: var(--borde-fuerte);
+  border-radius: 50%;
+}
+
+.previa-vacante__cuerpo {
+  padding: 22px;
+  background-color: var(--superficie);
+}
+
+.previa-vacante__cuerpo h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+}
+
+.previa-vacante__vacio {
+  color: var(--apoyo);
+}
+
+.previa-vacante__datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.previa-vacante__datos span {
+  padding: 4px 10px;
+  color: var(--texto);
+  font-size: 12.5px;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+}
+
+.previa-vacante__cuerpo h4 {
+  margin: 20px 0 6px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.previa-vacante__cuerpo p {
+  margin: 0;
+  color: var(--texto);
+  font-size: 14px;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.previa-vacante__cuerpo ol {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.previa-vacante__cuerpo li {
+  display: grid;
+  grid-template-columns: 22px 1fr auto;
+  gap: 10px;
+  align-items: start;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.previa-vacante__cuerpo li i {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  color: var(--azul-texto);
+  font-size: 11px;
+  font-weight: 800;
+  font-style: normal;
+  background-color: var(--azul-claro);
+  border-radius: 50%;
+}
+
+.previa-vacante__cuerpo li small {
+  padding: 1px 8px;
+  color: var(--apoyo);
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px dashed var(--borde-fuerte);
+  border-radius: 999px;
+}
+
+.previa-vacante__nota {
+  margin: 12px 0 0;
+  color: var(--apoyo);
+  font-size: 12.5px;
+}
+
+/* ================= Responsivo ================= */
+@media (max-width: 1280px) {
+  /* La fila pasa a dos líneas: qué es arriba; cierre, avance y acciones debajo */
+  .fila-vacante {
+    grid-template-columns: 150px minmax(0, 1fr) 190px;
+    gap: 12px 28px;
+  }
+
+  .fila-vacante__principal {
+    grid-column: 1 / -1;
+  }
+
+  .form-vacante {
+    grid-template-columns: 1fr;
+  }
+
+  .previa-vacante {
+    position: static;
+  }
+}
+
+@media (max-width: 1100px) {
+  .mis-vacantes__filtros {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+    border-bottom: 0;
+  }
+
+  .mis-vacantes__pestanas {
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .mis-vacantes__buscar {
+    margin: 0;
+  }
+
+  .mis-vacantes__buscar input {
+    width: min(100%, 360px);
+  }
+}
+
+@media (max-width: 900px) {
+  .mis-vacantes__buscar input {
+    width: 100%;
+  }
+
+  /* La fila se vuelve una ficha: título arriba, cierre y avance lado a lado, acciones abajo */
+  .fila-vacante {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+  }
+
+  .fila-vacante__acciones {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  .form-vacante__fila {
+    grid-template-columns: 1fr;
+  }
+
+  .requisito-editable {
+    grid-template-columns: 26px minmax(0, 1fr) auto;
+    row-gap: 6px;
+  }
+
+  .requisito-editable__tipo {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .requisito-editable__mover {
+    grid-row: 1;
+    grid-column: 3;
+  }
+
+  .form-vacante__pie {
+    margin-inline: -16px;
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .form-vacante__pie p {
+    display: none;
+  }
+
+  .form-vacante__botones {
+    width: 100%;
+  }
+
+  .form-vacante__botones .boton {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mas-acciones__menu {
+    animation: none;
+  }
+
+  .mis-vacantes__toast {
+    transition: none;
+  }
+}

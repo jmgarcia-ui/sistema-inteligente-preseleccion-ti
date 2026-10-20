@@ -491,6 +491,107 @@ html[data-tema="oscuro"] .pagina-vacante {
   color: var(--verde);
 }
 
+/* CV: una sola fila para elegir o soltar el PDF; una vez elegido muestra nombre y peso */
+.postular__cv {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 58px;
+  padding: 10px 12px 10px 14px;
+  color: var(--apoyo);
+  background-color: var(--fondo-2);
+  border: 1px dashed var(--borde-fuerte);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.25s var(--curva);
+}
+
+.postular__cv:hover,
+.postular__cv--arrastrando {
+  color: var(--azul-texto);
+  background-color: var(--azul-claro);
+  border-color: var(--azul);
+}
+
+/* el input real está oculto: el foco del teclado se muestra en la zona */
+.postular__campo:has(#cv:focus-visible) .postular__cv {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 4px var(--azul-claro);
+}
+
+.postular__cv-texto {
+  min-width: 0;
+}
+
+.postular__cv-texto b {
+  display: block;
+  overflow: hidden;
+  color: var(--tinta);
+  font-size: 14.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.postular__cv-texto small {
+  display: block;
+  color: var(--apoyo);
+  font-size: 12.5px;
+}
+
+.postular__cv-boton {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  color: var(--tinta);
+  font-size: 13.5px;
+  font-weight: 700;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 8px;
+}
+
+/* elegido: borde continuo y el ícono en verde, como los enlaces completos */
+.postular__cv--listo {
+  color: var(--verde);
+  background-color: var(--superficie);
+  border-style: solid;
+  border-color: var(--borde-fuerte);
+  cursor: default;
+  animation: asomar 0.3s var(--curva) both;
+}
+
+.postular__cv--listo:hover {
+  color: var(--verde);
+  background-color: var(--superficie);
+  border-color: var(--borde-fuerte);
+}
+
+.postular__cv-quitar {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--apoyo);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.postular__cv-quitar:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+  border-color: var(--borde);
+}
+
+.postular__campo--error .postular__cv {
+  border-color: var(--rojo);
+  box-shadow: 0 0 0 4px var(--rojo-claro);
+}
+
 .postular__cierre {
   display: grid;
   gap: 10px;
@@ -904,7 +1005,7 @@ html[data-tema="oscuro"] .postular__enviar:disabled {
 }
 
 /* Pantallas bajas (laptops): el formulario se compacta para seguir viéndose entero */
-@media (min-width: 901px) and (max-height: 800px) {
+@media (min-width: 901px) and (max-height: 920px) {
   .pagina-vacante {
     padding-top: 16px;
   }
@@ -946,6 +1047,11 @@ html[data-tema="oscuro"] .postular__enviar:disabled {
     padding: 10px 12px;
   }
 
+  .postular__cv {
+    min-height: 50px;
+    padding-block: 6px;
+  }
+
   .postular__enviar {
     min-height: 44px;
   }
@@ -963,6 +1069,24 @@ html[data-tema="oscuro"] .postular__enviar:disabled {
 
   .postular__pista {
     display: none;
+  }
+
+  /* la barra de avance es ayuda, no información necesaria: se cede su espacio a los campos */
+  .postular__progreso {
+    display: none;
+  }
+
+  .postular {
+    --alto-campo: 38px;
+  }
+
+  .postular__formulario {
+    gap: 10px;
+  }
+
+  .postular__cv {
+    min-height: 44px;
+    padding-block: 4px;
   }
 }
 

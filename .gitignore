@@ -38,3 +38,5 @@ __pycache__/
 
 #impeccable
 .impeccable/
+# CV guardados en desarrollo (datos personales: nunca al repositorio)
+apps/api/almacenamiento/

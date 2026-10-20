@@ -1,9 +1,111 @@
 /* Marco del panel del reclutador: índice a la izquierda sobre gris, hoja blanca a la derecha. */
 .panel {
+  /* Segmentos de estado de las postulaciones: gris para lo que no avanza, ámbar y verde para el flujo */
+  --seg-recibida: #94a3b8;
+  --seg-revision: var(--ambar);
+  --seg-presel: var(--verde);
+  --seg-descartada: #dbe2ea;
+  /* El rojo solo marca errores de formulario */
+  --rojo: #b91c1c;
+  --rojo-claro: #fef2f2;
+
   display: grid;
   grid-template-columns: 232px minmax(0, 1fr);
   min-height: 100dvh;
   background-color: var(--fondo-2);
+}
+
+html[data-tema="oscuro"] .panel {
+  --seg-recibida: #64748b;
+  --seg-descartada: #2a3548;
+  --rojo: #fca5a5;
+  --rojo-claro: rgba(239, 68, 68, 0.12);
+}
+
+/* ---- Piezas que comparten las páginas del panel ---- */
+
+/* Barra con un segmento por estado de postulación, del ancho de su cantidad */
+.barra-estados {
+  display: flex;
+  gap: 2px;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.barra-estados i {
+  transform-origin: left;
+  animation: panel-llenar 0.7s var(--curva) both;
+}
+
+.barra-estados i:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.barra-estados i:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+.barra-estados i:nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+.barra-estados--vacia {
+  background: repeating-linear-gradient(90deg, var(--borde-fuerte) 0 4px, transparent 4px 8px);
+  opacity: 0.7;
+}
+
+@keyframes panel-llenar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Carga: la forma de la página, sin datos, con un brillo que la recorre */
+.esqueleto-panel {
+  display: block;
+  background: linear-gradient(90deg, var(--borde) 25%, var(--fondo-2) 50%, var(--borde) 75%);
+  background-size: 300% 100%;
+  border-radius: 8px;
+  animation: panel-brillar 1.6s ease-in-out infinite;
+}
+
+@keyframes panel-brillar {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Estado de una vacante: verde publicada, ámbar borrador, neutro cerrada */
+.etiqueta-estado {
+  display: inline-block;
+  padding: 1px 9px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: 999px;
+}
+
+.etiqueta-estado--publicada {
+  color: var(--verde);
+  background-color: var(--verde-claro);
+}
+
+.etiqueta-estado--borrador {
+  color: var(--ambar);
+  background-color: var(--ambar-claro);
+}
+
+.etiqueta-estado--cerrada {
+  color: var(--apoyo);
+  background-color: var(--fondo-2);
+  border: 1px solid var(--borde);
 }
 
 /* ---- Índice ---- */
@@ -355,6 +457,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .barra-estados i,
+  .esqueleto-panel {
+    animation: none;
+  }
+
   .panel__menu,
   .panel__menu--abierto,
   .panel__cuenta-boton > svg {

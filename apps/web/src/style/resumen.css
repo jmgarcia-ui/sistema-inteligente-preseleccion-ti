@@ -1,17 +1,4 @@
 /* Resumen del panel: titular con la situación del día, cola de lectura y matriz de vacantes. */
-.resumen {
-  /* Segmentos de estado: gris para lo que no avanza, ámbar y verde para el flujo */
-  --seg-recibida: #94a3b8;
-  --seg-revision: var(--ambar);
-  --seg-presel: var(--verde);
-  --seg-descartada: #dbe2ea;
-}
-
-html[data-tema="oscuro"] .resumen {
-  --seg-recibida: #64748b;
-  --seg-descartada: #2a3548;
-}
-
 .resumen__fecha {
   margin: 0;
   color: var(--apoyo);
@@ -288,45 +275,6 @@ html[data-tema="oscuro"] .resumen {
   min-width: 240px;
 }
 
-.barra-estados {
-  display: flex;
-  gap: 2px;
-  height: 8px;
-  overflow: hidden;
-  border-radius: 2px;
-}
-
-.barra-estados i {
-  transform-origin: left;
-  animation: resumen-llenar 0.7s var(--curva) both;
-}
-
-.barra-estados i:nth-child(2) {
-  animation-delay: 0.05s;
-}
-
-.barra-estados i:nth-child(3) {
-  animation-delay: 0.1s;
-}
-
-.barra-estados i:nth-child(4) {
-  animation-delay: 0.15s;
-}
-
-.barra-estados--vacia {
-  background: repeating-linear-gradient(90deg, var(--borde-fuerte) 0 4px, transparent 4px 8px);
-  opacity: 0.7;
-}
-
-@keyframes resumen-llenar {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: none;
-  }
-}
-
 /* ---- Avisos y carga ---- */
 .resumen__aviso {
   max-width: 560px;
@@ -346,22 +294,6 @@ html[data-tema="oscuro"] .resumen {
   color: var(--texto);
 }
 
-.esqueleto-panel {
-  display: block;
-  background: linear-gradient(90deg, var(--borde) 25%, var(--fondo-2) 50%, var(--borde) 75%);
-  background-size: 300% 100%;
-  border-radius: 8px;
-  animation: resumen-brillar 1.6s ease-in-out infinite;
-}
-
-@keyframes resumen-brillar {
-  from {
-    background-position: 100% 0;
-  }
-  to {
-    background-position: 0 0;
-  }
-}
 
 /* ---- Responsivo ---- */
 @media (max-width: 1400px) {
@@ -432,12 +364,5 @@ html[data-tema="oscuro"] .resumen {
 @media (max-width: 560px) {
   .cola__fila {
     grid-template-columns: 60px minmax(0, 1fr);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .barra-estados i,
-  .esqueleto-panel {
-    animation: none;
   }
 }

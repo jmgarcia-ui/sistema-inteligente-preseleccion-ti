@@ -30,3 +30,16 @@ export function requisitosPrincipales(requisitos: Requisito[], cantidad: number)
   );
   return { visibles: ordenados.slice(0, cantidad), restantes: Math.max(ordenados.length - cantidad, 0) };
 }
+
+//la fecha de hoy como "2026-10-19", el mismo formato que usan la API y los <input type="date">
+export function hoyIso() {
+  const hoy = new Date();
+  const mes = String(hoy.getMonth() + 1).padStart(2, "0");
+  const dia = String(hoy.getDate()).padStart(2, "0");
+  return `${hoy.getFullYear()}-${mes}-${dia}`;
+}
+
+//"15 nov": la fecha límite en corto
+export function fechaCorta(fecha: string) {
+  return leerFecha(fecha).toLocaleDateString("es", { day: "numeric", month: "short" });
+}

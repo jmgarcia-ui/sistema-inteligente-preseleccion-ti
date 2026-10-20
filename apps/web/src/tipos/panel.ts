@@ -1,5 +1,7 @@
 //respuesta de GET /panel/resumen (esquemas/panel.py en la API)
 
+import type { Modalidad, Requisito } from "./vacantes";
+
 export type EstadoVacante = "borrador" | "publicada" | "cerrada";
 
 export type EstadoPostulacion = "recibida" | "en_revision" | "preseleccionada" | "descartada" | "retirada";
@@ -39,3 +41,36 @@ export type ResumenPanel = {
   vacantes: VacanteResumen[];
   por_revisar: PostulacionRevisar[];
 };
+
+export type VacanteGestion = VacanteResumen & {
+  modalidad: Modalidad;
+  ubicacion: string | null;
+  creado_en: string;
+}
+//vacante completa para editarla (VacanteRespuesta en la API): GET /panel/vacantes/{id}
+export type VacanteDetalle = {
+  id: number;
+  id_creador: number;
+  titulo: string;
+  descripcion: string;
+  requisitos: Requisito[];
+  modalidad: Modalidad;
+  ubicacion: string | null;
+  estado: EstadoVacante;
+  fecha_limite: string;
+  creado_en: string;
+  actualizado_en: string;
+};
+
+//lo que se envía al crear (POST /vacantes); el orden de los requisitos lo pone la API según su posición
+export type VacanteDatos = {
+  titulo: string;
+  descripcion: string;
+  requisitos: { descripcion: string; obligatorio: boolean }[];
+  modalidad: Modalidad;
+  ubicacion: string | null;
+  fecha_limite: string;
+};
+
+//al editar (PATCH /vacantes/{id}) solo se envía lo que cambió, y también el estado
+export type VacanteCambios = Partial<VacanteDatos> & { estado?: EstadoVacante };

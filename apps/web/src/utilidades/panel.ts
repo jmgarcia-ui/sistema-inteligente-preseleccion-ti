@@ -1,4 +1,4 @@
-import type { CandidatoResumen } from "../tipos/panel";
+import type { CandidatoResumen, EstadoPostulacion, VacanteResumen } from "../tipos/panel";
 
 //desde los 2 días de espera se marca en ámbar
 export const DIAS_ESPERA_LARGA = 2;
@@ -27,4 +27,27 @@ export function describirFuentes(candidato: CandidatoResumen) {
     candidato.portafolio_url && "Portafolio",
   ].filter(Boolean);
   return fuentes.join(" · ");
+}
+
+//todas las postulaciones de una vacante, en cualquier estado
+export function totalDeVacante(vacante: VacanteResumen) {
+  return Object.values(vacante.conteos).reduce((total, cantidad) => total + (cantidad ?? 0), 0);
+}
+
+//"1 postulación", "12 postulaciones"
+export function textoPostulaciones(cantidad: number) {
+  return `${cantidad} ${cantidad === 1 ? "postulación" : "postulaciones"}`;
+}
+
+//los estados que se dibujan, en el orden del proceso; "color" es la variable CSS del segmento (panel.css)
+export const SEGMENTOS: { clave: EstadoPostulacion; nombre: string; color: string }[] = [
+  { clave: "recibida", nombre: "Recibidas", color: "var(--seg-recibida)" },
+  { clave: "en_revision", nombre: "En revisión", color: "var(--seg-revision)" },
+  { clave: "preseleccionada", nombre: "Preseleccionadas", color: "var(--seg-presel)" },
+  { clave: "descartada", nombre: "Descartadas", color: "var(--seg-descartada)" },
+];
+
+//"2 oct": el día en que se creó algo, en la hora local de quien mira
+export function fechaDeCreacion(creadoEn: string) {
+  return leerFechaUtc(creadoEn).toLocaleDateString("es", { day: "numeric", month: "short" });
 }

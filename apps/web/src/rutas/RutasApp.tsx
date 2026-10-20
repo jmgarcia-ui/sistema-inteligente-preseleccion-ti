@@ -10,6 +10,7 @@ import VacantesReclutador from "../pages/VacantesReclutador";
 import CandidatosReclutador from "../pages/CandidatosReclutador";
 import ActividadReclutador from "../pages/ActividadReclutador";
 import DisenoPanel from "../componentes/panel/DisenoPanel";
+import EditorVacante from "../pages/EditorVacante";
 
 export default function RutasApp() {
   return (
@@ -22,6 +23,8 @@ export default function RutasApp() {
         <Route element={<DisenoPanel />}>
           <Route path="/reclutador/resumen" element={<ResumenReclutador />} />
           <Route path="/reclutador/vacantes" element={<VacantesReclutador />} />
+          <Route path="/reclutador/vacantes/nueva" element={<EditorVacante />} />
+          <Route path="/reclutador/vacantes/:idVacante/editar" element={<EditorVacante />} />
           <Route path="/reclutador/candidatos" element={<CandidatosReclutador />} />
           <Route path="/reclutador/actividad" element={<ActividadReclutador />} />
         </Route>

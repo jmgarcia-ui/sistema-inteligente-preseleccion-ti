@@ -1,6 +1,6 @@
-import { useState, type CSSProperties, type FormEvent } from "react";
+import { useRef, useState, type CSSProperties, type DragEvent, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { AlertCircle, Check, Link2, LoaderCircle } from "lucide-react";
+import { AlertCircle, Check, FileText, FileUp, Link2, LoaderCircle, X } from "lucide-react";
 import crearPostulacion from "../../servicios/postulaciones";
 import type { CandidatoPostulacion, PostulacionCrear } from "../../tipos/postulacion";
 
@@ -15,6 +15,7 @@ type Errores = {
   apellidos?: string;
   correo?: string;
   enlaces?: string;
+  cv?: string;
 };
 
 const MENSAJES: Required<Errores> = {
@@ -22,7 +23,19 @@ const MENSAJES: Required<Errores> = {
   apellidos: "Escribe tus apellidos.",
   correo: "Revisa tu correo: debe ser como nombre@correo.com.",
   enlaces: "Agrega al menos un enlace: LinkedIn, GitHub o portafolio.",
+  cv: "Adjunta tu CV en PDF.",
 };
+
+//el mismo límite que la API
+const TAMANO_MAXIMO_CV = 5 * 1024 * 1024;
+
+//revisa el archivo elegido; devuelve el mensaje de error o null si está bien
+function revisarCv(archivo: File | null): string | null {
+  if (archivo === null) return MENSAJES.cv;
+  if (!archivo.name.toLowerCase().endsWith(".pdf")) return "Tu CV tiene que ser un archivo PDF.";
+  if (archivo.size > TAMANO_MAXIMO_CV) return "Tu CV pesa más de 5 MB. Sube una versión más liviana.";
+  return null;
+}
 
 const FORMATO_CORREO = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -34,6 +47,7 @@ function FormularioPostulacion({ idVacante, tituloVacante }: Propiedades) {
   const [linkedin, setLinkedin] = useState("");
   const [portafolio, setPortafolio] = useState("");
   const [github, setGithub] = useState("");
+  const [cv, setCv] = useState<File | null>(null);
   const [aceptaTerminos, setAceptaTerminos] = useState(false);
   //¿hay un envío en curso? evita el doble clic
   const [enviando, setEnviando] = useState(false);
@@ -50,6 +64,8 @@ function FormularioPostulacion({ idVacante, tituloVacante }: Propiedades) {
     if (!correo.trim()) nuevos.correo = "Escribe tu correo.";
     else if (!FORMATO_CORREO.test(correo.trim())) nuevos.correo = MENSAJES.correo;
     if (!linkedin.trim() && !github.trim() && !portafolio.trim()) nuevos.enlaces = MENSAJES.enlaces;
+    const errorCv = revisarCv(cv);
+    if (errorCv) nuevos.cv = errorCv;
     return nuevos;
   }
 
@@ -80,7 +96,7 @@ function FormularioPostulacion({ idVacante, tituloVacante }: Propiedades) {
     setEnviando(true);
     setMensajeError("");
 
-    crearPostulacion(postulacion_data)
+    crearPostulacion(postulacion_data, cv!)
       .then(() => {
         setEnviado(true);
       })
@@ -92,11 +108,18 @@ function FormularioPostulacion({ idVacante, tituloVacante }: Propiedades) {
       .finally(() => setEnviando(false));
   }
 
-  //avance de la barra: cuántos de los 4 obligatorios ya están completos
+  //el CV elegido (o soltado) se revisa al momento, para avisar sin esperar al envío
+  function elegirCv(archivo: File | null) {
+    setCv(archivo);
+    setErrores((anteriores) => ({ ...anteriores, cv: archivo ? (revisarCv(archivo) ?? undefined) : undefined }));
+  }
+
+  //avance de la barra: cuántos de los 5 obligatorios ya están completos
   const completos = [
     nombres.trim(),
     apellidos.trim(),
     FORMATO_CORREO.test(correo.trim()),
+    revisarCv(cv) === null,
     linkedin.trim() || github.trim() || portafolio.trim(),
   ].filter(Boolean).length;
 
@@ -132,13 +155,13 @@ function FormularioPostulacion({ idVacante, tituloVacante }: Propiedades) {
     <>
       <h2 id="titulo-postular">Postula a esta vacante</h2>
       <p className="postular__sub">Toma unos minutos. No necesitas crear una cuenta.</p>
-      <div className={`postular__progreso ${completos === 4 ? "postular__progreso--completo" : ""}`}>
+      <div className={`postular__progreso ${completos === 5 ? "postular__progreso--completo" : ""}`}>
         <div className="postular__progreso-texto">
           <span>Campos obligatorios</span>
-          <b>{completos} de 4</b>
+          <b>{completos} de 5</b>
         </div>
         <div className="postular__barra">
-          <i style={{ "--avance": completos / 4 } as CSSProperties} />
+          <i style={{ "--avance": completos / 5 } as CSSProperties} />
         </div>
       </div>
       <form className="postular__formulario" onSubmit={enviar} noValidate>
@@ -202,10 +225,11 @@ function FormularioPostulacion({ idVacante, tituloVacante }: Propiedades) {
             </div>
           </div>
         </fieldset>
-        <fieldset className={`postular__grupo ${errores.enlaces ? "postular__grupo--error" : ""}`}>
+        <fieldset className={`postular__grupo ${errores.cv || errores.enlaces ? "postular__grupo--error" : ""}`}>
           <legend className="postular__leyenda">
-            Enlaces profesionales <small>al menos uno · nos ayudan a encontrar evidencia</small>
+            Tu CV y enlaces <small>CV en PDF de hasta 5 MB · al menos un enlace</small>
           </legend>
+          <CampoCv archivo={cv} error={errores.cv} alElegir={elegirCv} />
           <div className="postular__enlaces">
             <CampoEnlace id="linkedin" etiqueta="LinkedIn" ejemplo="linkedin.com/…" valor={linkedin} cambiar={setLinkedin} />
             <CampoEnlace id="github" etiqueta="GitHub" ejemplo="github.com/…" valor={github} cambiar={setGithub} />
@@ -271,13 +295,89 @@ function CampoEnlace({ id, etiqueta, ejemplo, valor, cambiar }: PropiedadesEnlac
   );
 }
 
+type PropiedadesCv = {
+  archivo: File | null;
+  error?: string;
+  alElegir: (archivo: File | null) => void;
+};
+
+//zona para elegir o soltar el CV; una vez elegido muestra el nombre y el peso
+function CampoCv({ archivo, error, alElegir }: PropiedadesCv) {
+  const entrada = useRef<HTMLInputElement>(null);
+  const [arrastrando, setArrastrando] = useState(false);
+
+  function soltar(evento: DragEvent<HTMLLabelElement>) {
+    evento.preventDefault();
+    setArrastrando(false);
+    alElegir(evento.dataTransfer.files[0] ?? null);
+  }
+
+  function quitar() {
+    alElegir(null);
+    //se limpia el input para poder volver a elegir el mismo archivo
+    if (entrada.current) entrada.current.value = "";
+  }
+
+  return (
+    <div className={`postular__campo ${error ? "postular__campo--error" : ""}`}>
+      {archivo && !error ? (
+        <div className="postular__cv postular__cv--listo">
+          <FileText size={20} aria-hidden="true" />
+          <span className="postular__cv-texto">
+            <b>{archivo.name}</b>
+            <small>{pesoLegible(archivo.size)} · listo para enviar</small>
+          </span>
+          <button className="postular__cv-quitar" type="button" aria-label="Quitar el CV" onClick={quitar}>
+            <X size={16} aria-hidden="true" />
+          </button>
+        </div>
+      ) : (
+        <label
+          className={`postular__cv ${arrastrando ? "postular__cv--arrastrando" : ""}`}
+          htmlFor="cv"
+          onDragOver={(evento) => {
+            evento.preventDefault();
+            setArrastrando(true);
+          }}
+          onDragLeave={() => setArrastrando(false)}
+          onDrop={soltar}>
+          <FileUp size={20} aria-hidden="true" />
+          <span className="postular__cv-texto">
+            <b>Elige tu CV</b>
+            <small>o arrástralo aquí</small>
+          </span>
+          <span className="postular__cv-boton">Buscar archivo</span>
+        </label>
+      )}
+      <input
+        ref={entrada}
+        className="solo-lectores"
+        id="cv"
+        type="file"
+        accept="application/pdf,.pdf"
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? "cv-error" : undefined}
+        onChange={(evento) => alElegir(evento.target.files?.[0] ?? null)}
+      />
+      {error && <ErrorCampo id="cv-error" texto={error} />}
+    </div>
+  );
+}
+
+//"1,2 MB" o "340 KB"
+function pesoLegible(bytes: number) {
+  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toLocaleString("es", { maximumFractionDigits: 1 })} MB`;
+  return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+}
+
 //traduce la lista "detail" de un 422 a mensajes por campo
-//loc termina en el nombre del campo; solo ["body"] es el error de enlaces
-function erroresDeLaApi(detalle: { loc: string[] }[]): Errores {
+//loc termina en el nombre del campo; solo ["body"] es el error de enlaces; el del CV trae su propio mensaje
+function erroresDeLaApi(detalle: { loc: string[]; msg: string }[]): Errores {
   const nuevos: Errores = {};
   for (const item of detalle) {
     const campo = item.loc[item.loc.length - 1];
     if (campo === "nombres" || campo === "apellidos" || campo === "correo") nuevos[campo] = MENSAJES[campo];
+    else if (campo === "cv") nuevos.cv = item.msg;
     else if (campo === "body") nuevos.enlaces = MENSAJES.enlaces;
   }
   return nuevos;

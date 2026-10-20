@@ -3,18 +3,14 @@ import { Link } from "react-router-dom";
 import { ArrowRight, RefreshCw } from "lucide-react";
 import "../style/resumen.css";
 import { UsuarioContext } from "../contexto/UsuarioContext";
+import BarraEstados from "../componentes/panel/BarraEstados";
 import { obtenerResumen } from "../servicios/panel";
 import type { EstadoPostulacion, ResumenPanel, VacanteResumen } from "../tipos/panel";
-import { DIAS_ESPERA_LARGA, describirEspera, describirFuentes } from "../utilidades/panel";
+import { SEGMENTOS, DIAS_ESPERA_LARGA, describirEspera, describirFuentes, textoPostulaciones, totalDeVacante } from "../utilidades/panel";
 import { describirCierre } from "../utilidades/vacantes";
 
-//columnas de la tabla, en el orden del proceso; "color" es la variable CSS del segmento
-const ESTADOS: { clave: EstadoPostulacion; nombre: string; color: string }[] = [
-  { clave: "recibida", nombre: "Recibidas", color: "var(--seg-recibida)" },
-  { clave: "en_revision", nombre: "En revisión", color: "var(--seg-revision)" },
-  { clave: "preseleccionada", nombre: "Preseleccionadas", color: "var(--seg-presel)" },
-  { clave: "descartada", nombre: "Descartadas", color: "var(--seg-descartada)" },
-];
+//columnas de la tabla: los mismos estados y colores que la barra
+const ESTADOS = SEGMENTOS;
 
 const NOMBRES_ESTADO_VACANTE = { borrador: "Borrador", publicada: "Publicada", cerrada: "Cerrada" };
 
@@ -132,7 +128,7 @@ export default function ResumenReclutador() {
         <section className="matriz" aria-labelledby="titulo-matriz">
           <div className="resumen__titulo">
             <h2 id="titulo-matriz">Tus vacantes, estado por estado</h2>
-            <p>{postulaciones(sumarTodo(resumen.vacantes))} en total</p>
+            <p>{textoPostulaciones(sumarTodo(resumen.vacantes))} en total</p>
           </div>
           {resumen.vacantes.length === 0 ? (
             <p className="resumen__vacio">Todavía no tienes vacantes publicadas ni borradores.</p>
@@ -158,17 +154,17 @@ export default function ResumenReclutador() {
                     <td className="matriz__vacante">
                       <b>
                         {vacante.titulo}
-                        <span className={`matriz__estado matriz__estado--${vacante.estado}`}>{NOMBRES_ESTADO_VACANTE[vacante.estado]}</span>
+                        <span className={`matriz__estado etiqueta-estado etiqueta-estado--${vacante.estado}`}>{NOMBRES_ESTADO_VACANTE[vacante.estado]}</span>
                       </b>
                       <span>
-                        <Cierre vacante={vacante} /> · {postulaciones(totalDeVacante(vacante))}
+                        <Cierre vacante={vacante} /> · {textoPostulaciones(totalDeVacante(vacante))}
                       </span>
                     </td>
                     {ESTADOS.map((estado) => (
                       <Conteo cantidad={vacante.conteos[estado.clave] ?? 0} etiqueta={estado.nombre} key={estado.clave} />
                     ))}
                     <td className="matriz__avance">
-                      <BarraEstados conteos={ESTADOS.map((estado) => vacante.conteos[estado.clave] ?? 0)} />
+                      <BarraEstados conteos={vacante.conteos} />
                     </td>
                   </tr>
                 ))}
@@ -182,7 +178,7 @@ export default function ResumenReclutador() {
                     <Conteo cantidad={sumar(resumen.vacantes, estado.clave)} etiqueta={estado.nombre} key={estado.clave} />
                   ))}
                   <td className="matriz__avance">
-                    <BarraEstados conteos={ESTADOS.map((estado) => sumar(resumen.vacantes, estado.clave))} />
+                    <BarraEstados conteos={Object.fromEntries(ESTADOS.map((estado) => [estado.clave, sumar(resumen.vacantes, estado.clave)]))} />
                   </td>
                 </tr>
               </tfoot>
@@ -203,17 +199,6 @@ function Conteo({ cantidad, etiqueta }: { cantidad: number; etiqueta: string }) 
   );
 }
 
-//una barra con un segmento por estado, del ancho de su cantidad
-function BarraEstados({ conteos }: { conteos: number[] }) {
-  if (conteos.every((cantidad) => cantidad === 0)) return <span className="barra-estados barra-estados--vacia" aria-hidden="true" />;
-  return (
-    <span className="barra-estados" aria-hidden="true">
-      {conteos.map((cantidad, indice) =>
-        cantidad > 0 ? <i style={{ flexGrow: cantidad, background: ESTADOS[indice].color }} key={ESTADOS[indice].clave} /> : null,
-      )}
-    </span>
-  );
-}
 
 function Cierre({ vacante }: { vacante: VacanteResumen }) {
   if (vacante.estado === "borrador") return <>Sin publicar</>;
@@ -251,19 +236,12 @@ function hoy() {
   return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
 
-function postulaciones(cantidad: number) {
-  return `${cantidad} ${cantidad === 1 ? "postulación" : "postulaciones"}`;
-}
 
 //suma una columna de la tabla: cuántas postulaciones hay en ese estado entre todas las vacantes
 function sumar(vacantes: VacanteResumen[], estado: EstadoPostulacion) {
   return vacantes.reduce((total, vacante) => total + (vacante.conteos[estado] ?? 0), 0);
 }
 
-//todas las postulaciones de una vacante, en cualquier estado
-function totalDeVacante(vacante: VacanteResumen) {
-  return Object.values(vacante.conteos).reduce((total, cantidad) => total + (cantidad ?? 0), 0);
-}
 
 function sumarTodo(vacantes: VacanteResumen[]) {
   return vacantes.reduce((total, vacante) => total + totalDeVacante(vacante), 0);

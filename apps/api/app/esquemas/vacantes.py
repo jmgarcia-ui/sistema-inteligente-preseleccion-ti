@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from pydantic import BaseModel, Field, field_validator, ConfigDict
 from app.modelos.vacante import EstadoVacante, ModalidadVacante
+from app.servicios.texto_rico import validar_texto_rico
 
 
 #datos que envia el front al crear un requisito (post)
@@ -21,12 +22,19 @@ class RequisitoRespuesta(BaseModel):
 #datos que debe enviar el front al crear una vacante (post)
 class VacanteCrear(BaseModel):
   titulo: str = Field(min_length=3, max_length=150)
-  descripcion: str = Field(min_length=20)
+  #HTML del editor (negrita, listas, enlaces); se limpia al validar
+  descripcion: str = Field(min_length=20, max_length=20000)
   requisitos: list[RequisitoCrear] = Field(min_length=1)
   modalidad: ModalidadVacante
   ubicacion: str | None = Field(default=None, max_length=150)
   fecha_limite: date
   model_config = ConfigDict(str_strip_whitespace=True)
+
+  @field_validator("descripcion")
+  @classmethod
+  def limpiar_descripcion(cls, descripcion: str) -> str:
+    return validar_texto_rico(descripcion, 20)
+
   @field_validator("fecha_limite")
   @classmethod
   def validar_fecha_limite(cls, fecha_limite: date) -> date:
@@ -76,13 +84,18 @@ class VacanteRespuestaCandidato(BaseModel):
 # actualizar solo los campos enviados (patch)
 class VacanteActualizar(BaseModel):
   titulo: str | None = Field(default=None, min_length=3, max_length=150)
-  descripcion: str | None = Field(default=None, min_length=20)
+  descripcion: str | None = Field(default=None, min_length=20, max_length=20000)
   requisitos: list[RequisitoCrear] | None = Field(default=None, min_length=1)
   modalidad: ModalidadVacante | None = None
   ubicacion: str | None = Field(default=None, max_length=150)
   estado: EstadoVacante | None = None
   fecha_limite: date | None = None
   model_config = ConfigDict(str_strip_whitespace=True)
+
+  @field_validator("descripcion")
+  @classmethod
+  def limpiar_descripcion(cls, descripcion: str | None) -> str | None:
+    return None if descripcion is None else validar_texto_rico(descripcion, 20)
 
   @field_validator("fecha_limite")
   @classmethod

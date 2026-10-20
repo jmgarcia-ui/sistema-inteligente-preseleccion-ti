@@ -1,14 +1,17 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, UploadFile, status, HTTPException
+from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
 from app.esquemas.postulaciones import PostulacionRespuestaReclutador, PostulacionRespuestaCandidato
-from app.servicios.postulaciones import VacanteNoDisponibleError, PostulacionDuplicadaError
-from app.servicios.postulaciones import crear_postulacion, listar_postulaciones_por_vacante
+from app.servicios.postulaciones import VacanteNoDisponibleError, PostulacionDuplicadaError, CvInvalidoError, TAMANO_MAXIMO_CV
+from app.servicios.postulaciones import crear_postulacion, listar_postulaciones_por_vacante, validar_cv
 from app.servicios.vacantes import obtener_vacante_por_id, puede_editar_vacante
 from app.esquemas.postulaciones import PostulacionCrear
 from app.autorizacion import obtener_gestor_vacantes
 from app.base_datos import obtener_sesion
+from app.servicios.lecturas_cv import procesar_lectura
+from app.servicios.limites import limitar_postulaciones
 from app.modelos import Usuario
 
 router = APIRouter(
@@ -16,15 +19,45 @@ router = APIRouter(
   tags=["postulaciones"]
 )
 
-@router.post("", response_model=PostulacionRespuestaCandidato,status_code=status.HTTP_201_CREATED)
-def crear(datos: PostulacionCrear, sesion: Annotated[Session, Depends(obtener_sesion)]) -> PostulacionRespuestaCandidato:
+#llega como multipart/form-data: "datos" es el JSON de PostulacionCrear y "cv" es el PDF
+#limitar_postulaciones frena los envíos masivos desde una misma conexión
+@router.post("", response_model=PostulacionRespuestaCandidato,status_code=status.HTTP_201_CREATED, dependencies=[Depends(limitar_postulaciones)])
+def crear(
+  datos: Annotated[str, Form(description="JSON con id_vacante, candidato y acepta_tratamiento_datos")],
+  cv: Annotated[UploadFile, File(description="CV en PDF, hasta 5 MB")],
+  sesion: Annotated[Session, Depends(obtener_sesion)],
+  tareas: BackgroundTasks,
+  #campo trampa: va oculto en el formulario; una persona nunca lo llena, un robot sí
+  sitio_web: Annotated[str, Form()] = "",
+) -> PostulacionRespuestaCandidato:
+  if sitio_web.strip():
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No pudimos procesar tu postulación.")
+  #1. los datos se validan con el mismo esquema de antes; los errores salen con la forma de siempre ("loc" empieza en "body")
   try:
-    postulacion = crear_postulacion(sesion, datos)
+    postulacion_datos = PostulacionCrear.model_validate_json(datos)
+  except ValidationError as error:
+    detalle = [{"loc": ["body", *item["loc"]], "msg": item["msg"], "type": item["type"]} for item in error.errors()]
+    raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail=detalle)
+
+  #2. el CV: se lee un byte más del máximo para saber si se pasa, sin cargar archivos enormes
+  contenido = cv.file.read(TAMANO_MAXIMO_CV + 1)
+  try:
+    validar_cv(contenido, cv.filename)
+  except CvInvalidoError as error:
+    raise HTTPException(
+      status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+      detail=[{"loc": ["body", "cv"], "msg": str(error), "type": "cv_invalido"}],
+    )
+
+  try:
+    postulacion = crear_postulacion(sesion, postulacion_datos, contenido, cv.filename or "cv.pdf")
   except VacanteNoDisponibleError as error:
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(error))
   except PostulacionDuplicadaError as error:
       raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(error))
 
+  #el CV se lee con Document Intelligence después de responder: el candidato no espera
+  tareas.add_task(procesar_lectura, postulacion.id)
   return PostulacionRespuestaCandidato.model_validate(postulacion)
 
 

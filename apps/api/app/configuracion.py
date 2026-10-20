@@ -14,6 +14,23 @@ class Configuracion(BaseSettings):
   clave_secreta_jwt: SecretStr #clave utilizada para firmar los tokens
   algoritmo_jwt: str="HS256" #algoritmo para crear la firma
   minutos_expiracion_token: int=30 #minutos de la duracion de cada token
+  #CV de los candidatos: si hay cadena de conexión se guardan en Azure Blob Storage; si no, en disco
+  azure_storage_connection_string: SecretStr | None = None
+  azure_storage_contenedor: str = "cvs"
+  carpeta_almacenamiento_local: Path = RUTA_API / "almacenamiento"
+  #Azure AI Document Intelligence: lee el texto de los CV
+  azure_docint_endpoint: str | None = None
+  azure_docint_clave: SecretStr | None = None
+  #Azure OpenAI: compara el CV con los requisitos y redacta el feedback
+  azure_openai_endpoint: str | None = None
+  azure_openai_clave: SecretStr | None = None
+  azure_openai_despliegue: str = "gpt-4o-mini"
+  #Azure Communication Services: envía los correos que el equipo confirma
+  azure_comunicacion_connection_string: SecretStr | None = None
+  correo_remitente: str | None = None
+  correo_nombre_remitente: str = "Equipo de selección"
+  #tope de análisis con IA por día (protege el saldo de Azure si llegan postulaciones masivas)
+  maximo_analisis_por_dia: int = 150
 
   model_config = SettingsConfigDict(
     env_file=RUTA_API / ".env", #obtner ruta de .env

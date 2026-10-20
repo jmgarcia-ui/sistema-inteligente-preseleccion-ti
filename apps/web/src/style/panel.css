@@ -1,0 +1,729 @@
+/* Marco del panel del reclutador: índice a la izquierda sobre gris, hoja blanca a la derecha. */
+.panel {
+  /* Segmentos de estado de las postulaciones: gris para lo que no avanza, ámbar y verde para el flujo */
+  --seg-recibida: #94a3b8;
+  --seg-revision: var(--ambar);
+  --seg-presel: var(--verde);
+  --seg-descartada: #dbe2ea;
+  /* El rojo solo marca errores de formulario */
+  --rojo: #b91c1c;
+  --rojo-claro: #fef2f2;
+
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  min-height: 100dvh;
+  background-color: var(--fondo-2);
+}
+
+html[data-tema="oscuro"] .panel {
+  --seg-recibida: #64748b;
+  --seg-descartada: #2a3548;
+  --rojo: #fca5a5;
+  --rojo-claro: rgba(239, 68, 68, 0.12);
+}
+
+/* ---- Piezas que comparten las páginas del panel ---- */
+
+/* Barra con un segmento por estado de postulación, del ancho de su cantidad */
+.barra-estados {
+  display: flex;
+  gap: 2px;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.barra-estados i {
+  transform-origin: left;
+  animation: panel-llenar 0.7s var(--curva) both;
+}
+
+.barra-estados i:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.barra-estados i:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+.barra-estados i:nth-child(4) {
+  animation-delay: 0.15s;
+}
+
+.barra-estados--vacia {
+  background: repeating-linear-gradient(90deg, var(--borde-fuerte) 0 4px, transparent 4px 8px);
+  opacity: 0.7;
+}
+
+@keyframes panel-llenar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Carga: la forma de la página, sin datos, con un brillo que la recorre */
+.esqueleto-panel {
+  display: block;
+  background: linear-gradient(90deg, var(--borde) 25%, var(--fondo-2) 50%, var(--borde) 75%);
+  background-size: 300% 100%;
+  border-radius: 8px;
+  animation: panel-brillar 1.6s ease-in-out infinite;
+}
+
+@keyframes panel-brillar {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Botón sin fondo para acciones secundarias (Cancelar, Volver a revisión) */
+.boton--fantasma {
+  color: var(--texto);
+  background: transparent;
+}
+
+.boton--fantasma:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+/* Registro de acciones: hora, una marca de color por clase de acción y el texto */
+.acciones {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.accion {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 12px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.accion:last-child {
+  border-bottom: 0;
+}
+
+.accion time {
+  padding-top: 2px;
+  color: var(--apoyo);
+  font-size: 12.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.accion__marca {
+  width: 9px;
+  height: 9px;
+  margin-top: 6px;
+  background-color: var(--borde-fuerte);
+  border-radius: 3px;
+}
+
+.accion--verde .accion__marca {
+  background-color: var(--verde);
+}
+
+.accion--ambar .accion__marca {
+  background-color: var(--ambar);
+}
+
+.accion--tinta .accion__marca {
+  background-color: var(--tinta);
+}
+
+.accion--gris .accion__marca {
+  background: transparent;
+  border: 1px dashed var(--apoyo);
+}
+
+.accion__texto {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.accion--sistema .accion__texto {
+  color: var(--texto);
+  font-weight: 500;
+}
+
+.accion__detalle {
+  margin: 3px 0 0;
+  color: var(--texto);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.accion__pie {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 4px 0 0;
+  color: var(--apoyo);
+  font-size: 12.5px;
+}
+
+.accion__pie a {
+  color: var(--azul-texto);
+  font-weight: 700;
+}
+
+.acciones--compacta .accion {
+  grid-template-columns: 48px 10px minmax(0, 1fr);
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.acciones--compacta .accion__texto {
+  font-size: 13.5px;
+}
+
+.acciones--compacta .accion__detalle {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Estado de una vacante: verde publicada, ámbar borrador, neutro cerrada */
+.etiqueta-estado {
+  display: inline-block;
+  padding: 1px 9px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: 999px;
+}
+
+.etiqueta-estado--publicada {
+  color: var(--verde);
+  background-color: var(--verde-claro);
+}
+
+.etiqueta-estado--borrador {
+  color: var(--ambar);
+  background-color: var(--ambar-claro);
+}
+
+.etiqueta-estado--cerrada {
+  color: var(--apoyo);
+  background-color: var(--fondo-2);
+  border: 1px solid var(--borde);
+}
+
+/* ---- Índice ---- */
+.panel__indice {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px 16px;
+}
+
+.panel__marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 8px 0;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  border-radius: 8px;
+}
+
+.panel__marca b,
+.panel__marca small {
+  display: block;
+  line-height: 1.2;
+}
+
+.panel__marca small {
+  color: var(--apoyo);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.panel__signo {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background-color: var(--azul);
+  border-radius: 8px;
+}
+
+.panel__nav {
+  display: grid;
+  gap: 2px;
+  margin-top: 28px;
+}
+
+.panel__enlace {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 0 10px;
+  color: var(--texto);
+  font-size: 14.5px;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.panel__enlace svg {
+  color: var(--apoyo);
+  transition: color 0.15s;
+}
+
+.panel__enlace:hover,
+.panel__enlace:hover svg {
+  color: var(--tinta);
+}
+
+/* La sección actual es la única que "sale" a la hoja */
+.panel__enlace[aria-current="page"] {
+  color: var(--tinta);
+  background-color: var(--superficie);
+  border-color: var(--borde);
+  box-shadow: var(--sombra-suave);
+}
+
+.panel__enlace[aria-current="page"] svg {
+  color: var(--azul-texto);
+}
+
+.panel__pie {
+  display: grid;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--borde);
+}
+
+.panel__util {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 10px;
+  color: var(--texto);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.panel__util svg {
+  color: var(--apoyo);
+}
+
+.panel__util:hover {
+  color: var(--tinta);
+}
+
+/* ---- Cuenta ---- */
+.panel__cuenta {
+  position: relative;
+  margin-top: 6px;
+}
+
+.panel__cuenta-boton {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.panel__cuenta-boton:hover,
+.panel__cuenta-boton[aria-expanded="true"] {
+  background-color: var(--superficie);
+  border-color: var(--borde);
+}
+
+.panel__cuenta-boton > svg {
+  color: var(--apoyo);
+  transition: transform 0.2s var(--curva);
+}
+
+.panel__cuenta-boton[aria-expanded="true"] > svg {
+  transform: rotate(180deg);
+}
+
+.panel__iniciales {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--fondo);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  background-color: var(--tinta);
+  border-radius: 8px;
+}
+
+.panel__quien {
+  min-width: 0;
+}
+
+.panel__quien b {
+  display: block;
+  overflow: hidden;
+  font-size: 13.5px;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel__quien span {
+  display: block;
+  overflow: hidden;
+  color: var(--apoyo);
+  font-size: 12.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel__menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 60;
+  padding: 6px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  box-shadow: 0 16px 30px -24px rgba(15, 23, 42, 0.45), var(--sombra-suave);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.2s var(--curva), visibility 0s 0.2s;
+}
+
+.panel__menu--abierto {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.15s, transform 0.2s var(--curva);
+}
+
+.panel__menu button {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.panel__menu button:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+/* ---- Hoja ---- */
+.panel__hoja {
+  min-width: 0;
+  background-color: var(--superficie);
+  border-left: 1px solid var(--borde);
+}
+
+.panel__contenido {
+  max-width: 1640px;
+  padding: 36px 48px 88px;
+}
+
+/* La barra superior solo existe en pantallas medianas y en celular */
+.panel__barra {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .panel__contenido {
+    padding: 32px 36px 80px;
+  }
+}
+
+@media (max-width: 900px) {
+  .panel {
+    display: block;
+  }
+
+  .panel__indice {
+    display: none;
+  }
+
+  .panel__hoja {
+    min-height: 100dvh;
+    border-left: 0;
+  }
+
+  .panel__barra {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 58px;
+    padding: 0 16px;
+    background-color: var(--encabezado);
+    border-bottom: 1px solid var(--borde);
+    backdrop-filter: blur(10px);
+  }
+
+  .panel__barra .panel__marca {
+    padding: 0;
+  }
+
+  .panel__barra-acciones {
+    display: flex;
+    gap: 8px;
+  }
+
+  .panel__icono {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    color: var(--texto);
+    background-color: var(--superficie);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .panel__menu-movil {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    display: grid;
+    gap: 2px;
+    padding: 8px 16px 14px;
+    background-color: var(--fondo-2);
+    border-bottom: 1px solid var(--borde);
+    box-shadow: 0 16px 30px -24px rgba(15, 23, 42, 0.45);
+    animation: panel-caer 0.2s var(--curva) both;
+  }
+
+  .panel__menu-movil .panel__enlace {
+    min-height: 46px;
+  }
+
+  .panel__contenido {
+    padding: 24px 16px 64px;
+  }
+}
+
+@keyframes panel-caer {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barra-estados i,
+  .esqueleto-panel {
+    animation: none;
+  }
+
+  .panel__menu,
+  .panel__menu--abierto,
+  .panel__cuenta-boton > svg {
+    transition: none;
+  }
+
+  .panel__menu-movil {
+    animation: none;
+  }
+}
+
+/* ---- Editor de texto con formato (descripción de la vacante, correo al candidato) ---- */
+.editor {
+  overflow: hidden;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.editor:hover {
+  border-color: var(--apoyo);
+}
+
+.editor:focus-within {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 4px var(--azul-claro);
+}
+
+.editor--error,
+.editor--error:hover {
+  border-color: var(--rojo);
+  box-shadow: 0 0 0 4px var(--rojo-claro);
+}
+
+.editor__barra {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.editor__boton {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: var(--texto);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.editor__boton:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+.editor__boton[aria-pressed="true"] {
+  color: var(--azul-texto);
+  background-color: var(--azul-claro);
+}
+
+.editor__boton:focus-visible {
+  outline: 2px solid var(--azul);
+  outline-offset: -2px;
+}
+
+.editor__separador {
+  width: 1px;
+  height: 18px;
+  margin: 0 6px;
+  background-color: var(--borde);
+}
+
+.editor__enlace {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background-color: var(--fondo-2);
+  border-bottom: 1px solid var(--borde);
+}
+
+.editor__enlace input {
+  flex: 1;
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 10px;
+  color: var(--tinta);
+  font: inherit;
+  font-size: 14px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 8px;
+}
+
+.editor__enlace input:focus {
+  outline: none;
+  border-color: var(--azul);
+}
+
+.editor__area {
+  min-height: 140px;
+  max-height: 460px;
+  overflow-y: auto;
+  padding: 12px 14px;
+  color: var(--tinta);
+  font-size: 15px;
+  line-height: 1.6;
+  outline: none;
+}
+
+.editor--alto .editor__area {
+  min-height: 260px;
+}
+
+/* :where no suma especificidad: así el espacio entre bloques de abajo sí se aplica */
+.editor__area :where(p, ul, ol) {
+  margin: 0;
+}
+
+.editor__area > * + * {
+  margin-top: 12px;
+}
+
+.editor__area ul,
+.editor__area ol {
+  padding-left: 22px;
+}
+
+.editor__area li p {
+  margin: 0;
+}
+
+.editor__area a {
+  color: var(--azul-texto);
+  text-decoration: underline;
+}
+
+/* el texto de ayuda del editor vacío */
+.editor__area p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: var(--apoyo);
+  pointer-events: none;
+}

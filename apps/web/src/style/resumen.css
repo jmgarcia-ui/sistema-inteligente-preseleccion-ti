@@ -1,0 +1,373 @@
+/* Resumen del panel: titular con la situación del día, cola de lectura y matriz de vacantes. */
+.resumen__fecha {
+  margin: 0;
+  color: var(--apoyo);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.resumen__situacion {
+  max-width: 24ch;
+  margin: 14px 0 0;
+  font-size: clamp(1.9rem, 2.6vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.resumen__situacion em {
+  color: var(--azul-texto);
+  font-style: normal;
+}
+
+.resumen__detalle {
+  max-width: 62ch;
+  margin: 12px 0 0;
+  color: var(--texto);
+  font-size: 16.5px;
+  text-wrap: pretty;
+}
+
+.resumen__detalle b {
+  color: var(--tinta);
+  font-weight: 700;
+}
+
+/* Cola a la izquierda, matriz a la derecha; se apilan en laptops */
+.resumen__dos {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 56px;
+  align-items: start;
+  margin-top: 40px;
+}
+
+/* Títulos de sección con filete de tinta, como en un informe */
+.resumen__titulo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--tinta);
+}
+
+.resumen__titulo h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.resumen__titulo h2 span {
+  margin-left: 6px;
+  color: var(--apoyo);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.resumen__titulo p {
+  margin: 0;
+  color: var(--apoyo);
+  font-size: 13px;
+}
+
+.resumen__vacio {
+  margin: 0;
+  padding: 18px 0;
+  color: var(--texto);
+  font-size: 14.5px;
+}
+
+.resumen__mas {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  color: var(--azul-texto);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ---- Cola de lectura: la espera manda el orden ---- */
+.cola {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cola__fila {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.cola__espera {
+  display: grid;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+
+.cola__espera b {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.cola__espera span {
+  color: var(--apoyo);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cola__espera--larga b,
+.cola__espera--larga span {
+  color: var(--ambar);
+}
+
+.cola__quien {
+  min-width: 0;
+}
+
+.cola__quien b {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.cola__quien span {
+  display: block;
+  overflow: hidden;
+  color: var(--texto);
+  font-size: 13.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cola__quien small {
+  display: block;
+  margin-top: 2px;
+  color: var(--apoyo);
+  font-size: 12.5px;
+}
+
+/* ---- Matriz: cada fila es una vacante; cada columna, un estado ---- */
+.matriz {
+  min-width: 0;
+}
+
+.matriz__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.matriz__tabla th {
+  padding: 12px 10px 10px;
+  color: var(--apoyo);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--borde);
+}
+
+.matriz__tabla th i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 2px;
+}
+
+.matriz__tabla td {
+  padding: 14px 10px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--borde);
+}
+
+.matriz__tabla th:first-child,
+.matriz__tabla td:first-child {
+  padding-left: 0;
+  text-align: left;
+}
+
+.matriz__tabla tbody tr {
+  transition: background-color 0.15s;
+}
+
+.matriz__tabla tbody tr:hover {
+  background-color: var(--fondo-2);
+}
+
+.matriz__tabla tfoot td {
+  font-weight: 800;
+  border-top: 1px solid var(--tinta);
+  border-bottom: 0;
+}
+
+.matriz__vacante b {
+  display: block;
+  font-size: 14.5px;
+  white-space: normal;
+}
+
+.matriz__vacante > span {
+  display: block;
+  margin-top: 2px;
+  color: var(--apoyo);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.matriz__pronto {
+  color: var(--ambar);
+  font-weight: 700;
+}
+
+.matriz__cero {
+  color: var(--borde-fuerte);
+  font-weight: 600 !important;
+}
+
+.matriz__borrador td {
+  color: var(--apoyo);
+}
+
+.matriz__estado {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  vertical-align: 1px;
+  border-radius: 999px;
+}
+
+.matriz__estado--publicada {
+  color: var(--verde);
+  background-color: var(--verde-claro);
+}
+
+.matriz__estado--borrador {
+  color: var(--ambar);
+  background-color: var(--ambar-claro);
+}
+
+.matriz__estado--cerrada {
+  color: var(--apoyo);
+  background-color: var(--fondo-2);
+}
+
+.matriz__avance {
+  width: 150px;
+}
+
+/* El título de la vacante no se parte en tres líneas por culpa de las columnas */
+.matriz__tabla .matriz__vacante {
+  min-width: 240px;
+}
+
+/* ---- Avisos y carga ---- */
+.resumen__aviso {
+  max-width: 560px;
+  padding: 32px 0;
+}
+
+.resumen__aviso h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.resumen__aviso p {
+  margin: 10px 0 22px;
+  color: var(--texto);
+}
+
+
+/* ---- Responsivo ---- */
+@media (max-width: 1400px) {
+  .resumen__dos {
+    grid-template-columns: 1fr;
+  }
+
+  .matriz {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* La matriz se vuelve una ficha por vacante */
+  .matriz__tabla thead {
+    display: none;
+  }
+
+  .matriz__tabla,
+  .matriz__tabla tbody,
+  .matriz__tabla tfoot {
+    display: block;
+  }
+
+  .matriz__tabla tr {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px 8px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .matriz__tabla td {
+    display: block;
+    padding: 0;
+    text-align: left;
+    border: 0;
+  }
+
+  .matriz__tabla .matriz__vacante,
+  .matriz__tabla .matriz__avance {
+    grid-column: 1 / -1;
+    width: auto;
+  }
+
+  .matriz__tabla .matriz__avance {
+    margin: 6px 0 4px;
+  }
+
+  .matriz__tabla td[data-etiqueta]::after {
+    content: attr(data-etiqueta);
+    display: block;
+    color: var(--apoyo);
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+
+  .matriz__tabla tfoot tr {
+    border-top: 1px solid var(--tinta);
+    border-bottom: 0;
+  }
+
+  .matriz__tabla tfoot td {
+    border: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .cola__fila {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+}
+
+/* Bitácora: debajo de la cola, lo último que pasó */
+.resumen__bitacora {
+  margin-top: 40px;
+}

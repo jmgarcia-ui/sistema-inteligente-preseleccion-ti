@@ -6,30 +6,25 @@ import type { Credenciales } from "../tipos/sesion";
 import { useNavigate } from "react-router-dom";
 
 export default function InicioSesion() {
-
   const [mensajeError, setMensajeError] = useState("");
   const navegar = useNavigate();
 
-  const contexto = useContext(UsuarioContext)
-  if (!contexto) 
-    throw new Error("No hay contexto")
+  const contexto = useContext(UsuarioContext);
+  if (!contexto) throw new Error("No hay contexto");
 
   async function manejarEnvio(datos: FormData) {
     const data: Credenciales = {
-      correo: String(datos.get("correo")?? "").trim(),
-      contrasena: String(datos.get("contrasena")??"")
-    }
+      correo: String(datos.get("correo") ?? "").trim(),
+      contrasena: String(datos.get("contrasena") ?? ""),
+    };
 
-    setMensajeError("")
+    setMensajeError("");
     try {
-      await contexto?.iniciarSesion(data)      
-      navegar("/reclutador/resumen", { replace:true });
-
+      await contexto?.iniciarSesion(data);
+      navegar("/reclutador/resumen", { replace: true });
     } catch {
-      setMensajeError("No se pudo iniciar sesión. Revisa tus datos e inténtalo de nuevo.")
+      setMensajeError("No se pudo iniciar sesión. Revisa tus datos e inténtalo de nuevo.");
     }
-
-    
   }
 
   return (

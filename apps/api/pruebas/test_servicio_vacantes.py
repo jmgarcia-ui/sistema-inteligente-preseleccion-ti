@@ -26,8 +26,10 @@ def test_crear_vacante_guardar_datos():
   assert [requisito.descripcion for requisito in vacante.requisitos] == ["Python", "SQL"]
   assert [requisito.orden for requisito in vacante.requisitos] == [1, 2]
 
-  #comprobaciones de la sesion
-  sesion.add.assert_called_once_with(vacante)
+  #comprobaciones de la sesion: se agrega la vacante y el registro de que se creó, en un solo commit
+  agregados = [llamada.args[0] for llamada in sesion.add.call_args_list]
+  assert agregados[0] is vacante
+  assert len(agregados) == 2 and agregados[1].tipo == "vacante_creada"
   sesion.commit.assert_called_once()
   sesion.refresh.assert_called_once_with(vacante)
 

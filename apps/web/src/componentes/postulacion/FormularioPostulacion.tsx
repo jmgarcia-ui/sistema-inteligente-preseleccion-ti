@@ -48,6 +48,8 @@ function FormularioPostulacion({ idVacante, tituloVacante }: Propiedades) {
   const [portafolio, setPortafolio] = useState("");
   const [github, setGithub] = useState("");
   const [cv, setCv] = useState<File | null>(null);
+  //campo trampa contra robots: está oculto y una persona nunca lo llena
+  const [sitioWeb, setSitioWeb] = useState("");
   const [aceptaTerminos, setAceptaTerminos] = useState(false);
   //¿hay un envío en curso? evita el doble clic
   const [enviando, setEnviando] = useState(false);
@@ -96,12 +98,13 @@ function FormularioPostulacion({ idVacante, tituloVacante }: Propiedades) {
     setEnviando(true);
     setMensajeError("");
 
-    crearPostulacion(postulacion_data, cv!)
+    crearPostulacion(postulacion_data, cv!, sitioWeb)
       .then(() => {
         setEnviado(true);
       })
       .catch((error) => {
         if (error.response?.status === 409) setMensajeError("Ya postulaste a esta vacante con este correo.");
+        else if (error.response?.status === 429) setMensajeError(error.response.data.detail);
         else if (error.response?.status === 422) setErrores(erroresDeLaApi(error.response.data.detail));
         else setMensajeError("No pudimos enviar tu postulación. Inténtalo de nuevo.");
       })
@@ -165,6 +168,11 @@ function FormularioPostulacion({ idVacante, tituloVacante }: Propiedades) {
         </div>
       </div>
       <form className="postular__formulario" onSubmit={enviar} noValidate>
+        {/* trampa para robots: fuera de la vista, sin foco con Tab y oculto para lectores de pantalla */}
+        <div className="postular__trampa" aria-hidden="true">
+          <label htmlFor="sitio-web">Sitio web</label>
+          <input id="sitio-web" name="sitio_web" tabIndex={-1} autoComplete="off" value={sitioWeb} onChange={(evento) => setSitioWeb(evento.target.value)} />
+        </div>
         <fieldset className="postular__grupo">
           <legend className="postular__leyenda">Tus datos</legend>
           <div className="postular__fila">

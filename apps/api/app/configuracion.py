@@ -29,6 +29,8 @@ class Configuracion(BaseSettings):
   azure_comunicacion_connection_string: SecretStr | None = None
   correo_remitente: str | None = None
   correo_nombre_remitente: str = "Equipo de selección"
+  #tope de análisis con IA por día (protege el saldo de Azure si llegan postulaciones masivas)
+  maximo_analisis_por_dia: int = 150
 
   model_config = SettingsConfigDict(
     env_file=RUTA_API / ".env", #obtner ruta de .env

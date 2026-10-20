@@ -4,12 +4,15 @@ import re
 import unicodedata
 from dataclasses import asdict, dataclass
 
-from sqlalchemy import select
+from datetime import datetime, timezone
+
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.modelos.registro_accion import TipoAccion
 from app.servicios.registro import nombre_de, registrar
 from app.base_datos import FabricaSesiones
+from app.configuracion import obtener_configuracion
 from app.modelos.analisis_cv import AnalisisCv, EstadoAnalisis, Recomendacion
 from app.modelos.lectura_cv import EstadoLectura, LecturaCv
 from app.servicios.azure_openai import completar_json
@@ -227,6 +230,19 @@ def procesar_analisis(id_postulacion: int) -> None:
       sesion.add(analisis)
     elif analisis.estado == EstadoAnalisis.ANALIZANDO:
       return
+    #tope diario: si se alcanzó, no se llama a la IA (se puede reintentar al día siguiente)
+    inicio_del_dia = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=None)
+    hechos_hoy = sesion.scalar(
+      select(func.count()).select_from(AnalisisCv).where(AnalisisCv.tokens_entrada.is_not(None), AnalisisCv.actualizado_en >= inicio_del_dia)
+    )
+    maximo = obtener_configuracion().maximo_analisis_por_dia
+    if hechos_hoy >= maximo:
+      analisis.estado = EstadoAnalisis.ERROR
+      analisis.error = f"Se alcanzó el límite de {maximo} análisis por día. Reintenta mañana o súbelo en MAXIMO_ANALISIS_POR_DIA."
+      registrar(sesion, TipoAccion.ANALISIS_ERROR, f"No se analizó el CV de {nombre_de(lectura.postulacion)}: límite diario", vacante=lectura.postulacion.vacante, postulacion=lectura.postulacion)
+      sesion.commit()
+      return
+
     analisis.estado = EstadoAnalisis.ANALIZANDO
     analisis.error = None
     sesion.commit()

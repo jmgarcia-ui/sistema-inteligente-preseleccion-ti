@@ -1104,3 +1104,13 @@ html[data-tema="oscuro"] .postular__enviar:disabled {
     animation: none !important;
   }
 }
+
+/* Campo trampa contra robots: fuera de la pantalla (no display:none, que algunos robots detectan) */
+.postular__trampa {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+

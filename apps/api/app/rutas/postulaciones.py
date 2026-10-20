@@ -11,6 +11,7 @@ from app.esquemas.postulaciones import PostulacionCrear
 from app.autorizacion import obtener_gestor_vacantes
 from app.base_datos import obtener_sesion
 from app.servicios.lecturas_cv import procesar_lectura
+from app.servicios.limites import limitar_postulaciones
 from app.modelos import Usuario
 
 router = APIRouter(
@@ -19,13 +20,18 @@ router = APIRouter(
 )
 
 #llega como multipart/form-data: "datos" es el JSON de PostulacionCrear y "cv" es el PDF
-@router.post("", response_model=PostulacionRespuestaCandidato,status_code=status.HTTP_201_CREATED)
+#limitar_postulaciones frena los envíos masivos desde una misma conexión
+@router.post("", response_model=PostulacionRespuestaCandidato,status_code=status.HTTP_201_CREATED, dependencies=[Depends(limitar_postulaciones)])
 def crear(
   datos: Annotated[str, Form(description="JSON con id_vacante, candidato y acepta_tratamiento_datos")],
   cv: Annotated[UploadFile, File(description="CV en PDF, hasta 5 MB")],
   sesion: Annotated[Session, Depends(obtener_sesion)],
   tareas: BackgroundTasks,
+  #campo trampa: va oculto en el formulario; una persona nunca lo llena, un robot sí
+  sitio_web: Annotated[str, Form()] = "",
 ) -> PostulacionRespuestaCandidato:
+  if sitio_web.strip():
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No pudimos procesar tu postulación.")
   #1. los datos se validan con el mismo esquema de antes; los errores salen con la forma de siempre ("loc" empieza en "body")
   try:
     postulacion_datos = PostulacionCrear.model_validate_json(datos)

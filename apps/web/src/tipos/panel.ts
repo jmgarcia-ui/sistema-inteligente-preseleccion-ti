@@ -37,9 +37,22 @@ export type PostulacionRevisar = {
   candidato: CandidatoResumen;
 };
 
+//una acción del registro: qué pasó, quién ("Sistema" si fue automático) y cuándo
+export type Accion = {
+  id: number;
+  tipo: string;
+  descripcion: string;
+  detalle: string | null;
+  autor: string;
+  id_vacante: number;
+  id_postulacion: number | null;
+  creado_en: string;
+};
+
 export type ResumenPanel = {
   vacantes: VacanteResumen[];
   por_revisar: PostulacionRevisar[];
+  actividad: Accion[];
 };
 
 export type VacanteGestion = VacanteResumen & {

@@ -366,3 +366,8 @@
     grid-template-columns: 60px minmax(0, 1fr);
   }
 }
+
+/* Bitácora: debajo de la cola, lo último que pasó */
+.resumen__bitacora {
+  margin-top: 40px;
+}

@@ -5,6 +5,8 @@ from dataclasses import asdict
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.modelos.registro_accion import TipoAccion
+from app.servicios.registro import nombre_de, registrar
 from app.base_datos import FabricaSesiones
 from app.modelos.lectura_cv import EstadoLectura, LecturaCv
 from app.servicios.almacenamiento import leer_cv
@@ -67,4 +69,6 @@ def procesar_lectura(id_postulacion: int) -> None:
 def _marcar_error(sesion: Session, lectura: LecturaCv, mensaje: str) -> None:
   lectura.estado = EstadoLectura.ERROR
   lectura.error = mensaje[:500]
+  postulacion = lectura.postulacion
+  registrar(sesion, TipoAccion.ANALISIS_ERROR, f"No se pudo leer el CV de {nombre_de(postulacion)}", vacante=postulacion.vacante, postulacion=postulacion, detalle=lectura.error)
   sesion.commit()

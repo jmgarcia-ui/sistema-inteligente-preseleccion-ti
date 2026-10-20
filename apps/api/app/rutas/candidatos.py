@@ -4,6 +4,8 @@ from urllib.parse import quote
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy.orm import Session
 
+from app.modelos.registro_accion import TipoAccion
+from app.servicios.registro import nombre_de, registrar
 from app.autorizacion import obtener_gestor_vacantes
 from app.base_datos import obtener_sesion
 from app.esquemas.candidatos import (
@@ -227,6 +229,10 @@ def enviar_borrador(id_postulacion: int, datos: EnviarCorreo, sesion: Sesion, us
   except CorreoError as error:
     envio.estado = EstadoEnvio.ERROR
     envio.error = str(error)[:500]
+  tipo_texto = "felicitación" if tipo == Recomendacion.PASA else "feedback"
+  if envio.estado == EstadoEnvio.ENVIADO:
+    registrar(sesion, TipoAccion.CORREO_ENVIADO, f"Envió el correo de {tipo_texto} a {nombre_de(postulacion)}", vacante=postulacion.vacante, postulacion=postulacion, usuario=usuario, detalle=envio.asunto)
+  else:
+    registrar(sesion, TipoAccion.CORREO_FALLIDO, f"No se pudo enviar el correo de {tipo_texto} a {nombre_de(postulacion)}", vacante=postulacion.vacante, postulacion=postulacion, usuario=usuario, detalle=envio.error)
   sesion.commit()
   return _ficha(sesion, postulacion)
-

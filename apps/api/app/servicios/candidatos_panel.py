@@ -1,6 +1,8 @@
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from app.modelos.registro_accion import TipoAccion
+from app.servicios.registro import nombre_de, registrar
 from app.modelos.analisis_cv import AnalisisCv
 from app.modelos.lectura_cv import LecturaCv
 from app.modelos.postulacion import EstadoPostulacion, Postulacion
@@ -39,6 +41,13 @@ def decidir(sesion: Session, postulacion: Postulacion, usuario: Usuario, estado:
   postulacion.decision_motivo = motivo if estado == EstadoPostulacion.DESCARTADA else None
   postulacion.decidido_por_id = usuario.id
   postulacion.decidido_en = func.sysutcdatetime()
+  verbo = {
+    EstadoPostulacion.PRESELECCIONADA: "Preseleccionó a",
+    EstadoPostulacion.DESCARTADA: "Descartó a",
+    EstadoPostulacion.EN_REVISION: "Pasó a revisión a",
+    EstadoPostulacion.RECIBIDA: "Devolvió a sin revisar a",
+  }.get(estado, "Cambió el estado de")
+  registrar(sesion, TipoAccion.DECISION, f"{verbo} {nombre_de(postulacion)}", vacante=postulacion.vacante, postulacion=postulacion, usuario=usuario, detalle=postulacion.decision_motivo)
   sesion.commit()
   sesion.refresh(postulacion)
   return postulacion

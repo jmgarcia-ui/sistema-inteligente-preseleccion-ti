@@ -60,3 +60,28 @@ export const NOMBRES_ESTADO_POSTULACION: Record<EstadoPostulacion, string> = {
   descartada: "Descartada",
   retirada: "Retirada",
 };
+
+//"10:42" si fue hoy, "Ayer" o "19 oct": para el registro de acciones
+export function momentoCorto(creadoEn: string, soloHora = false) {
+  const fecha = leerFechaUtc(creadoEn);
+  const hoy = new Date();
+  const mismoDia = (a: Date, b: Date) => a.toDateString() === b.toDateString();
+  if (soloHora || mismoDia(fecha, hoy)) return fecha.toLocaleTimeString("es", { hour: "2-digit", minute: "2-digit" });
+  const ayer = new Date(hoy);
+  ayer.setDate(hoy.getDate() - 1);
+  if (mismoDia(fecha, ayer)) return "Ayer";
+  return fecha.toLocaleDateString("es", { day: "numeric", month: "short" });
+}
+
+//"Hoy", "Ayer" o "lunes 19 de octubre": para agrupar la actividad por día
+export function diaDe(creadoEn: string) {
+  const fecha = leerFechaUtc(creadoEn);
+  const hoy = new Date();
+  const ayer = new Date(hoy);
+  ayer.setDate(hoy.getDate() - 1);
+  if (fecha.toDateString() === hoy.toDateString()) return "Hoy";
+  if (fecha.toDateString() === ayer.toDateString()) return "Ayer";
+  const texto = fecha.toLocaleDateString("es", { weekday: "long", day: "numeric", month: "long" });
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+

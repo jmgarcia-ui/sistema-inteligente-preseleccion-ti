@@ -1,9 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState, type RefObject } from "react";
 import { AlertTriangle, ArrowLeft, Copy, ExternalLink, FileText, LoaderCircle, RefreshCw, Search, Send, Sparkles, Star } from "lucide-react";
 import { UsuarioContext } from "../../contexto/UsuarioContext";
 import { abrirCv, decidir, enviarCorreo, guardarCorreo, obtenerFicha, redactarCorreo, reintentarAnalisis, reintentarLectura } from "../../servicios/candidatos";
 import type { Decision, EvidenciaRequisito, FichaCandidato as Ficha, Recomendacion } from "../../tipos/candidatos";
 import type { EstadoPostulacion } from "../../tipos/panel";
+import type { RespuestaToken } from "../../tipos/sesion";
+import { obtenerActividad } from "../../servicios/panel";
+import type { Accion } from "../../tipos/panel";
+import ListaAcciones from "./ListaAcciones";
 import { NOMBRES_ESTADO_POSTULACION, describirEspera, fechaDeCreacion } from "../../utilidades/panel";
 
 type Propiedades = {
@@ -33,6 +37,9 @@ export default function FichaCandidato({ idPostulacion, alVolver, alCambiarEstad
   const [hayError, setHayError] = useState(false);
   const [consulta, setConsulta] = useState(0);
   const [aviso, setAviso] = useState("");
+  //la confirmación del envío vive aquí: la abre el botón de la sección del correo o el de la barra de decisión
+  const [confirmandoEnvio, setConfirmandoEnvio] = useState(false);
+  const seccionCorreo = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (token === null) return;
@@ -200,6 +207,9 @@ export default function FichaCandidato({ idPostulacion, alVolver, alCambiarEstad
         <SeccionCorreo
           key={`${analisis?.actualizado_en ?? "sin-analisis"}-${analisis?.correo_tipo ?? ""}-${ficha.estado}`}
           ficha={ficha}
+          seccion={seccionCorreo}
+          confirmando={confirmandoEnvio}
+          alConfirmar={setConfirmandoEnvio}
           alGuardar={async (asunto, cuerpo) => {
             setFicha(await guardarCorreo(token, ficha.id, asunto, cuerpo));
             avisar("Borrador guardado.");
@@ -217,8 +227,15 @@ export default function FichaCandidato({ idPostulacion, alVolver, alCambiarEstad
         />
       )}
 
+      {token && <Historial token={token} idPostulacion={ficha.id} version={`${ficha.estado}-${ficha.envios.length}-${analisis?.estado ?? ""}`} />}
+
       <BarraDecision
         ficha={ficha}
+        alIrAEnviar={() => {
+          //lleva a la sección del correo y abre la confirmación (o el aviso para redactarlo si no coincide)
+          setConfirmandoEnvio(true);
+          seccionCorreo.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }}
         alDecidir={async (estado, motivo) => {
           if (!token) return;
           const nueva = await decidir(token, ficha.id, estado, motivo);
@@ -350,6 +367,9 @@ function Fuente({ nombre, url }: { nombre: string; url: string | null }) {
 
 type PropiedadesCorreo = {
   ficha: Ficha;
+  seccion: RefObject<HTMLElement | null>;
+  confirmando: boolean;
+  alConfirmar: (abierto: boolean) => void;
   alGuardar: (asunto: string, cuerpo: string) => Promise<void>;
   alRedactar: (tipo: Recomendacion) => Promise<void>;
   alEnviar: (reenviar: boolean) => Promise<void>;
@@ -358,12 +378,11 @@ type PropiedadesCorreo = {
 const NOMBRE_TIPO = { pasa: "felicitación", no_pasa: "feedback" };
 
 //el correo al candidato: borrador editable, redacción nueva si no coincide con la decisión, envío confirmado e historial
-function SeccionCorreo({ ficha, alGuardar, alRedactar, alEnviar }: PropiedadesCorreo) {
+function SeccionCorreo({ ficha, seccion, confirmando: confirmacionPedida, alConfirmar: setConfirmando, alGuardar, alRedactar, alEnviar }: PropiedadesCorreo) {
   const analisis = ficha.analisis;
   const [asunto, setAsunto] = useState(analisis?.correo_asunto ?? "");
   const [cuerpo, setCuerpo] = useState(analisis?.correo_cuerpo ?? "");
   const [ocupado, setOcupado] = useState<"" | "guardando" | "redactando" | "enviando">("");
-  const [confirmando, setConfirmando] = useState(false);
   const [error, setError] = useState("");
 
   //el correo comunica la decisión: preseleccionada → felicitación; descartada → feedback
@@ -372,6 +391,8 @@ function SeccionCorreo({ ficha, alGuardar, alRedactar, alEnviar }: PropiedadesCo
   const coincide = hayBorrador && tipoEsperado !== null && analisis?.correo_tipo === tipoEsperado;
   const cambiado = asunto !== (analisis?.correo_asunto ?? "") || cuerpo !== (analisis?.correo_cuerpo ?? "");
   const enviado = ficha.envios.find((envio) => envio.estado === "enviado" && envio.tipo === tipoEsperado);
+  //la confirmación solo se muestra si el borrador corresponde a la decisión
+  const confirmando = confirmacionPedida && coincide;
 
   //sin CV y sin decisión todavía no hay nada que mostrar
   if (!hayBorrador && tipoEsperado === null) return null;
@@ -397,7 +418,7 @@ function SeccionCorreo({ ficha, alGuardar, alRedactar, alEnviar }: PropiedadesCo
   }
 
   return (
-    <section className="ficha__seccion" aria-labelledby="titulo-correo">
+    <section className="ficha__seccion ficha__seccion--correo" aria-labelledby="titulo-correo" ref={seccion}>
       <h3 id="titulo-correo">
         Correo al candidato <small>{hayBorrador && analisis?.correo_tipo ? `borrador de ${NOMBRE_TIPO[analisis.correo_tipo]}` : "sin borrador"}</small>
       </h3>
@@ -495,7 +516,7 @@ function SeccionCorreo({ ficha, alGuardar, alRedactar, alEnviar }: PropiedadesCo
 }
 
 //la decisión siempre es de una persona; descartar pide un motivo, que arranca con el de la IA
-function BarraDecision({ ficha, alDecidir }: { ficha: Ficha; alDecidir: (estado: Decision, motivo?: string) => Promise<void> }) {
+function BarraDecision({ ficha, alDecidir, alIrAEnviar }: { ficha: Ficha; alDecidir: (estado: Decision, motivo?: string) => Promise<void>; alIrAEnviar: () => void }) {
   const [descartando, setDescartando] = useState(false);
   const [motivo, setMotivo] = useState("");
   const [enviando, setEnviando] = useState(false);
@@ -528,6 +549,9 @@ function BarraDecision({ ficha, alDecidir }: { ficha: Ficha; alDecidir: (estado:
     );
 
   const decidida = ficha.estado === "preseleccionada" || ficha.estado === "descartada";
+  //tras decidir falta un paso: comunicarlo al candidato
+  const tipoCorreo = ficha.estado === "preseleccionada" ? "pasa" : "no_pasa";
+  const correoEnviado = decidida && ficha.envios.some((envio) => envio.estado === "enviado" && envio.tipo === tipoCorreo);
   return (
     <div className="decision">
       {descartando && (
@@ -552,13 +576,22 @@ function BarraDecision({ ficha, alDecidir }: { ficha: Ficha; alDecidir: (estado:
           {decidida && ficha.decidido_por
             ? `${NOMBRES_ESTADO_POSTULACION[ficha.estado]} por ${ficha.decidido_por}${ficha.decidido_en ? ` el ${fechaDeCreacion(ficha.decidido_en)}` : ""}${ficha.decision_motivo ? `: “${ficha.decision_motivo}”` : "."}`
             : "La decisión es tuya: el sistema no descarta a nadie por su cuenta."}
+          {decidida && (correoEnviado ? <span className="decision__correo decision__correo--enviado"> Correo enviado.</span> : <span className="decision__correo"> Falta enviar el correo al candidato.</span>)}
         </p>
         {!descartando && (
           <div className="decision__botones">
             {decidida ? (
-              <button className="boton boton--fantasma boton--chico" type="button" disabled={enviando} onClick={() => confirmar("en_revision")}>
-                Volver a revisión
-              </button>
+              <>
+                <button className="boton boton--fantasma boton--chico" type="button" disabled={enviando} onClick={() => confirmar("en_revision")}>
+                  Volver a revisión
+                </button>
+                {!correoEnviado && (
+                  <button className="boton boton--primario boton--chico" type="button" onClick={alIrAEnviar}>
+                    <Send size={15} aria-hidden="true" />
+                    {ficha.estado === "preseleccionada" ? "Enviar correo de felicitación" : "Enviar correo de feedback"}
+                  </button>
+                )}
+              </>
             ) : (
               <>
                 <button className={`boton boton--chico ${recomendacion === "no_pasa" ? "boton--primario" : "boton--secundario"}`} type="button" disabled={enviando} onClick={empezarDescarte}>
@@ -580,6 +613,30 @@ function BarraDecision({ ficha, alDecidir }: { ficha: Ficha; alDecidir: (estado:
         )}
       </div>
     </div>
+  );
+}
+
+//lo que pasó con esta postulación; se vuelve a pedir cuando cambia el estado, el análisis o los envíos
+function Historial({ token, idPostulacion, version }: { token: RespuestaToken; idPostulacion: number; version: string }) {
+  const [acciones, setAcciones] = useState<Accion[] | null>(null);
+
+  useEffect(() => {
+    obtenerActividad(token, { idPostulacion, limite: 30 })
+      .then((datos) => setAcciones(datos))
+      .catch(() => setAcciones([]));
+  }, [token, idPostulacion, version]);
+
+  return (
+    <section className="ficha__seccion" aria-labelledby="titulo-historial">
+      <h3 id="titulo-historial">Historial</h3>
+      {acciones === null ? (
+        <span className="esqueleto-panel" style={{ height: 40 }} />
+      ) : acciones.length === 0 ? (
+        <p className="ficha__nota">Sin acciones registradas todavía.</p>
+      ) : (
+        <ListaAcciones acciones={acciones} compacta />
+      )}
+    </section>
   );
 }
 

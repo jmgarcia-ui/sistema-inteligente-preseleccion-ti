@@ -48,10 +48,24 @@ class PostulacionRevisar(BaseModel):
   candidato: CandidatoResumen
   model_config = ConfigDict(from_attributes=True)
 
+#una acción del registro: qué pasó, quién (o "Sistema") y cuándo
+class AccionRespuesta(BaseModel):
+  id: int
+  tipo: str
+  descripcion: str
+  detalle: str | None
+  autor: str
+  id_vacante: int
+  id_postulacion: int | None
+  creado_en: datetime
+
+
 #todo lo que devuelve GET /panel/resumen
 class ResumenPanel(BaseModel):
   vacantes: list[VacanteResumen]
   por_revisar: list[PostulacionRevisar]
+  #la bitácora: las últimas acciones del equipo y del sistema
+  actividad: list[AccionRespuesta]
 
 
 #un párrafo del CV con la página donde está: así cada evidencia podrá citar su origen

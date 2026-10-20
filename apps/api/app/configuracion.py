@@ -21,6 +21,10 @@ class Configuracion(BaseSettings):
   #Azure AI Document Intelligence: lee el texto de los CV
   azure_docint_endpoint: str | None = None
   azure_docint_clave: SecretStr | None = None
+  #Azure OpenAI: compara el CV con los requisitos y redacta el feedback
+  azure_openai_endpoint: str | None = None
+  azure_openai_clave: SecretStr | None = None
+  azure_openai_despliegue: str = "gpt-4o-mini"
 
   model_config = SettingsConfigDict(
     env_file=RUTA_API / ".env", #obtner ruta de .env

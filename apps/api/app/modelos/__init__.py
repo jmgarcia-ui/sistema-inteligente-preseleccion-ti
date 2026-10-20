@@ -5,5 +5,6 @@ from app.modelos.candidato import Candidato
 from app.modelos.postulacion import Postulacion
 from app.modelos.requisito_vacante import RequisitoVacante
 from app.modelos.lectura_cv import LecturaCv, EstadoLectura
+from app.modelos.analisis_cv import AnalisisCv, EstadoAnalisis, Recomendacion
 
-__all__ = ["Rol", "Usuario", "Vacante", "Candidato", "Postulacion", "RequisitoVacante", "LecturaCv", "EstadoLectura"]
+__all__ = ["Rol", "Usuario", "Vacante", "Candidato", "Postulacion", "RequisitoVacante", "LecturaCv", "EstadoLectura", "AnalisisCv", "EstadoAnalisis", "Recomendacion"]

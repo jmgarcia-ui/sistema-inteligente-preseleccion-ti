@@ -6,10 +6,12 @@ from sqlalchemy.orm import Session
 from app.autorizacion import obtener_gestor_vacantes
 from app.base_datos import obtener_sesion
 from app.esquemas.vacantes import VacanteRespuesta
-from app.esquemas.panel import LecturaCvRespuesta, PostulacionRevisar, ResumenPanel, VacanteGestion, VacanteResumen
+from app.esquemas.panel import AnalisisCvRespuesta, LecturaCvRespuesta, PostulacionRevisar, ResumenPanel, VacanteGestion, VacanteResumen
 from app.modelos import Postulacion, Usuario
 from app.modelos.lectura_cv import EstadoLectura, LecturaCv
 from app.servicios.lecturas_cv import obtener_lectura, procesar_lectura, reiniciar_lectura
+from app.servicios.analisis_cv import obtener_analisis, procesar_analisis
+from app.modelos.analisis_cv import AnalisisCv, EstadoAnalisis
 from app.servicios.panel import contar_postulaciones, listar_por_revisar, listar_vacantes_panel
 from app.servicios.vacantes import listar_vacantes, obtener_vacante_por_id, puede_editar_vacante
 
@@ -124,4 +126,47 @@ def reintentar_lectura_cv(
   lectura = reiniciar_lectura(sesion, lectura)
   tareas.add_task(procesar_lectura, id_postulacion)
   return _respuesta_lectura(lectura)
+
+
+def _respuesta_analisis(analisis: AnalisisCv) -> AnalisisCvRespuesta:
+  return AnalisisCvRespuesta(
+    estado=analisis.estado,
+    modelo=analisis.modelo,
+    recomendacion=analisis.recomendacion,
+    motivo=analisis.motivo,
+    evidencias=json.loads(analisis.evidencias) if analisis.evidencias else [],
+    avisos=json.loads(analisis.avisos) if analisis.avisos else [],
+    correo_asunto=analisis.correo_asunto,
+    correo_cuerpo=analisis.correo_cuerpo,
+    error=analisis.error,
+    actualizado_en=analisis.actualizado_en,
+  )
+
+
+#la propuesta de la IA para una postulación: evidencia por requisito, recomendación y borrador del correo
+@router.get("/postulaciones/{id_postulacion}/analisis", response_model=AnalisisCvRespuesta)
+def obtener_analisis_cv(id_postulacion: int, sesion: Annotated[Session, Depends(obtener_sesion)], usuario: Annotated[Usuario, Depends(obtener_gestor_vacantes)]) -> AnalisisCvRespuesta:
+  _lectura_permitida(sesion, usuario, id_postulacion)
+  analisis = obtener_analisis(sesion, id_postulacion)
+  if analisis is None:
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="El CV todavía no tiene análisis")
+  return _respuesta_analisis(analisis)
+
+
+#vuelve a analizar el CV (por ejemplo, si falló o si cambiaron los requisitos de la vacante)
+@router.post("/postulaciones/{id_postulacion}/analisis", status_code=status.HTTP_202_ACCEPTED)
+def reintentar_analisis_cv(
+  id_postulacion: int,
+  sesion: Annotated[Session, Depends(obtener_sesion)],
+  usuario: Annotated[Usuario, Depends(obtener_gestor_vacantes)],
+  tareas: BackgroundTasks,
+) -> dict[str, str]:
+  lectura = _lectura_permitida(sesion, usuario, id_postulacion)
+  if lectura.estado != EstadoLectura.LEIDO:
+    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="El CV todavía no se ha leído")
+  analisis = obtener_analisis(sesion, id_postulacion)
+  if analisis is not None and analisis.estado == EstadoAnalisis.ANALIZANDO:
+    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="El CV se está analizando en este momento")
+  tareas.add_task(procesar_analisis, id_postulacion)
+  return {"detalle": "Análisis en curso"}
 

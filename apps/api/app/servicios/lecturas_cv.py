@@ -58,6 +58,11 @@ def procesar_lectura(id_postulacion: int) -> None:
     lectura.error = None
     sesion.commit()
 
+  #con el CV leído, la IA lo compara con los requisitos (fuera de la sesión de lectura, que ya se cerró)
+  from app.servicios.analisis_cv import procesar_analisis
+
+  procesar_analisis(id_postulacion)
+
 
 def _marcar_error(sesion: Session, lectura: LecturaCv, mensaje: str) -> None:
   lectura.estado = EstadoLectura.ERROR

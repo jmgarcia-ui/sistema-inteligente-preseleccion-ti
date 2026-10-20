@@ -1,7 +1,9 @@
 from datetime import date, datetime
+from typing import Literal
 from pydantic import BaseModel, ConfigDict
 from app.modelos.vacante import EstadoVacante, ModalidadVacante
 from app.modelos.lectura_cv import EstadoLectura
+from app.modelos.analisis_cv import EstadoAnalisis, Recomendacion
 
 #una fila de la tabla "Tus vacantes, estado por estado"
 #se llena a mano en la ruta: "conteos" no existe en el modelo Vacante
@@ -67,6 +69,31 @@ class LecturaCvRespuesta(BaseModel):
   paginas_leidas: int | None
   contenido: str | None
   parrafos: list[ParrafoCv]
+  error: str | None
+  actualizado_en: datetime
+
+
+#la evidencia de un requisito: solo trae cita si se comprobó que existe en el CV
+class EvidenciaRequisito(BaseModel):
+  numero: int
+  requisito: str
+  obligatorio: bool
+  resultado: Literal["cumple", "parcial", "sin_evidencia"]
+  cita: str | None
+  pagina: int | None
+  explicacion: str
+
+
+#la propuesta de la IA: nada de esto se aplica ni se envía sin la confirmación de una persona
+class AnalisisCvRespuesta(BaseModel):
+  estado: EstadoAnalisis
+  modelo: str | None
+  recomendacion: Recomendacion | None
+  motivo: str | None
+  evidencias: list[EvidenciaRequisito]
+  avisos: list[str]
+  correo_asunto: str | None
+  correo_cuerpo: str | None
   error: str | None
   actualizado_en: datetime
 

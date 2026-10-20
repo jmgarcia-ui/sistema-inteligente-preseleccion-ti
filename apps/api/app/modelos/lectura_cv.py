@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum
 
-from sqlalchemy import DateTime, Enum as EnumSQLAlchemy, ForeignKey, Integer, String, Text, func, text
+from sqlalchemy import DateTime, Enum as EnumSQLAlchemy, ForeignKey, Integer, String, Unicode, UnicodeText, func, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.base_datos import Base
@@ -42,11 +42,11 @@ class LecturaCv(Base):
   paginas_documento: Mapped[int | None] = mapped_column(Integer, nullable=True)
   paginas_leidas: Mapped[int | None] = mapped_column(Integer, nullable=True)
   #el CV como markdown (títulos, listas, tablas): es lo que leerá la IA para buscar evidencia
-  contenido: Mapped[str | None] = mapped_column(Text, nullable=True)
+  contenido: Mapped[str | None] = mapped_column(UnicodeText, nullable=True)
   #párrafos con su página, en JSON: [{"pagina": 1, "rol": "sectionHeading", "texto": "..."}]; sirven para citar el origen
-  parrafos: Mapped[str | None] = mapped_column(Text, nullable=True)
+  parrafos: Mapped[str | None] = mapped_column(UnicodeText, nullable=True)
   #motivo del error, para el equipo (no se muestra al candidato)
-  error: Mapped[str | None] = mapped_column(String(500), nullable=True)
+  error: Mapped[str | None] = mapped_column(Unicode(500), nullable=True)
 
   creado_en: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.sysutcdatetime())
   actualizado_en: Mapped[datetime] = mapped_column(

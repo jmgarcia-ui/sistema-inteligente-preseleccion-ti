@@ -13,7 +13,11 @@ from app.esquemas.candidatos import (
   ContactoCandidato,
   CorreoBorrador,
   DecisionCrear,
+  DecisionLote,
   EnviarCorreo,
+  EnvioLote,
+  Omitido,
+  ResultadoLote,
   EnvioResumen,
   FichaCandidato,
   LecturaBreve,
@@ -121,6 +125,55 @@ def listar(sesion: Sesion, usuario: Gestor, id_vacante: Annotated[int | None, Qu
   ]
 
 
+#las postulaciones del lote que el usuario puede ver; las demás se informan como omitidas
+def _del_lote(sesion: Session, usuario: Usuario, ids: list[int], omitidos: list[Omitido]) -> list[Postulacion]:
+  permitidas = []
+  #dict.fromkeys quita repetidos sin cambiar el orden
+  for id_postulacion in dict.fromkeys(ids):
+    postulacion = sesion.get(Postulacion, id_postulacion)
+    if postulacion is None or not puede_editar_vacante(usuario, postulacion.vacante):
+      omitidos.append(Omitido(id=id_postulacion, nombre="—", motivo="No encontrada"))
+    else:
+      permitidas.append(postulacion)
+  return permitidas
+
+
+#la misma decisión para varias postulaciones; cada una queda registrada por separado
+#va antes de las rutas con /{id_postulacion} para que "lote" no se lea como un id
+@router.put("/lote/decision", response_model=ResultadoLote)
+def decidir_lote(datos: DecisionLote, sesion: Sesion, usuario: Gestor) -> ResultadoLote:
+  hechos: list[int] = []
+  omitidos: list[Omitido] = []
+  estado = EstadoPostulacion(datos.estado)
+  for postulacion in _del_lote(sesion, usuario, datos.ids, omitidos):
+    if postulacion.estado == EstadoPostulacion.RETIRADA:
+      omitidos.append(Omitido(id=postulacion.id, nombre=nombre_de(postulacion), motivo="Retiró su postulación"))
+    elif postulacion.estado == estado:
+      omitidos.append(Omitido(id=postulacion.id, nombre=nombre_de(postulacion), motivo="Ya estaba en ese estado"))
+    else:
+      decidir(sesion, postulacion, usuario, estado, datos.motivo)
+      hechos.append(postulacion.id)
+  return ResultadoLote(hechos=hechos, omitidos=omitidos)
+
+
+#envía los borradores ya revisados; nunca reenvía: a quien ya recibió su correo se le omite
+@router.post("/lote/correo/enviar", response_model=ResultadoLote)
+def enviar_lote(datos: EnvioLote, sesion: Sesion, usuario: Gestor) -> ResultadoLote:
+  hechos: list[int] = []
+  omitidos: list[Omitido] = []
+  for postulacion in _del_lote(sesion, usuario, datos.ids, omitidos):
+    try:
+      envio = _enviar(sesion, postulacion, usuario, reenviar=False)
+    except EnvioNoPermitido as error:
+      omitidos.append(Omitido(id=postulacion.id, nombre=nombre_de(postulacion), motivo=error.corto))
+      continue
+    if envio.estado == EstadoEnvio.ENVIADO:
+      hechos.append(postulacion.id)
+    else:
+      omitidos.append(Omitido(id=postulacion.id, nombre=nombre_de(postulacion), motivo="Azure no pudo enviarlo"))
+  return ResultadoLote(hechos=hechos, omitidos=omitidos)
+
+
 @router.get("/{id_postulacion}", response_model=FichaCandidato)
 def obtener_ficha(id_postulacion: int, sesion: Sesion, usuario: Gestor) -> FichaCandidato:
   return _ficha(sesion, _postulacion_permitida(sesion, usuario, id_postulacion))
@@ -190,25 +243,31 @@ def redactar_borrador(id_postulacion: int, datos: RedactarCorreo, sesion: Sesion
   return _ficha(sesion, postulacion)
 
 
-#envía el borrador al candidato; solo con una decisión tomada y del tipo que le corresponde
-@router.post("/{id_postulacion}/correo/enviar", response_model=FichaCandidato)
-def enviar_borrador(id_postulacion: int, datos: EnviarCorreo, sesion: Sesion, usuario: Gestor) -> FichaCandidato:
-  postulacion = _postulacion_permitida(sesion, usuario, id_postulacion)
+#no se puede enviar (falta la decisión, el borrador o la confirmación); el texto se muestra tal cual al equipo
+class EnvioNoPermitido(Exception):
+  def __init__(self, mensaje: str, corto: str):
+    super().__init__(mensaje)
+    #versión breve, para la lista de omitidos de un lote
+    self.corto = corto
+
+
+#envía el borrador al candidato y deja constancia; solo con una decisión tomada y un borrador del tipo que le corresponde
+def _enviar(sesion: Session, postulacion: Postulacion, usuario: Usuario, reenviar: bool) -> EnvioCorreo:
   tipo = TIPO_POR_DECISION.get(postulacion.estado)
   if tipo is None:
-    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Primero preselecciona o descarta: el correo comunica esa decisión")
+    raise EnvioNoPermitido("Primero preselecciona o descarta: el correo comunica esa decisión", "Sin decisión")
   analisis = obtener_analisis(sesion, postulacion.id)
   if analisis is None or not analisis.correo_asunto or not analisis.correo_cuerpo:
-    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="No hay borrador: redáctalo primero")
+    raise EnvioNoPermitido("No hay borrador: redáctalo primero", "Sin borrador")
   if analisis.correo_tipo != tipo:
-    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="El borrador no corresponde a tu decisión: redáctalo de nuevo")
+    raise EnvioNoPermitido("El borrador no corresponde a tu decisión: redáctalo de nuevo", "El borrador no coincide con la decisión")
   ya_enviado = sesion.scalar(
     select(func.count()).select_from(EnvioCorreo).where(
       EnvioCorreo.id_postulacion == postulacion.id, EnvioCorreo.tipo == tipo, EnvioCorreo.estado.in_([EstadoEnvio.ENVIADO, EstadoEnvio.ENVIANDO])
     )
   )
-  if ya_enviado and not datos.reenviar:
-    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Este correo ya se envió. Confirma si quieres reenviarlo.")
+  if ya_enviado and not reenviar:
+    raise EnvioNoPermitido("Este correo ya se envió. Confirma si quieres reenviarlo.", "Ya se le envió")
 
   #se registra antes de enviar: si algo falla, queda constancia del intento
   envio = EnvioCorreo(
@@ -235,4 +294,15 @@ def enviar_borrador(id_postulacion: int, datos: EnviarCorreo, sesion: Sesion, us
   else:
     registrar(sesion, TipoAccion.CORREO_FALLIDO, f"No se pudo enviar el correo de {tipo_texto} a {nombre_de(postulacion)}", vacante=postulacion.vacante, postulacion=postulacion, usuario=usuario, detalle=envio.error)
   sesion.commit()
+  return envio
+
+
+@router.post("/{id_postulacion}/correo/enviar", response_model=FichaCandidato)
+def enviar_borrador(id_postulacion: int, datos: EnviarCorreo, sesion: Sesion, usuario: Gestor) -> FichaCandidato:
+  postulacion = _postulacion_permitida(sesion, usuario, id_postulacion)
+  try:
+    _enviar(sesion, postulacion, usuario, datos.reenviar)
+  except EnvioNoPermitido as error:
+    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(error))
   return _ficha(sesion, postulacion)
+

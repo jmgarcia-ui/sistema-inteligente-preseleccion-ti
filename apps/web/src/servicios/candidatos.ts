@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CandidatoFila, Decision, FichaCandidato, Recomendacion } from "../tipos/candidatos";
+import type { CandidatoFila, Decision, FichaCandidato, Recomendacion, ResultadoLote } from "../tipos/candidatos";
 import type { RespuestaToken } from "../tipos/sesion";
 
 const urlApi = import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000";
@@ -64,5 +64,17 @@ export async function redactarCorreo(token: RespuestaToken, idPostulacion: numbe
 //envía el borrador al candidato; "reenviar" confirma un segundo envío del mismo tipo
 export async function enviarCorreo(token: RespuestaToken, idPostulacion: number, reenviar = false) {
   const { data } = await axios.post<FichaCandidato>(`${urlApi}/panel/candidatos/${idPostulacion}/correo/enviar`, { reenviar }, { headers: cabeceras(token) });
+  return data;
+}
+
+//la misma decisión para varias postulaciones; al descartar, el motivo es común
+export async function decidirLote(token: RespuestaToken, ids: number[], estado: Decision, motivo?: string) {
+  const { data } = await axios.put<ResultadoLote>(`${urlApi}/panel/candidatos/lote/decision`, { ids, estado, motivo }, { headers: cabeceras(token) });
+  return data;
+}
+
+//envía los borradores ya revisados (máximo 25); nunca reenvía
+export async function enviarCorreosLote(token: RespuestaToken, ids: number[]) {
+  const { data } = await axios.post<ResultadoLote>(`${urlApi}/panel/candidatos/lote/correo/enviar`, { ids }, { headers: cabeceras(token) });
   return data;
 }

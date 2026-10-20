@@ -185,15 +185,216 @@
   align-items: start;
 }
 
-.bandeja__lista {
+/* La columna de la lista: la barra de lote arriba y las postulaciones debajo */
+.bandeja__columna {
   position: sticky;
   top: 0;
   max-height: 100dvh;
+  overflow-y: auto;
+  border-right: 1px solid var(--borde);
+}
+
+.bandeja__lista {
   margin: 0;
   padding: 0;
-  overflow-y: auto;
   list-style: none;
-  border-right: 1px solid var(--borde);
+}
+
+.bandeja__fila {
+  position: relative;
+}
+
+/* La casilla queda a la izquierda, sobre el relleno del botón, para no partir la fila en dos clics distintos */
+.bandeja__marcar {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 42px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.bandeja__marcar input,
+.lote__todos input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--azul);
+  cursor: pointer;
+}
+
+/* ---- Lote: marcar a varios y decidir o enviar de una vez ---- */
+.lote {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  padding: 0 16px 0 0;
+  background-color: var(--fondo);
+  border-bottom: 1px solid var(--tinta);
+}
+
+.lote__fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 44px;
+}
+
+.lote__todos {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 13px;
+  color: var(--texto);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lote__limpiar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: var(--apoyo);
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lote__limpiar:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+.lote__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 0 12px 13px;
+}
+
+.lote__panel,
+.lote__resultado {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 12px 13px;
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: var(--fondo-2);
+  border-radius: 10px;
+  animation: lote-aparece 0.18s ease-out;
+}
+
+.lote__panel p,
+.lote__resultado ul {
+  margin: 0;
+}
+
+.lote__panel label {
+  font-weight: 700;
+}
+
+.lote__panel label span,
+.lote__nota {
+  color: var(--texto);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.lote__panel textarea {
+  width: 100%;
+  padding: 10px 12px;
+  color: var(--tinta);
+  font: inherit;
+  background-color: var(--fondo);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 8px;
+  resize: vertical;
+}
+
+.lote__panel textarea:focus-visible {
+  outline: 2px solid var(--azul);
+  outline-offset: 1px;
+}
+
+.lote__botones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.lote__resultado .lote__fila {
+  min-height: 0;
+}
+
+.lote__resultado ul {
+  padding-left: 18px;
+  color: var(--tinta);
+  font-size: 13.5px;
+}
+
+.lote__resultado li span {
+  color: var(--texto);
+}
+
+.lote__resultado .boton {
+  justify-self: start;
+}
+
+.lote__trabajando {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0 0 12px 13px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lote__trabajando svg {
+  animation: lote-gira 0.9s linear infinite;
+}
+
+.lote__error {
+  margin: 0;
+  padding: 0 0 12px 13px;
+  color: var(--ambar);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.lote__panel .lote__error {
+  padding: 0;
+}
+
+@keyframes lote-aparece {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes lote-gira {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lote__panel,
+  .lote__resultado,
+  .lote__trabajando svg {
+    animation: none;
+  }
 }
 
 .bandeja__nada {
@@ -207,7 +408,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 4px 12px;
-  padding: 14px 16px 14px 14px;
+  padding: 14px 16px 14px 42px;
   text-align: left;
   background: transparent;
   border: 0;
@@ -966,9 +1167,10 @@ a.fuente:hover {
     display: block;
   }
 
-  .bandeja__lista {
+  .bandeja__columna {
     position: static;
     max-height: none;
+    overflow: visible;
     border-right: 0;
   }
 
@@ -976,7 +1178,7 @@ a.fuente:hover {
     display: none;
   }
 
-  .candidatos--con-ficha .bandeja__lista,
+  .candidatos--con-ficha .bandeja__columna,
   .candidatos--con-ficha .candidatos__cabecera,
   .candidatos--con-ficha .candidatos__filtros {
     display: none;

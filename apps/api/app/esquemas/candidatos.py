@@ -113,3 +113,25 @@ class RedactarCorreo(BaseModel):
 class EnviarCorreo(BaseModel):
   reenviar: bool = False
 
+
+#lote: la misma decisión para varias postulaciones (el motivo, si se descarta, es común a todas)
+class DecisionLote(DecisionCrear):
+  ids: list[int] = Field(min_length=1, max_length=100)
+
+
+#lote: enviar el borrador ya revisado de varias postulaciones; cada envío espera la confirmación de Azure, por eso el tope es menor
+class EnvioLote(BaseModel):
+  ids: list[int] = Field(min_length=1, max_length=25)
+
+
+class Omitido(BaseModel):
+  id: int
+  nombre: str
+  motivo: str
+
+
+#qué se hizo y qué no (con el porqué), para informarlo al equipo
+class ResultadoLote(BaseModel):
+  hechos: list[int]
+  omitidos: list[Omitido]
+

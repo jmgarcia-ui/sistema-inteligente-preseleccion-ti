@@ -85,3 +85,9 @@ export type FichaCandidato = {
   decidido_en: string | null;
   envios: EnvioCorreo[];
 };
+
+//resultado de una acción en lote: a quiénes se aplicó y a quiénes no (con el porqué)
+export type ResultadoLote = {
+  hechos: number[];
+  omitidos: { id: number; nombre: string; motivo: string }[];
+};

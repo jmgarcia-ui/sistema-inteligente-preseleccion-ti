@@ -3,9 +3,10 @@ import { useSearchParams } from "react-router-dom";
 import { ChevronDown, RefreshCw, Search } from "lucide-react";
 import "../style/candidatos.css";
 import { UsuarioContext } from "../contexto/UsuarioContext";
+import BarraLote from "../componentes/panel/BarraLote";
 import FichaCandidato from "../componentes/panel/FichaCandidato";
 import { listarCandidatos } from "../servicios/candidatos";
-import type { CandidatoFila } from "../tipos/candidatos";
+import type { CandidatoFila, Decision } from "../tipos/candidatos";
 import type { EstadoPostulacion } from "../tipos/panel";
 import { NOMBRES_ESTADO_POSTULACION, describirEspera, DIAS_ESPERA_LARGA } from "../utilidades/panel";
 
@@ -33,6 +34,10 @@ export default function CandidatosReclutador() {
   const [intento, setIntento] = useState(0);
   const [filtro, setFiltro] = useState<"todos" | EstadoPostulacion>("todos");
   const [texto, setTexto] = useState("");
+  //los marcados para decidir o enviar en lote
+  const [marcados, setMarcados] = useState<Set<number>>(new Set());
+  //cambiar este número vuelve a cargar la ficha abierta (tras una acción en lote)
+  const [versionFicha, setVersionFicha] = useState(0);
 
   useEffect(() => {
     if (token === null) return;
@@ -56,6 +61,22 @@ export default function CandidatosReclutador() {
   //tras decidir, la fila se actualiza sin volver a pedir toda la bandeja
   function alCambiarEstado(id: number, estado: EstadoPostulacion) {
     setCandidatos((anteriores) => anteriores?.map((c) => (c.id === id ? { ...c, estado } : c)) ?? null);
+  }
+
+  function marcar(ids: number[], marcar: boolean) {
+    setMarcados((anteriores) => {
+      const nuevos = new Set(anteriores);
+      for (const id of ids) {
+        if (marcar) nuevos.add(id);
+        else nuevos.delete(id);
+      }
+      return nuevos;
+    });
+  }
+
+  function alDecidirLote(hechos: number[], estado: Decision) {
+    setCandidatos((anteriores) => anteriores?.map((c) => (hechos.includes(c.id) ? { ...c, estado } : c)) ?? null);
+    setVersionFicha((anterior) => anterior + 1);
   }
 
   if (hayError)
@@ -97,6 +118,8 @@ export default function CandidatosReclutador() {
   );
   const sinRevisar = deLaVacante.filter((c) => c.estado === "recibida").length;
   //si no hay nadie elegido (o ya no está en la lista), se muestra el primero
+  //solo se actúa sobre los marcados que se ven: lo que un filtro oculta no se toca
+  const seleccion = visibles.filter((c) => marcados.has(c.id));
   const elegido = visibles.find((c) => c.id === idElegido)?.id ?? visibles[0]?.id;
   const conFicha = idElegido !== undefined && elegido === idElegido;
 
@@ -149,38 +172,54 @@ export default function CandidatosReclutador() {
           </div>
 
           <div className="bandeja">
-            {visibles.length === 0 ? (
-              <p className="bandeja__nada">Nadie coincide con estos filtros.</p>
-            ) : (
-              <ul className="bandeja__lista" aria-label="Postulaciones; primero lo que falta decidir">
-                {visibles.map((c) => {
-                  const espera = describirEspera(c.creado_en);
-                  return (
-                    <li key={c.id}>
-                      <button
-                        className={`bandeja__item bandeja__item--${c.estado}`}
-                        type="button"
-                        aria-current={c.id === elegido}
-                        onClick={() => cambiarParametro("postulacion", c.id)}>
-                        <b>
-                          {c.nombres} {c.apellidos}
-                        </b>
-                        <span className={`bandeja__espera ${c.estado === "recibida" && espera.dias >= DIAS_ESPERA_LARGA ? "bandeja__espera--larga" : ""}`}>
-                          {espera.cantidad} {espera.unidad}
-                        </span>
-                        <span className="bandeja__vacante">{c.vacante.titulo}</span>
-                        <span className={`estado-postulacion estado-postulacion--${c.estado}`}>{NOMBRES_ESTADO_POSTULACION[c.estado]}</span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
+            <div className="bandeja__columna">
+              <BarraLote
+                seleccion={seleccion}
+                totalVisibles={visibles.length}
+                alMarcarTodos={(todos) => marcar(visibles.map((c) => c.id), todos)}
+                alLimpiar={() => setMarcados(new Set())}
+                alDecidir={alDecidirLote}
+                alEnviar={() => setVersionFicha((anterior) => anterior + 1)}
+              />
+              {visibles.length === 0 ? (
+                <p className="bandeja__nada">Nadie coincide con estos filtros.</p>
+              ) : (
+                <ul className="bandeja__lista" aria-label="Postulaciones; primero lo que falta decidir">
+                  {visibles.map((c) => {
+                    const espera = describirEspera(c.creado_en);
+                    return (
+                      <li className="bandeja__fila" key={c.id}>
+                        <label className="bandeja__marcar">
+                          <input type="checkbox" checked={marcados.has(c.id)} onChange={(evento) => marcar([c.id], evento.target.checked)} />
+                          <span className="solo-lectores">
+                            Seleccionar a {c.nombres} {c.apellidos}
+                          </span>
+                        </label>
+                        <button
+                          className={`bandeja__item bandeja__item--${c.estado}`}
+                          type="button"
+                          aria-current={c.id === elegido}
+                          onClick={() => cambiarParametro("postulacion", c.id)}>
+                          <b>
+                            {c.nombres} {c.apellidos}
+                          </b>
+                          <span className={`bandeja__espera ${c.estado === "recibida" && espera.dias >= DIAS_ESPERA_LARGA ? "bandeja__espera--larga" : ""}`}>
+                            {espera.cantidad} {espera.unidad}
+                          </span>
+                          <span className="bandeja__vacante">{c.vacante.titulo}</span>
+                          <span className={`estado-postulacion estado-postulacion--${c.estado}`}>{NOMBRES_ESTADO_POSTULACION[c.estado]}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
 
             {elegido !== undefined && (
               <FichaCandidato
                 idPostulacion={elegido}
-                key={elegido}
+                key={`${elegido}-${versionFicha}`}
                 alVolver={() => cambiarParametro("postulacion")}
                 alCambiarEstado={(estado) => alCambiarEstado(elegido, estado)}
               />

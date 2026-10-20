@@ -1,12 +1,15 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, status
+import json
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.autorizacion import obtener_gestor_vacantes
 from app.base_datos import obtener_sesion
 from app.esquemas.vacantes import VacanteRespuesta
-from app.esquemas.panel import PostulacionRevisar, ResumenPanel, VacanteGestion, VacanteResumen
-from app.modelos import Usuario
+from app.esquemas.panel import LecturaCvRespuesta, PostulacionRevisar, ResumenPanel, VacanteGestion, VacanteResumen
+from app.modelos import Postulacion, Usuario
+from app.modelos.lectura_cv import EstadoLectura, LecturaCv
+from app.servicios.lecturas_cv import obtener_lectura, procesar_lectura, reiniciar_lectura
 from app.servicios.panel import contar_postulaciones, listar_por_revisar, listar_vacantes_panel
 from app.servicios.vacantes import listar_vacantes, obtener_vacante_por_id, puede_editar_vacante
 
@@ -74,3 +77,51 @@ def obtener_mi_vacante(id_vacante: int, sesion: Annotated[Session, Depends(obten
   if not puede_editar_vacante(usuario, vacante):
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="No tienes permiso para ver esta vacante")
   return VacanteRespuesta.model_validate(vacante)
+
+
+#busca la lectura del CV de una postulación y comprueba que el usuario pueda verla
+def _lectura_permitida(sesion: Session, usuario: Usuario, id_postulacion: int) -> LecturaCv:
+  postulacion = sesion.get(Postulacion, id_postulacion)
+  #404 tanto si no existe como si es de otra persona: no se revela qué postulaciones existen
+  if postulacion is None or not puede_editar_vacante(usuario, postulacion.vacante):
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Postulación no encontrada")
+  lectura = obtener_lectura(sesion, id_postulacion)
+  if lectura is None:
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Esta postulación no tiene CV")
+  return lectura
+
+
+def _respuesta_lectura(lectura: LecturaCv) -> LecturaCvRespuesta:
+  return LecturaCvRespuesta(
+    estado=lectura.estado,
+    modelo=lectura.modelo,
+    paginas_documento=lectura.paginas_documento,
+    paginas_leidas=lectura.paginas_leidas,
+    contenido=lectura.contenido,
+    parrafos=json.loads(lectura.parrafos) if lectura.parrafos else [],
+    error=lectura.error,
+    actualizado_en=lectura.actualizado_en,
+  )
+
+
+#lo que Document Intelligence leyó del CV: estado, texto y párrafos con su página
+@router.get("/postulaciones/{id_postulacion}/lectura-cv", response_model=LecturaCvRespuesta)
+def obtener_lectura_cv(id_postulacion: int, sesion: Annotated[Session, Depends(obtener_sesion)], usuario: Annotated[Usuario, Depends(obtener_gestor_vacantes)]) -> LecturaCvRespuesta:
+  return _respuesta_lectura(_lectura_permitida(sesion, usuario, id_postulacion))
+
+
+#vuelve a leer el CV, por ejemplo si la lectura anterior falló
+@router.post("/postulaciones/{id_postulacion}/lectura-cv", response_model=LecturaCvRespuesta, status_code=status.HTTP_202_ACCEPTED)
+def reintentar_lectura_cv(
+  id_postulacion: int,
+  sesion: Annotated[Session, Depends(obtener_sesion)],
+  usuario: Annotated[Usuario, Depends(obtener_gestor_vacantes)],
+  tareas: BackgroundTasks,
+) -> LecturaCvRespuesta:
+  lectura = _lectura_permitida(sesion, usuario, id_postulacion)
+  if lectura.estado == EstadoLectura.LEYENDO:
+    raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="El CV se está leyendo en este momento")
+  lectura = reiniciar_lectura(sesion, lectura)
+  tareas.add_task(procesar_lectura, id_postulacion)
+  return _respuesta_lectura(lectura)
+

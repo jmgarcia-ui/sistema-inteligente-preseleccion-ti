@@ -18,6 +18,9 @@ class Configuracion(BaseSettings):
   azure_storage_connection_string: SecretStr | None = None
   azure_storage_contenedor: str = "cvs"
   carpeta_almacenamiento_local: Path = RUTA_API / "almacenamiento"
+  #Azure AI Document Intelligence: lee el texto de los CV
+  azure_docint_endpoint: str | None = None
+  azure_docint_clave: SecretStr | None = None
 
   model_config = SettingsConfigDict(
     env_file=RUTA_API / ".env", #obtner ruta de .env

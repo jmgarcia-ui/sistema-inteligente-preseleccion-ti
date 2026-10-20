@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict
 from app.modelos.vacante import EstadoVacante, ModalidadVacante
+from app.modelos.lectura_cv import EstadoLectura
 
 #una fila de la tabla "Tus vacantes, estado por estado"
 #se llena a mano en la ruta: "conteos" no existe en el modelo Vacante
@@ -49,3 +50,23 @@ class PostulacionRevisar(BaseModel):
 class ResumenPanel(BaseModel):
   vacantes: list[VacanteResumen]
   por_revisar: list[PostulacionRevisar]
+
+
+#un párrafo del CV con la página donde está: así cada evidencia podrá citar su origen
+class ParrafoCv(BaseModel):
+  pagina: int
+  rol: str | None
+  texto: str
+
+
+#lo que Document Intelligence leyó del CV de una postulación
+class LecturaCvRespuesta(BaseModel):
+  estado: EstadoLectura
+  modelo: str | None
+  paginas_documento: int | None
+  paginas_leidas: int | None
+  contenido: str | None
+  parrafos: list[ParrafoCv]
+  error: str | None
+  actualizado_en: datetime
+

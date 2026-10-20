@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, File, Form, UploadFile, status, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, UploadFile, status, HTTPException
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
@@ -10,6 +10,7 @@ from app.servicios.vacantes import obtener_vacante_por_id, puede_editar_vacante
 from app.esquemas.postulaciones import PostulacionCrear
 from app.autorizacion import obtener_gestor_vacantes
 from app.base_datos import obtener_sesion
+from app.servicios.lecturas_cv import procesar_lectura
 from app.modelos import Usuario
 
 router = APIRouter(
@@ -23,6 +24,7 @@ def crear(
   datos: Annotated[str, Form(description="JSON con id_vacante, candidato y acepta_tratamiento_datos")],
   cv: Annotated[UploadFile, File(description="CV en PDF, hasta 5 MB")],
   sesion: Annotated[Session, Depends(obtener_sesion)],
+  tareas: BackgroundTasks,
 ) -> PostulacionRespuestaCandidato:
   #1. los datos se validan con el mismo esquema de antes; los errores salen con la forma de siempre ("loc" empieza en "body")
   try:
@@ -48,6 +50,8 @@ def crear(
   except PostulacionDuplicadaError as error:
       raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(error))
 
+  #el CV se lee con Document Intelligence después de responder: el candidato no espera
+  tareas.add_task(procesar_lectura, postulacion.id)
   return PostulacionRespuestaCandidato.model_validate(postulacion)
 
 

@@ -8,6 +8,7 @@ import type { RespuestaToken } from "../../tipos/sesion";
 import { obtenerActividad } from "../../servicios/panel";
 import type { Accion } from "../../tipos/panel";
 import ListaAcciones from "./ListaAcciones";
+import EditorTexto from "./EditorTexto";
 import { NOMBRES_ESTADO_POSTULACION, describirEspera, fechaDeCreacion } from "../../utilidades/panel";
 
 type Propiedades = {
@@ -231,11 +232,8 @@ export default function FichaCandidato({ idPostulacion, alVolver, alCambiarEstad
 
       <BarraDecision
         ficha={ficha}
-        alIrAEnviar={() => {
-          //lleva a la sección del correo y abre la confirmación (o el aviso para redactarlo si no coincide)
-          setConfirmandoEnvio(true);
-          seccionCorreo.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }}
+        //el envío está en la sección del correo; la barra solo lleva hasta ella
+        alIrAlCorreo={() => seccionCorreo.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
         alDecidir={async (estado, motivo) => {
           if (!token) return;
           const nueva = await decidir(token, ficha.id, estado, motivo);
@@ -442,11 +440,11 @@ function SeccionCorreo({ ficha, seccion, confirmando: confirmacionPedida, alConf
       )}
 
       {hayBorrador && (
-        <div className="correo">
+        <div className="borrador">
           <label htmlFor="correo-asunto">Asunto</label>
           <input id="correo-asunto" value={asunto} maxLength={200} onChange={(evento) => setAsunto(evento.target.value)} />
-          <label htmlFor="correo-cuerpo">Mensaje</label>
-          <textarea id="correo-cuerpo" rows={10} value={cuerpo} onChange={(evento) => setCuerpo(evento.target.value)} />
+          <label id="correo-cuerpo-etiqueta">Mensaje</label>
+          <EditorTexto valorInicial={analisis?.correo_cuerpo ?? ""} alCambiar={setCuerpo} idEtiqueta="correo-cuerpo-etiqueta" alto="alto" />
         </div>
       )}
 
@@ -516,7 +514,7 @@ function SeccionCorreo({ ficha, seccion, confirmando: confirmacionPedida, alConf
 }
 
 //la decisión siempre es de una persona; descartar pide un motivo, que arranca con el de la IA
-function BarraDecision({ ficha, alDecidir, alIrAEnviar }: { ficha: Ficha; alDecidir: (estado: Decision, motivo?: string) => Promise<void>; alIrAEnviar: () => void }) {
+function BarraDecision({ ficha, alDecidir, alIrAlCorreo }: { ficha: Ficha; alDecidir: (estado: Decision, motivo?: string) => Promise<void>; alIrAlCorreo: () => void }) {
   const [descartando, setDescartando] = useState(false);
   const [motivo, setMotivo] = useState("");
   const [enviando, setEnviando] = useState(false);
@@ -576,7 +574,17 @@ function BarraDecision({ ficha, alDecidir, alIrAEnviar }: { ficha: Ficha; alDeci
           {decidida && ficha.decidido_por
             ? `${NOMBRES_ESTADO_POSTULACION[ficha.estado]} por ${ficha.decidido_por}${ficha.decidido_en ? ` el ${fechaDeCreacion(ficha.decidido_en)}` : ""}${ficha.decision_motivo ? `: “${ficha.decision_motivo}”` : "."}`
             : "La decisión es tuya: el sistema no descarta a nadie por su cuenta."}
-          {decidida && (correoEnviado ? <span className="decision__correo decision__correo--enviado"> Correo enviado.</span> : <span className="decision__correo"> Falta enviar el correo al candidato.</span>)}
+          {decidida &&
+            (correoEnviado ? (
+              <span className="decision__correo decision__correo--enviado"> Correo enviado.</span>
+            ) : (
+              <>
+                {" "}
+                <button className="decision__correo decision__ir" type="button" onClick={alIrAlCorreo}>
+                  Falta enviar el correo al candidato ↑
+                </button>
+              </>
+            ))}
         </p>
         {!descartando && (
           <div className="decision__botones">
@@ -585,12 +593,6 @@ function BarraDecision({ ficha, alDecidir, alIrAEnviar }: { ficha: Ficha; alDeci
                 <button className="boton boton--fantasma boton--chico" type="button" disabled={enviando} onClick={() => confirmar("en_revision")}>
                   Volver a revisión
                 </button>
-                {!correoEnviado && (
-                  <button className="boton boton--primario boton--chico" type="button" onClick={alIrAEnviar}>
-                    <Send size={15} aria-hidden="true" />
-                    {ficha.estado === "preseleccionada" ? "Enviar correo de felicitación" : "Enviar correo de feedback"}
-                  </button>
-                )}
               </>
             ) : (
               <>

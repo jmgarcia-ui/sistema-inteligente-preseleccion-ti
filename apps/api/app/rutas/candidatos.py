@@ -37,6 +37,7 @@ from app.servicios.analisis_cv import obtener_analisis
 from app.servicios.candidatos_panel import decidir, listar_candidatos
 from app.servicios.correos import CorreoError, enviar_correo, redactar_correo
 from app.servicios.lecturas_cv import obtener_lectura
+from app.servicios.texto_rico import texto_a_html
 from app.servicios.vacantes import puede_editar_vacante
 
 router = APIRouter(prefix="/panel/candidatos", tags=["candidatos"])
@@ -238,7 +239,7 @@ def redactar_borrador(id_postulacion: int, datos: RedactarCorreo, sesion: Sesion
     sesion.add(analisis)
   analisis.correo_tipo = datos.tipo
   analisis.correo_asunto = asunto
-  analisis.correo_cuerpo = cuerpo
+  analisis.correo_cuerpo = texto_a_html(cuerpo)
   sesion.commit()
   return _ficha(sesion, postulacion)
 

@@ -1,4 +1,4 @@
-import html
+from app.servicios.texto_rico import html_a_texto, texto_a_html
 
 from app.configuracion import obtener_configuracion
 from app.modelos.analisis_cv import Recomendacion
@@ -13,9 +13,13 @@ class CorreoError(Exception):
 
 
 def _html(cuerpo: str) -> str:
-  #el texto se escapa (lo escribió una persona o la IA) y cada párrafo pasa a <p>
-  parrafos = [html.escape(parrafo).replace("\n", "<br>") for parrafo in cuerpo.strip().split("\n\n") if parrafo.strip()]
-  contenido = "".join(f'<p style="margin:0 0 14px">{parrafo}</p>' for parrafo in parrafos)
+  #el cuerpo es HTML del editor (o texto plano de antes): se limpia y cada bloque lleva su margen en línea, como piden los clientes de correo
+  contenido = (
+    texto_a_html(cuerpo)
+    .replace("<p>", '<p style="margin:0 0 14px">')
+    .replace("<ul>", '<ul style="margin:0 0 14px;padding-left:22px">')
+    .replace("<ol>", '<ol style="margin:0 0 14px;padding-left:22px">')
+  )
   pie = '<p style="margin:24px 0 0;font-size:12px;color:#556274">Este correo se envió desde una dirección que no recibe respuestas.</p>'
   return f'<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.55;color:#0f172a;max-width:600px">{contenido}{pie}</div>'
 
@@ -33,7 +37,7 @@ def enviar_correo(destinatario: str, nombre: str, asunto: str, cuerpo: str) -> s
   mensaje = {
     "senderAddress": configuracion.correo_remitente,
     "recipients": {"to": [{"address": destinatario, "displayName": nombre}]},
-    "content": {"subject": asunto, "plainText": cuerpo, "html": _html(cuerpo)},
+    "content": {"subject": asunto, "plainText": html_a_texto(cuerpo), "html": _html(cuerpo)},
     #el remitente no recibe respuestas (DoNotReply); el candidato lo sabe por el cuerpo del correo
     "userEngagementTrackingDisabled": True,
   }

@@ -4,6 +4,9 @@ import { AlertCircle, ChevronDown, ChevronUp, Plus, Send, X } from "lucide-react
 import type { EstadoVacante, VacanteDatos } from "../../tipos/panel";
 import { NOMBRES_MODALIDAD, type Modalidad } from "../../tipos/vacantes";
 import { describirCierre, hoyIso } from "../../utilidades/vacantes";
+import { aTexto } from "../../utilidades/textoRico";
+import TextoRico from "../comunes/TextoRico";
+import EditorTexto from "./EditorTexto";
 
 type Propiedades = {
   //datos con los que arranca el formulario: vacíos al crear, los de la vacante al editar
@@ -71,7 +74,7 @@ function FormularioVacante({ inicial, estado, idVacante, alGuardar }: Propiedade
     const nuevos: Errores = {};
     const hoy = hoyIso();
     if (titulo.trim().length < 3) nuevos.titulo = "El título necesita al menos 3 caracteres.";
-    if (descripcion.trim().length < 20) nuevos.descripcion = "Cuenta un poco más: la descripción necesita al menos 20 caracteres.";
+    if (aTexto(descripcion).length < 20) nuevos.descripcion = "Cuenta un poco más: la descripción necesita al menos 20 caracteres.";
     if (!requisitos.some((fila) => fila.descripcion.trim())) nuevos.requisitos = "Escribe al menos un requisito.";
     if (!fechaLimite) nuevos.fecha_limite = "Elige la fecha límite.";
     //una fecha nueva (al crear o si la cambiaste) tiene que ser futura
@@ -154,20 +157,20 @@ function FormularioVacante({ inicial, estado, idVacante, alGuardar }: Propiedade
           </div>
 
           <div className={`form-vacante__campo ${errores.descripcion ? "form-vacante__campo--error" : ""}`}>
-            <label htmlFor="descripcion">Descripción</label>
-            <textarea
-              id="descripcion"
-              rows={6}
-              value={descripcion}
+            {/* el editor no es un campo nativo: la etiqueta lo nombra con aria-labelledby */}
+            <label id="descripcion-etiqueta">Descripción</label>
+            <EditorTexto
+              valorInicial={inicial.descripcion}
+              alCambiar={setDescripcion}
+              idEtiqueta="descripcion-etiqueta"
+              idDescripcion="descripcion-error"
               placeholder="Qué hará la persona, con quién y con qué herramientas."
-              aria-invalid={Boolean(errores.descripcion)}
-              aria-describedby={errores.descripcion ? "descripcion-error" : undefined}
-              onChange={(evento) => setDescripcion(evento.target.value)}
+              conError={Boolean(errores.descripcion)}
             />
             {errores.descripcion && <ErrorCampo id="descripcion-error" texto={errores.descripcion} />}
             <div className="form-vacante__pie-campo">
               <span>Qué hará, con quién y con qué herramientas.</span>
-              <span>{descripcion.trim().length} caracteres</span>
+              <span>{aTexto(descripcion).length} caracteres</span>
             </div>
           </div>
         </fieldset>
@@ -317,7 +320,7 @@ function FormularioVacante({ inicial, estado, idVacante, alGuardar }: Propiedade
               {fechaLimite && <span>{describirCierre(fechaLimite).texto}</span>}
             </div>
             <h4>Sobre el puesto</h4>
-            <p className={descripcion.trim() ? undefined : "previa-vacante__vacio"}>{descripcion.trim() || "La descripción aparecerá aquí."}</p>
+            {aTexto(descripcion) ? <TextoRico className="previa-vacante__texto" texto={descripcion} /> : <p className="previa-vacante__vacio">La descripción aparecerá aquí.</p>}
             <h4>Requisitos</h4>
             {requisitosEscritos.length === 0 ? (
               <p className="previa-vacante__vacio">Los requisitos aparecerán aquí.</p>

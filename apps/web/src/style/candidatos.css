@@ -948,21 +948,20 @@ a.fuente:hover {
   border-style: dashed;
 }
 
-/* Borrador del correo */
-.correo {
+/* Borrador del correo ("borrador" y no "correo": la landing ya usa .correo) */
+.borrador {
   display: grid;
   gap: 6px;
   margin-top: 12px;
 }
 
-.correo label {
+.borrador label {
   margin-top: 6px;
   font-size: 13.5px;
   font-weight: 700;
 }
 
-.correo input,
-.correo textarea {
+.borrador > input {
   width: 100%;
   padding: 10px 12px;
   color: var(--tinta);
@@ -973,12 +972,7 @@ a.fuente:hover {
   border-radius: 10px;
 }
 
-.correo textarea {
-  resize: vertical;
-}
-
-.correo input:focus,
-.correo textarea:focus {
+.borrador > input:focus {
   outline: none;
   border-color: var(--azul);
   box-shadow: 0 0 0 4px var(--azul-claro);
@@ -1320,6 +1314,17 @@ a.fuente:hover {
 .decision__correo {
   color: var(--ambar);
   font-weight: 700;
+}
+
+.decision__ir {
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
 }
 
 .decision__correo--enviado {

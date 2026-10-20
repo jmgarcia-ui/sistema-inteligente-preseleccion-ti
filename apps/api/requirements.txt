@@ -34,6 +34,7 @@ Mako==1.4.1
 markdown-it-py==4.2.0
 MarkupSafe==3.0.3
 mdurl==0.1.2
+nh3==0.3.7
 packaging==26.3
 pluggy==1.6.0
 pwdlib==0.3.1

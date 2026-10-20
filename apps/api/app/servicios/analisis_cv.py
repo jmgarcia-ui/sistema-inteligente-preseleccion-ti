@@ -16,6 +16,7 @@ from app.configuracion import obtener_configuracion
 from app.modelos.analisis_cv import AnalisisCv, EstadoAnalisis, Recomendacion
 from app.modelos.lectura_cv import EstadoLectura, LecturaCv
 from app.servicios.azure_openai import completar_json
+from app.servicios.texto_rico import html_a_texto, texto_a_html
 
 registro = logging.getLogger(__name__)
 
@@ -207,7 +208,8 @@ def analizar(
     evidencias=evidencias,
     avisos=avisos,
     correo_asunto=datos["correo"]["asunto"][:200],
-    correo_cuerpo=datos["correo"]["cuerpo"],
+    #la IA escribe texto plano; se guarda como HTML para el editor
+    correo_cuerpo=texto_a_html(datos["correo"]["cuerpo"]),
     modelo=respuesta.modelo,
     tokens_entrada=respuesta.tokens_entrada,
     tokens_salida=respuesta.tokens_salida,
@@ -258,7 +260,7 @@ def procesar_analisis(id_postulacion: int) -> None:
     try:
       resultado = analizar(
         vacante.titulo,
-        vacante.descripcion,
+        html_a_texto(vacante.descripcion),
         requisitos,
         postulacion.candidato.nombres,
         parrafos,

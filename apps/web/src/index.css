@@ -189,3 +189,27 @@ a {
     transform: none;
   }
 }
+
+/* Texto con formato del editor (descripción de la vacante): párrafos, listas y enlaces */
+.texto-rico > * {
+  margin: 0;
+}
+
+.texto-rico > * + * {
+  margin-top: 0.75em;
+}
+
+.texto-rico ul,
+.texto-rico ol {
+  padding-left: 1.4em;
+}
+
+.texto-rico li p {
+  margin: 0;
+}
+
+.texto-rico a {
+  color: var(--azul-texto);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

@@ -974,7 +974,7 @@
   overflow-wrap: anywhere;
 }
 
-.previa-vacante__cuerpo ol {
+.previa-vacante__cuerpo > ol {
   display: grid;
   gap: 8px;
   margin: 0;
@@ -982,7 +982,7 @@
   list-style: none;
 }
 
-.previa-vacante__cuerpo li {
+.previa-vacante__cuerpo > ol > li {
   display: grid;
   grid-template-columns: 22px 1fr auto;
   gap: 10px;
@@ -1124,4 +1124,12 @@
   .mis-vacantes__toast {
     transition: none;
   }
+}
+
+/* La descripción con formato en la vista previa */
+.previa-vacante__texto {
+  color: var(--texto);
+  font-size: 14px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }

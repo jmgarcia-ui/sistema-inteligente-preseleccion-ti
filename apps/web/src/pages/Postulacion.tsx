@@ -6,6 +6,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { NOMBRES_MODALIDAD, type VacantePublica } from "../tipos/vacantes";
 import { describirCierre } from "../utilidades/vacantes";
 import FormularioPostulacion from "../componentes/postulacion/FormularioPostulacion";
+import TextoRico from "../componentes/comunes/TextoRico";
 
 export default function Postulacion() {
   const [vacante, setVacante] = useState<VacantePublica | null>(null);
@@ -113,7 +114,7 @@ export default function Postulacion() {
           </ul>
           <section className="vacante__bloque">
             <h2>Sobre el puesto</h2>
-            <p className="vacante__descripcion">{vacante.descripcion}</p>
+            <TextoRico className="vacante__descripcion" texto={vacante.descripcion} />
           </section>
           <section className="vacante__bloque">
             <h2>Requisitos</h2>

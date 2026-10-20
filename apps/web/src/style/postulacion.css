@@ -170,7 +170,6 @@ html[data-tema="oscuro"] .pagina-vacante {
   margin: 0;
   color: var(--texto);
   font-size: 17px;
-  white-space: pre-line;
   text-wrap: pretty;
 }
 

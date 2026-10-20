@@ -1,13 +1,14 @@
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from app.esquemas.panel import AnalisisCvRespuesta
 from app.modelos.analisis_cv import EstadoAnalisis, Recomendacion
 from app.modelos.lectura_cv import EstadoLectura
 from app.modelos.envio_correo import EstadoEnvio
 from app.modelos.postulacion import EstadoPostulacion
+from app.servicios.texto_rico import validar_texto_rico
 
 
 class VacanteBreve(BaseModel):
@@ -100,8 +101,14 @@ class DecisionCrear(BaseModel):
 #el borrador del correo, editado por el equipo antes de enviarlo
 class CorreoBorrador(BaseModel):
   asunto: str = Field(min_length=3, max_length=200)
-  cuerpo: str = Field(min_length=20, max_length=8000)
+  #HTML del editor; se limpia al validar
+  cuerpo: str = Field(min_length=20, max_length=20000)
   model_config = ConfigDict(str_strip_whitespace=True)
+
+  @field_validator("cuerpo")
+  @classmethod
+  def limpiar_cuerpo(cls, cuerpo: str) -> str:
+    return validar_texto_rico(cuerpo, 20)
 
 
 #pide a la IA un borrador nuevo del tipo indicado (por ejemplo, si el equipo decidió distinto a la propuesta)

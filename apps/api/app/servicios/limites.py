@@ -36,9 +36,21 @@ class LimiteIntentos:
 limite_postulaciones = LimiteIntentos(REGLAS_POSTULACION)
 
 
+#en Azure la petición llega a través de un proxy: la IP real es la última que agregó ese proxy en X-Forwarded-For
+#(la última y no la primera: las anteriores las puede inventar el visitante); puede venir con puerto, que se quita
+def ip_del_visitante(request: Request) -> str:
+  reenviada = request.headers.get("x-forwarded-for")
+  if reenviada:
+    ip = reenviada.split(",")[-1].strip()
+    if ip.startswith("["):
+      return ip[1 : ip.find("]")]
+    return ip.split(":")[0] if ip.count(":") == 1 else ip
+  return request.client.host if request.client else "desconocida"
+
+
 #dependencia de la ruta pública de postulación
 def limitar_postulaciones(request: Request) -> None:
-  ip = request.client.host if request.client else "desconocida"
+  ip = ip_del_visitante(request)
   espera = limite_postulaciones.intentar(ip)
   if espera is not None:
     minutos = max(1, math.ceil(espera / 60))

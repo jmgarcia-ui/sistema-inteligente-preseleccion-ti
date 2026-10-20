@@ -40,3 +40,7 @@ __pycache__/
 .impeccable/
 # CV guardados en desarrollo (datos personales: nunca al repositorio)
 apps/api/almacenamiento/
+
+# variables de producción (solo en tu equipo)
+.env.*
+!.env.example

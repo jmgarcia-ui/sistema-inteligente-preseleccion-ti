@@ -1,0 +1,41 @@
+# Corre las pruebas y publica el backend en Azure App Service cada vez que cambia apps/api en main
+# Las migraciones se aplican solas al arrancar (comando de inicio de la app en Azure)
+name: Publicar API
+
+on:
+  push:
+    branches: [main]
+    paths: ["apps/api/**", ".github/workflows/api.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: publicar-api
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: apps/api/requirements.txt
+      # pyodbc necesita la librería ODBC del sistema aunque las pruebas no se conecten a la base
+      - run: sudo apt-get install -y unixodbc
+      - run: pip install -r requirements.txt
+      - run: python -m pytest -q
+        env:
+          DATABASE_URL: mssql+pyodbc://prueba:prueba@localhost/prueba?driver=ODBC+Driver+18+for+SQL+Server
+          FRONTEND_URL: http://localhost:5173
+          CLAVE_SECRETA_JWT: solo-para-pruebas
+      # Azure instala requirements.txt al recibir el paquete (SCM_DO_BUILD_DURING_DEPLOYMENT)
+      - uses: azure/webapps-deploy@v3
+        with:
+          app-name: api-preseleccion-ti
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: apps/api

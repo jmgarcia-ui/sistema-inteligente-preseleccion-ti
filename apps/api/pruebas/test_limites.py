@@ -39,3 +39,17 @@ def test_el_campo_trampa_lleno_se_rechaza():
     files={"cv": ("cv.pdf", b"%PDF-1.4", "application/pdf")},
   )
   assert respuesta.status_code == 400
+
+
+def test_ip_del_visitante_detras_del_proxy():
+  from types import SimpleNamespace
+  from app.servicios.limites import ip_del_visitante
+
+  def peticion(cabecera=None):
+    return SimpleNamespace(headers={"x-forwarded-for": cabecera} if cabecera else {}, client=SimpleNamespace(host="10.0.0.1"))
+
+  assert ip_del_visitante(peticion()) == "10.0.0.1"
+  #la última es la que agregó el proxy de Azure; la primera la puede inventar el visitante
+  assert ip_del_visitante(peticion("1.1.1.1, 200.1.2.3:51234")) == "200.1.2.3"
+  assert ip_del_visitante(peticion("[2001:db8::1]:443")) == "2001:db8::1"
+  assert ip_del_visitante(peticion("2001:db8::1")) == "2001:db8::1"

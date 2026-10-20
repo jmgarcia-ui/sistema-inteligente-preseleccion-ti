@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { EstadoVacante, ResumenPanel, VacanteCambios, VacanteDatos, VacanteDetalle, VacanteGestion } from "../tipos/panel";
+import type { Accion, EstadoVacante, ResumenPanel, VacanteCambios, VacanteDatos, VacanteDetalle, VacanteGestion } from "../tipos/panel";
 import type { RespuestaToken } from "../tipos/sesion";
 
 const urlApi = import.meta.env.VITE_API_URL ?? "http://127.0.0.1:8000";
@@ -49,3 +49,15 @@ export async function actualizarVacante(token: RespuestaToken, idVacante: number
   });
   return data;
 }
+
+//el registro de acciones; "antesDe" pide la página siguiente
+export async function obtenerActividad(token: RespuestaToken, opciones: { idPostulacion?: number; tipos?: string[]; antesDe?: number; limite?: number } = {}) {
+  const { data } = await axios.get<Accion[]>(`${urlApi}/panel/actividad`, {
+    headers: { Authorization: `${token.tipo_token} ${token.token_acceso}` },
+    params: { id_postulacion: opciones.idPostulacion, tipo: opciones.tipos, antes_de: opciones.antesDe, limite: opciones.limite },
+    //"tipo" se repite en la dirección: ?tipo=decision&tipo=correo_enviado
+    paramsSerializer: { indexes: null },
+  });
+  return data;
+}
+

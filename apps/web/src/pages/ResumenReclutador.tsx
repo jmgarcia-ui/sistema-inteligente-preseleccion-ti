@@ -4,6 +4,7 @@ import { ArrowRight, RefreshCw } from "lucide-react";
 import "../style/resumen.css";
 import { UsuarioContext } from "../contexto/UsuarioContext";
 import BarraEstados from "../componentes/panel/BarraEstados";
+import ListaAcciones from "../componentes/panel/ListaAcciones";
 import { obtenerResumen } from "../servicios/panel";
 import type { EstadoPostulacion, ResumenPanel, VacanteResumen } from "../tipos/panel";
 import { SEGMENTOS, DIAS_ESPERA_LARGA, describirEspera, describirFuentes, textoPostulaciones, totalDeVacante } from "../utilidades/panel";
@@ -123,6 +124,20 @@ export default function ResumenReclutador() {
               <ArrowRight size={14} aria-hidden="true" />
             </Link>
           )}
+
+          <div className="resumen__titulo resumen__bitacora">
+            <h2>Bitácora</h2>
+            <p>Lo último que pasó</p>
+          </div>
+          {resumen.actividad.length === 0 ? (
+            <p className="resumen__vacio">Aquí verás las decisiones, los correos y los cambios en tus vacantes.</p>
+          ) : (
+            <ListaAcciones acciones={resumen.actividad} compacta />
+          )}
+          <Link className="resumen__mas" to="/reclutador/actividad">
+            Ver toda la actividad
+            <ArrowRight size={14} aria-hidden="true" />
+          </Link>
         </section>
 
         <section className="matriz" aria-labelledby="titulo-matriz">

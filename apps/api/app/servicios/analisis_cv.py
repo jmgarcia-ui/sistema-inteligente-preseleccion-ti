@@ -7,6 +7,8 @@ from dataclasses import asdict, dataclass
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.modelos.registro_accion import TipoAccion
+from app.servicios.registro import nombre_de, registrar
 from app.base_datos import FabricaSesiones
 from app.modelos.analisis_cv import AnalisisCv, EstadoAnalisis, Recomendacion
 from app.modelos.lectura_cv import EstadoLectura, LecturaCv
@@ -251,6 +253,7 @@ def procesar_analisis(id_postulacion: int) -> None:
       registro.exception("No se pudo analizar el CV de la postulación %s", id_postulacion)
       analisis.estado = EstadoAnalisis.ERROR
       analisis.error = str(error)[:500]
+      registrar(sesion, TipoAccion.ANALISIS_ERROR, f"No se pudo analizar el CV de {nombre_de(postulacion)}", vacante=vacante, postulacion=postulacion, detalle=analisis.error)
       sesion.commit()
       return
 
@@ -265,4 +268,6 @@ def procesar_analisis(id_postulacion: int) -> None:
     analisis.correo_cuerpo = resultado.correo_cuerpo
     analisis.tokens_entrada = resultado.tokens_entrada
     analisis.tokens_salida = resultado.tokens_salida
+    propuesta = "pasa" if resultado.recomendacion == Recomendacion.PASA else "no pasa"
+    registrar(sesion, TipoAccion.ANALISIS_LISTO, f"La IA propuso que {nombre_de(postulacion)} {propuesta}", vacante=vacante, postulacion=postulacion, detalle=resultado.motivo)
     sesion.commit()

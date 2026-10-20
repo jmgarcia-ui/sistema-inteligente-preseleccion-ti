@@ -1,14 +1,16 @@
 from typing import Annotated
 import json
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.autorizacion import obtener_gestor_vacantes
 from app.base_datos import obtener_sesion
 from app.esquemas.vacantes import VacanteRespuesta
-from app.esquemas.panel import AnalisisCvRespuesta, LecturaCvRespuesta, PostulacionRevisar, ResumenPanel, VacanteGestion, VacanteResumen
+from app.esquemas.panel import AccionRespuesta, AnalisisCvRespuesta, LecturaCvRespuesta, PostulacionRevisar, ResumenPanel, VacanteGestion, VacanteResumen
 from app.modelos import Postulacion, Usuario
 from app.modelos.lectura_cv import EstadoLectura, LecturaCv
+from app.servicios.registro import listar_acciones
+from app.modelos.registro_accion import RegistroAccion
 from app.servicios.lecturas_cv import obtener_lectura, procesar_lectura, reiniciar_lectura
 from app.servicios.analisis_cv import obtener_analisis, procesar_analisis
 from app.modelos.analisis_cv import AnalisisCv, EstadoAnalisis
@@ -45,6 +47,7 @@ def obtener_resumen(sesion: Annotated[Session, Depends(obtener_sesion)], usuario
       for vacante in vacantes
     ],
     por_revisar=[PostulacionRevisar.model_validate(postulacion) for postulacion in por_revisar],
+    actividad=[respuesta_accion(accion) for accion in listar_acciones(sesion, usuario, limite=6)],
   )
 
 @router.get("/vacantes", response_model=list[VacanteGestion])
@@ -170,4 +173,32 @@ def reintentar_analisis_cv(
     raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="El CV se está analizando en este momento")
   tareas.add_task(procesar_analisis, id_postulacion)
   return {"detalle": "Análisis en curso"}
+
+
+def respuesta_accion(accion: RegistroAccion) -> AccionRespuesta:
+  return AccionRespuesta(
+    id=accion.id,
+    tipo=accion.tipo,
+    descripcion=accion.descripcion,
+    detalle=accion.detalle,
+    autor=f"{accion.usuario.nombres} {accion.usuario.apellidos}" if accion.usuario else "Sistema",
+    id_vacante=accion.id_vacante,
+    id_postulacion=accion.id_postulacion,
+    creado_en=accion.creado_en,
+  )
+
+
+#el registro: qué pasó, quién y cuándo, de la acción más nueva a la más vieja
+#"antes_de" pide la página siguiente (el id de la última acción ya mostrada)
+@router.get("/actividad", response_model=list[AccionRespuesta])
+def obtener_actividad(
+  sesion: Annotated[Session, Depends(obtener_sesion)],
+  usuario: Annotated[Usuario, Depends(obtener_gestor_vacantes)],
+  id_postulacion: Annotated[int | None, Query()] = None,
+  tipo: Annotated[list[str] | None, Query()] = None,
+  antes_de: Annotated[int | None, Query()] = None,
+  limite: Annotated[int, Query(ge=1, le=100)] = 50,
+) -> list[AccionRespuesta]:
+  acciones = listar_acciones(sesion, usuario, id_postulacion=id_postulacion, tipos=tipo, antes_de=antes_de, limite=limite)
+  return [respuesta_accion(accion) for accion in acciones]
 

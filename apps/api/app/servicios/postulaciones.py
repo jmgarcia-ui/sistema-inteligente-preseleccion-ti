@@ -1,4 +1,6 @@
 from sqlalchemy.orm import Session
+from app.modelos.registro_accion import TipoAccion
+from app.servicios.registro import nombre_de, registrar
 from app.modelos.postulacion import Postulacion
 from app.modelos.lectura_cv import LecturaCv
 from app.esquemas.postulaciones import PostulacionCrear
@@ -69,6 +71,7 @@ def crear_postulacion(sesion: Session, datos: PostulacionCrear, cv: bytes, cv_no
   sesion.add(postulacion)
   #la lectura del CV nace pendiente; se procesa en segundo plano después de responder
   sesion.add(LecturaCv(postulacion=postulacion))
+  registrar(sesion, TipoAccion.POSTULACION_RECIBIDA, f'{candidato.nombres} {candidato.apellidos} postuló a "{vacante.titulo}"', vacante=vacante, postulacion=postulacion)
   try:
     sesion.commit()
   except Exception:

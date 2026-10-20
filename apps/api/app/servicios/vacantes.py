@@ -1,4 +1,6 @@
 from sqlalchemy.orm import Session
+from app.modelos.registro_accion import TipoAccion
+from app.servicios.registro import registrar
 from app.esquemas.vacantes import VacanteCrear, VacanteActualizar
 from app.modelos.vacante import EstadoVacante, Vacante
 from app.esquemas.vacantes import RequisitoCrear
@@ -36,6 +38,7 @@ def crear_vacante(sesion:Session, datos: VacanteCrear, id_creador: int) -> Vacan
   )
   #añadimos el objeto a la sesion (no se guarda aún)
   sesion.add(vacante)
+  registrar(sesion, TipoAccion.VACANTE_CREADA, f'Creó la vacante "{vacante.titulo}"', vacante=vacante, usuario=sesion.get(Usuario, id_creador))
   #se guarda en la bd el objeto
   sesion.commit()
   #vacante recibe el id generado por sql server y el enum "borrador"

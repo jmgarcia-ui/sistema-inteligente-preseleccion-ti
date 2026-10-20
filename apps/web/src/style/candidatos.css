@@ -1113,3 +1113,25 @@ a.fuente:hover {
 .envios__item--error b {
   color: var(--ambar);
 }
+
+/* Tras decidir, la barra recuerda el paso que falta */
+.decision__correo {
+  color: var(--ambar);
+  font-weight: 700;
+}
+
+.decision__correo--enviado {
+  color: var(--verde);
+}
+
+/* al llegar desde la barra, el título del correo no queda bajo el borde superior */
+.ficha__seccion--correo {
+  scroll-margin-top: 16px;
+}
+
+
+.ficha__nota {
+  margin: 0;
+  color: var(--texto);
+  font-size: 14px;
+}

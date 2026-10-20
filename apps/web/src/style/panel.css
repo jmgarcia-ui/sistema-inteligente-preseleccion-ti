@@ -82,6 +82,17 @@ html[data-tema="oscuro"] .panel {
   }
 }
 
+/* Botón sin fondo para acciones secundarias (Cancelar, Volver a revisión) */
+.boton--fantasma {
+  color: var(--texto);
+  background: transparent;
+}
+
+.boton--fantasma:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
 /* Estado de una vacante: verde publicada, ámbar borrador, neutro cerrada */
 .etiqueta-estado {
   display: inline-block;

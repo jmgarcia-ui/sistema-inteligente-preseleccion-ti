@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Check, Eye, Link2, Lock, MoreVertical, Pencil, Plus, RefreshCw, Search, Send } from "lucide-react";
+import { Check, Eye, Link2, Lock, MoreVertical, Pencil, Plus, RefreshCw, Search, Send, Users } from "lucide-react";
 import "../style/mis-vacantes.css";
 import { UsuarioContext } from "../contexto/UsuarioContext";
 import BarraEstados from "../componentes/panel/BarraEstados";
@@ -217,10 +217,10 @@ function FilaVacante({ vacante, alPublicar, alCerrar, alCopiar }: PropiedadesFil
         ) : (
           <>
             <div className="fila-vacante__cifras">
-              <b>
+              <Link className="fila-vacante__total" to={`/reclutador/candidatos?vacante=${vacante.id}`}>
                 {total}
                 <span>{total === 1 ? "postulación" : "postulaciones"}</span>
-              </b>
+              </Link>
               {sinRevisar > 0 ? <small>{sinRevisar} sin revisar</small> : <small className="fila-vacante__al-dia">Todo revisado</small>}
             </div>
             <BarraEstados conteos={vacante.conteos} />
@@ -249,6 +249,12 @@ function FilaVacante({ vacante, alPublicar, alCerrar, alCopiar }: PropiedadesFil
           </Link>
         )}
         <MasAcciones titulo={vacante.titulo}>
+          {total > 0 && (
+            <Link to={`/reclutador/candidatos?vacante=${vacante.id}`} role="menuitem">
+              <Users size={16} aria-hidden="true" />
+              Ver postulaciones
+            </Link>
+          )}
           {vacante.estado !== "cerrada" && (
             <Link to={rutaEditar} role="menuitem">
               <Pencil size={16} aria-hidden="true" />

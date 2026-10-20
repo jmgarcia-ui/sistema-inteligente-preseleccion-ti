@@ -51,6 +51,8 @@ class AnalisisCv(Base):
   #lo que el equipo debe revisar con más cuidado (citas descartadas, páginas sin leer...), en JSON
   avisos: Mapped[str | None] = mapped_column(UnicodeText, nullable=True)
   #borrador del correo para el candidato; no se envía hasta que una persona lo confirme
+  #de qué tipo es el borrador: felicitación ("pasa") o feedback ("no_pasa"); cambia si el equipo lo redacta de nuevo
+  correo_tipo: Mapped[Recomendacion | None] = mapped_column(_enum(Recomendacion, "tipo_correo_analisis_cv"), nullable=True)
   correo_asunto: Mapped[str | None] = mapped_column(Unicode(200), nullable=True)
   correo_cuerpo: Mapped[str | None] = mapped_column(UnicodeText, nullable=True)
   #consumo de la llamada, para vigilar el costo

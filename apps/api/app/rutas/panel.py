@@ -136,6 +136,7 @@ def _respuesta_analisis(analisis: AnalisisCv) -> AnalisisCvRespuesta:
     motivo=analisis.motivo,
     evidencias=json.loads(analisis.evidencias) if analisis.evidencias else [],
     avisos=json.loads(analisis.avisos) if analisis.avisos else [],
+    correo_tipo=analisis.correo_tipo,
     correo_asunto=analisis.correo_asunto,
     correo_cuerpo=analisis.correo_cuerpo,
     error=analisis.error,

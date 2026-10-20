@@ -92,6 +92,7 @@ class AnalisisCvRespuesta(BaseModel):
   motivo: str | None
   evidencias: list[EvidenciaRequisito]
   avisos: list[str]
+  correo_tipo: Recomendacion | None
   correo_asunto: str | None
   correo_cuerpo: str | None
   error: str | None

@@ -260,6 +260,7 @@ def procesar_analisis(id_postulacion: int) -> None:
     analisis.motivo = resultado.motivo
     analisis.evidencias = json.dumps([asdict(e) for e in resultado.evidencias], ensure_ascii=False)
     analisis.avisos = json.dumps(resultado.avisos, ensure_ascii=False)
+    analisis.correo_tipo = resultado.recomendacion
     analisis.correo_asunto = resultado.correo_asunto
     analisis.correo_cuerpo = resultado.correo_cuerpo
     analisis.tokens_entrada = resultado.tokens_entrada

@@ -4,7 +4,7 @@ from app.base_datos import Base
 from app.modelos.vacante import Vacante
 from app.modelos.candidato import Candidato
 
-from sqlalchemy import DateTime, Integer, String, Text, text, func, ForeignKey, Enum as EnumSQLAlchemy, UniqueConstraint
+from sqlalchemy import DateTime, Integer, String, Text, Unicode, text, func, ForeignKey, Enum as EnumSQLAlchemy, UniqueConstraint
 from enum import Enum
 
 class EstadoPostulacion(str, Enum):
@@ -58,6 +58,11 @@ class Postulacion(Base):
   cv_clave: Mapped[str | None] = mapped_column(String(500), nullable=True)
   #tamaño en bytes
   cv_tamano: Mapped[int | None] = mapped_column(Integer, nullable=True)
+
+  #la última decisión de una persona del equipo sobre esta postulación (la IA solo propone)
+  decision_motivo: Mapped[str | None] = mapped_column(Unicode(500), nullable=True)
+  decidido_por_id: Mapped[int | None] = mapped_column(ForeignKey("usuarios.id"), nullable=True)
+  decidido_en: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
   acepto_tratamiento_datos_en: Mapped[datetime] = mapped_column(
     DateTime,

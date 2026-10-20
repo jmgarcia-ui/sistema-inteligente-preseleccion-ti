@@ -193,7 +193,12 @@
 }
 
 .fila-vacante--cerrada .fila-vacante__titulo a,
-.fila-vacante--cerrada .fila-vacante__cifras b {
+.fila-vacante--cerrada .fila-vacante__cifras .fila-vacante__total:hover {
+  color: var(--azul-texto);
+}
+
+.fila-vacante__cifras b,
+.fila-vacante__cifras .fila-vacante__total {
   color: var(--texto);
 }
 
@@ -230,7 +235,8 @@
   letter-spacing: -0.02em;
 }
 
-.fila-vacante__cifras b span {
+.fila-vacante__cifras b span,
+.fila-vacante__cifras .fila-vacante__total span {
   margin-left: 4px;
   color: var(--apoyo);
   font-size: 13px;
@@ -860,16 +866,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.boton--fantasma {
-  color: var(--texto);
-  background: transparent;
-}
-
-.boton--fantasma:hover {
-  color: var(--tinta);
-  background-color: var(--fondo-2);
 }
 
 .form-vacante__mensaje {

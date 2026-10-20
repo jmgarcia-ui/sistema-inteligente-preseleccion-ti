@@ -51,3 +51,12 @@ export const SEGMENTOS: { clave: EstadoPostulacion; nombre: string; color: strin
 export function fechaDeCreacion(creadoEn: string) {
   return leerFechaUtc(creadoEn).toLocaleDateString("es", { day: "numeric", month: "short" });
 }
+
+//cómo se nombra cada estado de una postulación en el panel
+export const NOMBRES_ESTADO_POSTULACION: Record<EstadoPostulacion, string> = {
+  recibida: "Sin revisar",
+  en_revision: "En revisión",
+  preseleccionada: "Preseleccionada",
+  descartada: "Descartada",
+  retirada: "Retirada",
+};

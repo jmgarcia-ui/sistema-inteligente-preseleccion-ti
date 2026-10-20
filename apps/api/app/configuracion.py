@@ -25,6 +25,10 @@ class Configuracion(BaseSettings):
   azure_openai_endpoint: str | None = None
   azure_openai_clave: SecretStr | None = None
   azure_openai_despliegue: str = "gpt-4o-mini"
+  #Azure Communication Services: envía los correos que el equipo confirma
+  azure_comunicacion_connection_string: SecretStr | None = None
+  correo_remitente: str | None = None
+  correo_nombre_remitente: str = "Equipo de selección"
 
   model_config = SettingsConfigDict(
     env_file=RUTA_API / ".env", #obtner ruta de .env

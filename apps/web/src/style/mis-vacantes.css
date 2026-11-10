@@ -297,84 +297,6 @@
   cursor: pointer;
 }
 
-/* Menú ⋮ con las acciones menos frecuentes */
-.mas-acciones {
-  position: relative;
-}
-
-.mas-acciones__boton {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  color: var(--texto);
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
-}
-
-.mas-acciones__boton:hover,
-.mas-acciones__boton[aria-expanded="true"] {
-  color: var(--tinta);
-  background-color: var(--fondo-2);
-  border-color: var(--borde);
-}
-
-.mas-acciones__menu {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  z-index: 30;
-  width: 230px;
-  padding: 6px;
-  background-color: var(--superficie);
-  border: 1px solid var(--borde);
-  border-radius: 10px;
-  box-shadow: 0 16px 30px -24px rgba(15, 23, 42, 0.45), var(--sombra-suave);
-  animation: mis-vacantes-asomar 0.16s var(--curva) both;
-}
-
-.mas-acciones__menu a,
-.mas-acciones__menu button {
-  width: 100%;
-  min-height: 38px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 10px;
-  color: var(--texto);
-  font-size: 14px;
-  font-weight: 600;
-  text-align: left;
-  background: transparent;
-  border: 0;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.mas-acciones__menu a:hover,
-.mas-acciones__menu button:hover {
-  color: var(--tinta);
-  background-color: var(--fondo-2);
-}
-
-.mas-acciones__menu svg {
-  color: var(--apoyo);
-}
-
-@keyframes mis-vacantes-asomar {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 /* Aviso flotante tras copiar, publicar o cerrar */
 .mis-vacantes__toast {
   position: fixed;
@@ -1117,10 +1039,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mas-acciones__menu {
-    animation: none;
-  }
-
   .mis-vacantes__toast {
     transition: none;
   }

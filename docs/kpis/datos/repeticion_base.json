@@ -1,0 +1,311 @@
+{
+  "ejecutado_en": "2026-10-21 20:37:00",
+  "repeticiones": [
+    {
+      "id": "CV01",
+      "repeticion": 1,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "cumple"
+      ]
+    },
+    {
+      "id": "CV01",
+      "repeticion": 2,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "cumple"
+      ]
+    },
+    {
+      "id": "CV02",
+      "repeticion": 1,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "parcial"
+      ]
+    },
+    {
+      "id": "CV02",
+      "repeticion": 2,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "parcial"
+      ]
+    },
+    {
+      "id": "CV03",
+      "repeticion": 1,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "cumple",
+        "sin_evidencia"
+      ]
+    },
+    {
+      "id": "CV03",
+      "repeticion": 2,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "cumple",
+        "sin_evidencia"
+      ]
+    },
+    {
+      "id": "CV07",
+      "repeticion": 1,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "sin_evidencia",
+        "cumple",
+        "cumple",
+        "cumple",
+        "parcial"
+      ]
+    },
+    {
+      "id": "CV07",
+      "repeticion": 2,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "sin_evidencia",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple"
+      ]
+    },
+    {
+      "id": "CV08",
+      "repeticion": 1,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "parcial",
+        "cumple",
+        "sin_evidencia",
+        "cumple",
+        "cumple",
+        "cumple",
+        "parcial"
+      ]
+    },
+    {
+      "id": "CV08",
+      "repeticion": 2,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "parcial",
+        "cumple",
+        "sin_evidencia",
+        "cumple",
+        "cumple",
+        "cumple",
+        "parcial"
+      ]
+    },
+    {
+      "id": "CV10",
+      "repeticion": 1,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia",
+        "cumple",
+        "sin_evidencia",
+        "sin_evidencia",
+        "cumple",
+        "sin_evidencia"
+      ]
+    },
+    {
+      "id": "CV10",
+      "repeticion": 2,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia",
+        "cumple",
+        "sin_evidencia",
+        "sin_evidencia",
+        "cumple",
+        "sin_evidencia"
+      ]
+    },
+    {
+      "id": "CV12",
+      "repeticion": 1,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "sin_evidencia",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "sin_evidencia"
+      ]
+    },
+    {
+      "id": "CV12",
+      "repeticion": 2,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "sin_evidencia",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "sin_evidencia"
+      ]
+    },
+    {
+      "id": "CV13",
+      "repeticion": 1,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple"
+      ]
+    },
+    {
+      "id": "CV13",
+      "repeticion": 2,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple"
+      ]
+    },
+    {
+      "id": "CV15",
+      "repeticion": 1,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia"
+      ]
+    },
+    {
+      "id": "CV15",
+      "repeticion": 2,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia",
+        "sin_evidencia"
+      ]
+    },
+    {
+      "id": "CV16",
+      "repeticion": 1,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple"
+      ]
+    },
+    {
+      "id": "CV16",
+      "repeticion": 2,
+      "recomendacion": "pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple"
+      ]
+    },
+    {
+      "id": "CV08-V",
+      "repeticion": 1,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "parcial",
+        "cumple",
+        "sin_evidencia",
+        "cumple",
+        "cumple",
+        "cumple",
+        "sin_evidencia"
+      ]
+    },
+    {
+      "id": "CV08-V",
+      "repeticion": 2,
+      "recomendacion": "no_pasa",
+      "resultados": [
+        "cumple",
+        "cumple",
+        "cumple",
+        "cumple",
+        "parcial",
+        "cumple",
+        "sin_evidencia",
+        "cumple",
+        "cumple",
+        "cumple",
+        "parcial"
+      ]
+    }
+  ]
+}

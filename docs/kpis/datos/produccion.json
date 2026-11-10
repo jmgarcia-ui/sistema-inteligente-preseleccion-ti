@@ -1,0 +1,345 @@
+{
+  "extraido_en": "2026-10-21T20:20:33",
+  "vacantes": [
+    {
+      "id": 1,
+      "titulo": "Desarrollador Node Js",
+      "estado": "publicada",
+      "modalidad": "presencial",
+      "creado_en": "2026-10-20T07:11:31.903000"
+    },
+    {
+      "id": 2,
+      "titulo": "Desarrollador Front End React.js/Next.js/Node.js",
+      "estado": "publicada",
+      "modalidad": "presencial",
+      "creado_en": "2026-10-20T07:19:44.357000"
+    },
+    {
+      "id": 3,
+      "titulo": "Practicante de Desarrollo de Software",
+      "estado": "borrador",
+      "modalidad": "hibrido",
+      "creado_en": "2026-10-22T00:45:10.773000"
+    }
+  ],
+  "requisitos": [
+    {
+      "id_vacante": 1,
+      "orden": 1,
+      "obligatorio": true,
+      "descripcion": "Node.js"
+    },
+    {
+      "id_vacante": 1,
+      "orden": 2,
+      "obligatorio": true,
+      "descripcion": "Base de datos NoSQL"
+    },
+    {
+      "id_vacante": 2,
+      "orden": 1,
+      "obligatorio": true,
+      "descripcion": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines."
+    },
+    {
+      "id_vacante": 2,
+      "orden": 2,
+      "obligatorio": true,
+      "descripcion": "Mínimo 3 años de experiencia como analista desarrollador."
+    },
+    {
+      "id_vacante": 2,
+      "orden": 3,
+      "obligatorio": true,
+      "descripcion": "Experiencia en React.js >= 18"
+    },
+    {
+      "id_vacante": 2,
+      "orden": 4,
+      "obligatorio": true,
+      "descripcion": "Experiencia utilizando Redux o Context API"
+    },
+    {
+      "id_vacante": 2,
+      "orden": 5,
+      "obligatorio": true,
+      "descripcion": "Experiencia en Next.js >= 13"
+    },
+    {
+      "id_vacante": 2,
+      "orden": 6,
+      "obligatorio": true,
+      "descripcion": "Experiencia en Node.js >= 16"
+    },
+    {
+      "id_vacante": 2,
+      "orden": 7,
+      "obligatorio": true,
+      "descripcion": "Conocimiento de SonnarQube"
+    },
+    {
+      "id_vacante": 2,
+      "orden": 8,
+      "obligatorio": true,
+      "descripcion": "Conocimiento de React Router"
+    },
+    {
+      "id_vacante": 2,
+      "orden": 9,
+      "obligatorio": true,
+      "descripcion": "Conocimiento de SASS o SCSS"
+    },
+    {
+      "id_vacante": 2,
+      "orden": 10,
+      "obligatorio": true,
+      "descripcion": "Manejo de Git (gitflow) y trabajo en scrum, jira"
+    },
+    {
+      "id_vacante": 2,
+      "orden": 11,
+      "obligatorio": false,
+      "descripcion": "Deseable conocimientos de AWS y backend(java)"
+    },
+    {
+      "id_vacante": 3,
+      "orden": 1,
+      "obligatorio": false,
+      "descripcion": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines."
+    },
+    {
+      "id_vacante": 3,
+      "orden": 2,
+      "obligatorio": true,
+      "descripcion": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript."
+    },
+    {
+      "id_vacante": 3,
+      "orden": 3,
+      "obligatorio": false,
+      "descripcion": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos."
+    },
+    {
+      "id_vacante": 3,
+      "orden": 4,
+      "obligatorio": true,
+      "descripcion": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles."
+    },
+    {
+      "id_vacante": 3,
+      "orden": 5,
+      "obligatorio": false,
+      "descripcion": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables."
+    }
+  ],
+  "postulaciones": [
+    {
+      "id": 1,
+      "id_vacante": 1,
+      "estado": "preseleccionada",
+      "creado_en": "2026-10-20T07:12:14.957000",
+      "decidido_en": "2026-10-20T07:12:38.090000",
+      "acepto_tratamiento_datos_en": "2026-10-20T07:12:14.957000",
+      "tiene_cv": 1,
+      "cv_tamano": 285204,
+      "estado_lectura": "leido",
+      "lectura_creada": "2026-10-20T07:12:14.977000",
+      "lectura_lista": "2026-10-20T07:12:21.477000",
+      "paginas_documento": 2,
+      "paginas_leidas": 2,
+      "modelo_lectura": "prebuilt-layout@2024-11-30",
+      "estado_analisis": "listo",
+      "recomendacion": "pasa",
+      "analisis_creado": "2026-10-20T07:12:21.500000",
+      "analisis_listo": "2026-10-20T07:12:24.840000",
+      "modelo_ia": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1670,
+      "tokens_salida": 182,
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Node.js",
+          "pagina": 1,
+          "explicacion": "El candidato menciona explícitamente su experiencia con Node.js."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "MongoDB",
+          "pagina": 2,
+          "explicacion": "El candidato menciona explícitamente su experiencia con MongoDB como base de datos NoSQL."
+        }
+      ],
+      "avisos": []
+    },
+    {
+      "id": 2,
+      "id_vacante": 2,
+      "estado": "descartada",
+      "creado_en": "2026-10-21T21:17:41.963000",
+      "decidido_en": "2026-10-21T21:29:57.007000",
+      "acepto_tratamiento_datos_en": "2026-10-21T21:17:41.963000",
+      "tiene_cv": 1,
+      "cv_tamano": 69528,
+      "estado_lectura": "leido",
+      "lectura_creada": "2026-10-21T21:17:41.983000",
+      "lectura_lista": "2026-10-21T21:17:46.550000",
+      "paginas_documento": 1,
+      "paginas_leidas": 1,
+      "modelo_lectura": "prebuilt-layout@2024-11-30",
+      "estado_analisis": "listo",
+      "recomendacion": "no_pasa",
+      "analisis_creado": "2026-10-21T21:17:46.600000",
+      "analisis_listo": "2026-10-21T21:17:54.667000",
+      "modelo_ia": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1185,
+      "tokens_salida": 537,
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona formación técnica o universitaria en Ingeniería de Software, Sistemas, Informática o carreras afines."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se evidencia experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en React.js."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia utilizando Redux o Context API."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en Next.js."
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en Node.js."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de SonarQube."
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de SASS o SCSS."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona manejo de Git (gitflow) y trabajo en scrum, jira."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de AWS y backend (java)."
+        }
+      ],
+      "avisos": []
+    }
+  ],
+  "usuarios_por_rol": [
+    {
+      "rol": "reclutador",
+      "cantidad": 3
+    }
+  ],
+  "acciones": [
+    {
+      "tipo": "analisis_listo",
+      "cantidad": 2
+    },
+    {
+      "tipo": "correo_enviado",
+      "cantidad": 1
+    },
+    {
+      "tipo": "decision",
+      "cantidad": 2
+    },
+    {
+      "tipo": "postulacion_recibida",
+      "cantidad": 2
+    },
+    {
+      "tipo": "vacante_creada",
+      "cantidad": 3
+    },
+    {
+      "tipo": "vacante_publicada",
+      "cantidad": 2
+    }
+  ],
+  "correos": [
+    {
+      "estado": "enviado",
+      "cantidad": 1
+    }
+  ]
+}

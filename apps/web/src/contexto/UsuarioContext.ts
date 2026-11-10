@@ -6,6 +6,8 @@ export type ContextoProp ={
   token: RespuestaToken | null;
   cargando: boolean
   iniciarSesion: (credenciales: Credenciales) => Promise<void>
+  //tras crear la contraseña con un enlace, la API ya entrega el token: se entra sin pedir los datos otra vez
+  entrarConToken: (token: RespuestaToken) => Promise<void>
   cerrarSesion: () => void
 }
 

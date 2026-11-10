@@ -39,3 +39,12 @@ def obtener_gestor_vacantes(
     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail="No tienes permiso para gestionar vacantes")
 
   return usuario
+
+
+def obtener_administrador(
+    usuario: Annotated[Usuario, Depends(obtener_usuario_actual)]
+  ) -> Usuario:
+  if usuario.rol.nombre != "administrador":
+    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Solo un administrador puede gestionar las cuentas del equipo")
+
+  return usuario

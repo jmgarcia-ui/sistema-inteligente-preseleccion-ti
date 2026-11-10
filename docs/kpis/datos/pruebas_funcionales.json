@@ -1,0 +1,478 @@
+{
+  "ejecutado_en": "2026-10-21 20:32:04",
+  "entorno": "API local (FastAPI TestClient) + SQL Server local + Azure Document Intelligence y OpenAI",
+  "aprobados": 47,
+  "total": 47,
+  "casos": [
+    {
+      "codigo": "R01",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Acceso",
+      "descripcion": "Inicio de sesión con credenciales válidas",
+      "esperado": "200 y token",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R02",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Acceso",
+      "descripcion": "Inicio de sesión con contraseña incorrecta",
+      "esperado": "401",
+      "obtenido": "401",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R03",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Acceso",
+      "descripcion": "Consulta del usuario en sesión y su rol",
+      "esperado": "200, rol reclutador",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R04",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Vacantes",
+      "descripcion": "Crear vacante con requisitos",
+      "esperado": "201",
+      "obtenido": "201",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R05",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Vacantes",
+      "descripcion": "Rechazar vacante con fecha límite pasada",
+      "esperado": "422",
+      "obtenido": "422",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R06",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Vacantes",
+      "descripcion": "Rechazar vacante sin requisitos",
+      "esperado": "422",
+      "obtenido": "422",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C01",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Vacantes",
+      "descripcion": "Una vacante en borrador no es visible al público",
+      "esperado": "404",
+      "obtenido": "404",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R07",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Vacantes",
+      "descripcion": "Publicar la vacante",
+      "esperado": "200, estado publicada",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C02",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Portal",
+      "descripcion": "El servicio responde (salud)",
+      "esperado": "200",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C03",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Vacantes",
+      "descripcion": "Lista pública incluye la vacante publicada",
+      "esperado": "200 y vacante presente",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C04",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Vacantes",
+      "descripcion": "Ver el detalle y los requisitos de la vacante",
+      "esperado": "200 con 2 requisitos",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C05",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Postulación",
+      "descripcion": "Postular con CV en PDF y consentimiento",
+      "esperado": "201",
+      "obtenido": "201 (incluye lectura y análisis: 9.7 s)",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C06",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Postulación",
+      "descripcion": "Rechazar postulación duplicada a la misma vacante",
+      "esperado": "409",
+      "obtenido": "409",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C07",
+      "kpi": "1 y 4",
+      "rol": "Candidato",
+      "modulo": "Postulación",
+      "descripcion": "Rechazar postulación sin aceptar el tratamiento de datos",
+      "esperado": "422",
+      "obtenido": "422",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C08",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Postulación",
+      "descripcion": "Rechazar CV que no es PDF",
+      "esperado": "422",
+      "obtenido": "422",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C09",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Postulación",
+      "descripcion": "Rechazar CV de más de 5 MB",
+      "esperado": "422",
+      "obtenido": "422",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C10",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Postulación",
+      "descripcion": "Exigir al menos un enlace profesional",
+      "esperado": "422",
+      "obtenido": "422",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C11",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Postulación",
+      "descripcion": "Bloquear envíos automáticos (campo trampa)",
+      "esperado": "400",
+      "obtenido": "400",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "C12",
+      "kpi": "1",
+      "rol": "Candidato",
+      "modulo": "Postulación",
+      "descripcion": "Segunda postulación válida (otro candidato)",
+      "esperado": "201",
+      "obtenido": "201",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R08",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Panel",
+      "descripcion": "Ver resumen del panel",
+      "esperado": "200",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R09",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Panel",
+      "descripcion": "Listar sus vacantes con conteo de postulaciones",
+      "esperado": "200 y vacante presente",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R10",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Candidatos",
+      "descripcion": "Bandeja de candidatos con estado del análisis",
+      "esperado": "200 con las 2 postulaciones",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R11",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Análisis IA",
+      "descripcion": "La ficha muestra la propuesta de la IA con evidencias por requisito",
+      "esperado": "estado listo y 2 evidencias",
+      "obtenido": "estado listo, recomendación pasa",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R12",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Candidatos",
+      "descripcion": "Abrir el CV en PDF",
+      "esperado": "200 application/pdf",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R13",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Decisión",
+      "descripcion": "Exigir motivo al descartar",
+      "esperado": "422",
+      "obtenido": "422",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R14",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Correos",
+      "descripcion": "No permitir enviar correo antes de decidir",
+      "esperado": "409",
+      "obtenido": "409",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R15",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Decisión",
+      "descripcion": "Preseleccionar al candidato",
+      "esperado": "200, estado preseleccionada",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R16",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Correos",
+      "descripcion": "Editar el borrador del correo",
+      "esperado": "200",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R17",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Correos",
+      "descripcion": "Pedir a la IA un borrador nuevo de no avance",
+      "esperado": "200",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R18",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Decisión",
+      "descripcion": "Decidir en lote",
+      "esperado": "200, 1 hecho",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R19",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Correos",
+      "descripcion": "Confirmar envío: queda registrado (envío real desactivado en la prueba)",
+      "esperado": "200 y envío registrado",
+      "obtenido": "200, estado del envío: error",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "R20",
+      "kpi": "1",
+      "rol": "Reclutador",
+      "modulo": "Actividad",
+      "descripcion": "El registro de actividad guarda decisiones y análisis",
+      "esperado": "200 con decisión y análisis",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "A01",
+      "kpi": "1",
+      "rol": "Administrador",
+      "modulo": "Acceso",
+      "descripcion": "Inicio de sesión del administrador",
+      "esperado": "200",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "A02",
+      "kpi": "1",
+      "rol": "Administrador",
+      "modulo": "Vacantes",
+      "descripcion": "Ve las vacantes de todos los reclutadores",
+      "esperado": "200 y vacante ajena presente",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "A03",
+      "kpi": "1",
+      "rol": "Administrador",
+      "modulo": "Candidatos",
+      "descripcion": "Ve la ficha de una postulación de otro reclutador",
+      "esperado": "200",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "A04",
+      "kpi": "1",
+      "rol": "Administrador",
+      "modulo": "Candidatos",
+      "descripcion": "Lista las postulaciones de cualquier vacante",
+      "esperado": "200",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "A05",
+      "kpi": "1",
+      "rol": "Administrador",
+      "modulo": "Vacantes",
+      "descripcion": "Cierra una vacante de otro reclutador",
+      "esperado": "200, estado cerrada",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S01",
+      "kpi": "1 y 4",
+      "rol": "Seguridad",
+      "modulo": "Acceso a datos",
+      "descripcion": "Otro reclutador no ve la ficha del candidato",
+      "esperado": "404",
+      "obtenido": "404",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S02",
+      "kpi": "1 y 4",
+      "rol": "Seguridad",
+      "modulo": "Acceso a datos",
+      "descripcion": "Otro reclutador no descarga el CV",
+      "esperado": "404",
+      "obtenido": "404",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S03",
+      "kpi": "1 y 4",
+      "rol": "Seguridad",
+      "modulo": "Acceso a datos",
+      "descripcion": "Otro reclutador no lista las postulaciones de la vacante",
+      "esperado": "403",
+      "obtenido": "403",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S04",
+      "kpi": "1 y 4",
+      "rol": "Seguridad",
+      "modulo": "Acceso a datos",
+      "descripcion": "La bandeja de otro reclutador no incluye estos candidatos",
+      "esperado": "200 sin las postulaciones",
+      "obtenido": "200",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S05",
+      "kpi": "1 y 4",
+      "rol": "Seguridad",
+      "modulo": "Acceso a datos",
+      "descripcion": "Otro reclutador no edita la vacante",
+      "esperado": "403 o 404",
+      "obtenido": "403",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S06",
+      "kpi": "1 y 4",
+      "rol": "Seguridad",
+      "modulo": "Acceso a datos",
+      "descripcion": "Otro reclutador no decide sobre el candidato",
+      "esperado": "404",
+      "obtenido": "404",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S07",
+      "kpi": "1 y 4",
+      "rol": "Seguridad",
+      "modulo": "Acceso a datos",
+      "descripcion": "Sin sesión no se accede al panel",
+      "esperado": "401",
+      "obtenido": "401",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S08",
+      "kpi": "1 y 4",
+      "rol": "Seguridad",
+      "modulo": "Acceso a datos",
+      "descripcion": "Un token inválido es rechazado",
+      "esperado": "401",
+      "obtenido": "401",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S09",
+      "kpi": "1 y 4",
+      "rol": "Seguridad",
+      "modulo": "Consentimiento",
+      "descripcion": "Cada postulación guarda la fecha de consentimiento",
+      "esperado": "fecha registrada",
+      "obtenido": "2026-10-22 01:31:39, 2026-10-22 01:31:48",
+      "resultado": "aprobado"
+    },
+    {
+      "codigo": "S10",
+      "kpi": "1",
+      "rol": "Seguridad",
+      "modulo": "Postulación",
+      "descripcion": "Límite de 5 postulaciones cada 10 minutos por conexión",
+      "esperado": "el 6.º intento devuelve 429",
+      "obtenido": "404, 404, 404, 404, 404, 429",
+      "resultado": "aprobado"
+    }
+  ]
+}

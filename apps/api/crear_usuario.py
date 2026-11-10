@@ -20,7 +20,7 @@ from app.modelos.rol import Rol  # noqa: E402
 from app.modelos.usuario import Usuario  # noqa: E402
 from app.servicios.contrasenas import generar_hash  # noqa: E402
 
-MINIMO_CONTRASENA = 10
+MINIMO_CONTRASENA = 15
 
 
 def preguntar(texto: str) -> str:

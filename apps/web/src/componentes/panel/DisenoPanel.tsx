@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { AlignLeft, Briefcase, ChevronUp, ExternalLink, History, LogOut, Menu, Moon, Sun, Users, X, type LucideIcon } from "lucide-react";
+import { AlignLeft, Briefcase, ChevronUp, ExternalLink, History, LogOut, Menu, Moon, Sun, UserCog, Users, X, type LucideIcon } from "lucide-react";
 import "../../style/panel.css";
 import { UsuarioContext } from "../../contexto/UsuarioContext";
 import useTema from "../../hooks/useTema";
@@ -14,14 +14,18 @@ const SECCIONES: Seccion[] = [
   { ruta: "/reclutador/actividad", nombre: "Actividad", Icono: History },
 ];
 
+//solo la ven los administradores
+const SECCION_USUARIOS: Seccion = { ruta: "/reclutador/usuarios", nombre: "Usuarios", Icono: UserCog };
+
 function DisenoPanel() {
   const contexto = useContext(UsuarioContext);
   const { pathname } = useLocation();
   const { temaOscuro, alternarTema } = useTema();
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const secciones = contexto?.usuario?.rol === "administrador" ? [...SECCIONES, SECCION_USUARIOS] : SECCIONES;
 
   //en celular la barra superior dice en qué sección estás
-  const seccionActual = SECCIONES.find((seccion) => pathname.startsWith(seccion.ruta))?.nombre ?? "Panel";
+  const seccionActual = secciones.find((seccion) => pathname.startsWith(seccion.ruta))?.nombre ?? "Panel";
 
   return (
     <div className="panel">
@@ -29,7 +33,7 @@ function DisenoPanel() {
       <aside className="panel__indice" aria-label="Panel">
         <Marca detalle="Panel del equipo" />
         <nav className="panel__nav" aria-label="Secciones del panel">
-          <Secciones />
+          <Secciones secciones={secciones} />
         </nav>
         <div className="panel__pie">
           <a className="panel__util" href="/vacantes" target="_blank" rel="noreferrer">
@@ -69,7 +73,7 @@ function DisenoPanel() {
           </div>
           {menuAbierto && (
             <nav className="panel__menu-movil" id="panel-menu-movil" aria-label="Secciones del panel">
-              <Secciones alElegir={() => setMenuAbierto(false)} />
+              <Secciones secciones={secciones} alElegir={() => setMenuAbierto(false)} />
               <button className="panel__enlace" type="button" onClick={() => contexto?.cerrarSesion()}>
                 <LogOut size={17} aria-hidden="true" />
                 <span>Cerrar sesión</span>
@@ -105,8 +109,8 @@ function Marca({ detalle }: { detalle: string }) {
 }
 
 //NavLink marca la sección actual con aria-current="page"; el CSS la resalta con eso
-function Secciones({ alElegir }: { alElegir?: () => void }) {
-  return SECCIONES.map(({ ruta, nombre, Icono }) => (
+function Secciones({ secciones, alElegir }: { secciones: Seccion[]; alElegir?: () => void }) {
+  return secciones.map(({ ruta, nombre, Icono }) => (
     <NavLink className="panel__enlace" to={ruta} key={ruta} onClick={alElegir}>
       <Icono size={17} aria-hidden="true" />
       <span>{nombre}</span>

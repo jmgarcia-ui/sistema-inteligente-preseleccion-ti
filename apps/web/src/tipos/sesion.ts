@@ -9,7 +9,10 @@ export type UsuarioAutenticado = {
   apellidos: string;
   correo: string;
   activo: boolean;
+  rol: Rol;
 };
+
+export type Rol = "administrador" | "reclutador";
 
 export type RespuestaToken = {
   token_acceso: string;

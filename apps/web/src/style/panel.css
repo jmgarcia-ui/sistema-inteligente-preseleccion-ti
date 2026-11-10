@@ -5,9 +5,12 @@
   --seg-revision: var(--ambar);
   --seg-presel: var(--verde);
   --seg-descartada: #dbe2ea;
-  /* El rojo solo marca errores de formulario */
+  /* El rojo marca errores y las acciones que quitan acceso (desactivar una cuenta) */
   --rojo: #b91c1c;
   --rojo-claro: #fef2f2;
+  /* fondo del botón de esa acción: igual en ambos temas, con texto blanco */
+  --rojo-accion: #b91c1c;
+  --rojo-accion-hondo: #991b1b;
 
   display: grid;
   grid-template-columns: 232px minmax(0, 1fr);
@@ -91,6 +94,16 @@ html[data-tema="oscuro"] .panel {
 .boton--fantasma:hover {
   color: var(--tinta);
   background-color: var(--fondo-2);
+}
+
+/* Acción que quita acceso o no se deshace sola (desactivar una cuenta) */
+.boton--rojo {
+  color: #fff;
+  background-color: var(--rojo-accion);
+}
+
+.boton--rojo:hover {
+  background-color: var(--rojo-accion-hondo);
 }
 
 /* Registro de acciones: hora, una marca de color por clase de acción y el texto */
@@ -726,4 +739,98 @@ html[data-tema="oscuro"] .panel {
   height: 0;
   color: var(--apoyo);
   pointer-events: none;
+}
+
+/* ---- Menú de acciones secundarias (Mis vacantes, Usuarios) ---- */
+/* Menú ⋮ con las acciones menos frecuentes */
+.mas-acciones {
+  position: relative;
+}
+
+.mas-acciones__boton {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--texto);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+}
+
+.mas-acciones__boton:hover,
+.mas-acciones__boton[aria-expanded="true"] {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+  border-color: var(--borde);
+}
+
+.mas-acciones__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 30;
+  width: 230px;
+  padding: 6px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  box-shadow: 0 16px 30px -24px rgba(15, 23, 42, 0.45), var(--sombra-suave);
+  animation: mas-acciones-asomar 0.16s var(--curva) both;
+}
+
+.mas-acciones__menu a,
+.mas-acciones__menu button {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.mas-acciones__menu a:hover,
+.mas-acciones__menu button:hover {
+  color: var(--tinta);
+  background-color: var(--fondo-2);
+}
+
+.mas-acciones__menu svg {
+  color: var(--apoyo);
+}
+
+.mas-acciones__menu .mas-acciones__peligro {
+  color: var(--rojo);
+}
+
+.mas-acciones__menu .mas-acciones__peligro svg {
+  color: currentColor;
+}
+
+.mas-acciones__menu .mas-acciones__peligro:hover {
+  color: var(--rojo);
+  background-color: var(--rojo-claro);
+}
+
+@keyframes mas-acciones-asomar {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mas-acciones__menu {
+    animation: none;
+  }
 }

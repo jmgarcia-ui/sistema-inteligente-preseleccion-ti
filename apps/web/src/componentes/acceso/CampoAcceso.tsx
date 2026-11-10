@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ChangeEvent } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 
 type PropiedadesCampoAcceso = {
@@ -7,9 +7,13 @@ type PropiedadesCampoAcceso = {
   tipo: 'email' | 'password'
   autocompletar: string
   ejemplo?: string
+  //opcionales: para validar mientras se escribe (crear contraseña)
+  valor?: string
+  alCambiar?: (valor: string) => void
+  describe?: string
 }
 
-export default function CampoAcceso({ id, etiqueta, tipo, autocompletar, ejemplo }: PropiedadesCampoAcceso) {
+export default function CampoAcceso({ id, etiqueta, tipo, autocompletar, ejemplo, valor, alCambiar, describe }: PropiedadesCampoAcceso) {
   const [mostrarContrasena, setMostrarContrasena] = useState(false)
   const esContrasena = tipo === 'password'
 
@@ -24,6 +28,8 @@ export default function CampoAcceso({ id, etiqueta, tipo, autocompletar, ejemplo
           placeholder={ejemplo}
           autoComplete={autocompletar}
           required
+          {...(alCambiar ? { value: valor ?? '', onChange: (evento: ChangeEvent<HTMLInputElement>) => alCambiar(evento.target.value) } : {})}
+          aria-describedby={describe}
         />
         {esContrasena && (
           <button

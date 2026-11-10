@@ -1,0 +1,631 @@
+/* Usuarios: las cuentas del equipo. Mismo vocabulario que Mis vacantes: cabecera, pestañas sobre un filete y filas. */
+.usuarios {
+  max-width: 1080px;
+}
+
+.usuarios__cabecera {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.usuarios__cabecera h1,
+.usuarios__aviso h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.usuarios__cabecera p {
+  margin: 8px 0 0;
+  color: var(--texto);
+  font-size: 15.5px;
+}
+
+.usuarios__cabecera p b {
+  color: var(--tinta);
+}
+
+.usuarios__aviso {
+  max-width: 560px;
+}
+
+.usuarios__aviso p {
+  margin: 10px 0 20px;
+  color: var(--texto);
+  line-height: 1.55;
+}
+
+/* ---- Invitar: el formulario se abre en la página, bajo la cabecera ---- */
+.invitacion {
+  display: grid;
+  gap: 20px;
+  margin-top: 24px;
+  padding: 22px;
+  background-color: var(--fondo-2);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  animation: usuarios-asomar 0.2s var(--curva) both;
+}
+
+.invitacion__titulo h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.invitacion__titulo p {
+  margin: 4px 0 0;
+  color: var(--texto);
+  font-size: 14px;
+}
+
+.invitacion__campos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+}
+
+.invitacion__campo {
+  display: grid;
+  gap: 6px;
+}
+
+.invitacion__campo--ancho {
+  grid-column: 1 / -1;
+}
+
+.invitacion__campo span,
+.invitacion__roles legend {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.invitacion__campo input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  color: var(--tinta);
+  font: inherit;
+  font-size: 15px;
+  background-color: var(--superficie);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 10px;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.invitacion__campo input:hover {
+  border-color: var(--apoyo);
+}
+
+.invitacion__campo input:focus {
+  outline: none;
+  border-color: var(--azul);
+  box-shadow: 0 0 0 4px var(--azul-claro);
+}
+
+.invitacion__campo input::placeholder {
+  color: var(--apoyo);
+}
+
+.invitacion__roles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.invitacion__roles legend {
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+/* Cada rol es una opción con su explicación: se elige sabiendo qué permite */
+.opcion-rol {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 14px 16px;
+  color: var(--texto);
+  background-color: var(--superficie);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.18s, background-color 0.18s;
+}
+
+.opcion-rol:hover {
+  border-color: var(--apoyo);
+}
+
+.opcion-rol input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.opcion-rol > svg {
+  margin-top: 1px;
+}
+
+.opcion-rol b {
+  display: block;
+  color: var(--tinta);
+  font-size: 14.5px;
+}
+
+.opcion-rol small {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.opcion-rol:has(input:checked) {
+  color: var(--azul-texto);
+  background-color: var(--azul-claro);
+  border-color: var(--azul);
+}
+
+.opcion-rol:has(input:checked) small {
+  color: var(--texto);
+}
+
+.opcion-rol:has(input:focus-visible) {
+  outline: 2px solid var(--azul);
+  outline-offset: 3px;
+}
+
+.invitacion__error,
+.fila-cuenta__error {
+  margin: 0;
+  color: var(--rojo);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.invitacion__botones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ---- Resultado de un enlace: llegó el correo (o no) y el enlace para copiarlo ---- */
+.aviso-enlace {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  margin-top: 20px;
+  padding: 14px 16px;
+  font-size: 14.5px;
+  background-color: var(--verde-claro);
+  border: 1px solid color-mix(in srgb, var(--verde) 30%, transparent);
+  border-radius: 14px;
+  animation: usuarios-asomar 0.2s var(--curva) both;
+}
+
+.aviso-enlace--fallo {
+  background-color: var(--ambar-claro);
+  border-color: color-mix(in srgb, var(--ambar) 35%, transparent);
+}
+
+.aviso-enlace__icono {
+  align-self: start;
+  margin-top: 2px;
+  color: var(--verde);
+}
+
+.aviso-enlace--fallo .aviso-enlace__icono {
+  color: var(--ambar);
+}
+
+.aviso-enlace__texto p {
+  margin: 0;
+  color: var(--tinta);
+  line-height: 1.45;
+}
+
+.aviso-enlace__texto small {
+  display: block;
+  margin-top: 3px;
+  color: var(--texto);
+  font-size: 13px;
+}
+
+.aviso-enlace__acciones {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.aviso-enlace__cerrar {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--texto);
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.aviso-enlace__cerrar:hover {
+  color: var(--tinta);
+  background-color: color-mix(in srgb, var(--tinta) 6%, transparent);
+}
+
+/* ---- Pestañas ---- */
+.usuarios__pestanas {
+  display: flex;
+  gap: 4px;
+  margin-top: 28px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--borde);
+  scrollbar-width: none;
+}
+
+.usuarios__pestana {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  color: var(--texto);
+  font-size: 14.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.usuarios__pestana:hover {
+  color: var(--tinta);
+}
+
+.usuarios__pestana span {
+  min-width: 22px;
+  height: 20px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 6px;
+  color: var(--apoyo);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background-color: var(--fondo-2);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+}
+
+.usuarios__pestana[aria-pressed="true"] {
+  color: var(--azul-texto);
+}
+
+.usuarios__pestana[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  bottom: -1px;
+  left: 8px;
+  height: 2px;
+  background-color: var(--azul);
+  border-radius: 2px;
+}
+
+.usuarios__pestana[aria-pressed="true"] span {
+  color: #fff;
+  background-color: var(--azul);
+  border-color: var(--azul);
+}
+
+/* ---- Lista ---- */
+.usuarios__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.usuarios__nada,
+.usuarios__solo {
+  margin: 0;
+  padding: 24px 0;
+  color: var(--texto);
+  font-size: 14.5px;
+}
+
+.usuarios__solo {
+  max-width: 62ch;
+  padding-top: 20px;
+  line-height: 1.55;
+}
+
+.fila-cuenta {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) 150px 170px 120px 80px 40px;
+  gap: 8px 20px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.fila-cuenta__persona {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.fila-cuenta__iniciales {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: var(--azul-texto);
+  font-size: 13px;
+  font-weight: 800;
+  background-color: var(--azul-claro);
+  border-radius: 50%;
+}
+
+.fila-cuenta__nombre {
+  display: grid;
+  min-width: 0;
+}
+
+.fila-cuenta__nombre b {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fila-cuenta__nombre > span {
+  overflow: hidden;
+  color: var(--texto);
+  font-size: 13.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fila-cuenta__tu {
+  padding: 0 7px;
+  color: var(--apoyo);
+  font-size: 11.5px;
+  font-weight: 700;
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+}
+
+.fila-cuenta__rol {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--tinta);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.fila-cuenta__rol svg {
+  color: var(--apoyo);
+}
+
+/* el dato con su nombre encima: se lee sin cabecera de tabla */
+.fila-cuenta__dato {
+  display: grid;
+  color: var(--tinta);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fila-cuenta__dato small {
+  color: var(--apoyo);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.fila-cuenta__acciones {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fila-cuenta__ocupado {
+  margin: 9px;
+  color: var(--apoyo);
+}
+
+/* Estados: verde activa, punteado pendiente (falta un paso), gris desactivada */
+.estado-cuenta {
+  justify-self: start;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.estado-cuenta--activa {
+  color: var(--verde);
+  background-color: var(--verde-claro);
+}
+
+.estado-cuenta--pendiente {
+  color: var(--texto);
+  background-color: var(--fondo-2);
+  border: 1px dashed var(--borde-fuerte);
+}
+
+.estado-cuenta--desactivada {
+  color: var(--apoyo);
+  background-color: var(--fondo-2);
+  border-color: var(--borde);
+}
+
+.fila-cuenta--desactivada .fila-cuenta__nombre b,
+.fila-cuenta--desactivada .fila-cuenta__rol {
+  color: var(--apoyo);
+}
+
+.fila-cuenta--desactivada .fila-cuenta__iniciales {
+  color: var(--apoyo);
+  background-color: var(--fondo-2);
+}
+
+/* La confirmación ocupa la fila completa, debajo de sus datos */
+.fila-cuenta__confirmar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  padding: 12px 14px;
+  font-size: 14px;
+  background-color: var(--fondo-2);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  animation: usuarios-asomar 0.18s var(--curva) both;
+}
+
+.fila-cuenta__confirmar p {
+  flex: 1 1 320px;
+  margin: 0;
+  color: var(--tinta);
+  line-height: 1.5;
+}
+
+.fila-cuenta__botones {
+  display: flex;
+  gap: 8px;
+}
+
+.fila-cuenta__error {
+  grid-column: 1 / -1;
+}
+
+/* ---- Aviso flotante tras un cambio ---- */
+.usuarios__toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  color: var(--fondo);
+  font-size: 14px;
+  font-weight: 600;
+  background-color: var(--tinta);
+  border-radius: 10px;
+  box-shadow: var(--sombra);
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s var(--curva);
+}
+
+.usuarios__toast--visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@keyframes usuarios-asomar {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+/* ---- Responsivo ---- */
+@media (max-width: 1100px) {
+  .fila-cuenta {
+    grid-template-columns: minmax(0, 1fr) 140px 160px 40px;
+  }
+
+  .fila-cuenta__dato {
+    display: none;
+  }
+}
+
+/* En celular cada cuenta es un bloque: persona y menú arriba, rol y estado debajo */
+@media (max-width: 720px) {
+  .invitacion {
+    padding: 18px;
+  }
+
+  .invitacion__campos,
+  .invitacion__roles {
+    grid-template-columns: 1fr;
+  }
+
+  .invitacion__botones .boton {
+    flex: 1;
+  }
+
+  .aviso-enlace {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .aviso-enlace__acciones {
+    grid-column: 2;
+  }
+
+  /* cada fila es su propia rejilla: rol y estado toman su ancho y quedan juntos */
+  .fila-cuenta {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "persona persona persona acciones"
+      "rol estado . .";
+    gap: 10px 12px;
+  }
+
+  .fila-cuenta__persona {
+    grid-area: persona;
+  }
+
+  .fila-cuenta__rol {
+    grid-area: rol;
+    padding-left: 50px;
+  }
+
+  .estado-cuenta {
+    grid-area: estado;
+  }
+
+  .fila-cuenta__acciones {
+    grid-area: acciones;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invitacion,
+  .aviso-enlace,
+  .fila-cuenta__confirmar {
+    animation: none;
+  }
+
+  .usuarios__toast {
+    transition: none;
+  }
+}

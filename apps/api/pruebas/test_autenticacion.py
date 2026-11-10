@@ -50,6 +50,7 @@ def test_obtener_usuario_actual():
     apellidos = "Garcia",
     correo = "marco@ejemplo.com",
     activo = True,
+    rol = SimpleNamespace(nombre="administrador"),
   )
   def simular_usuario_actual() -> SimpleNamespace:
     return usuario
@@ -69,6 +70,7 @@ def test_obtener_usuario_actual():
     "apellidos": "Garcia",
     "correo": "marco@ejemplo.com",
     "activo": True,
+    "rol": "administrador",
   }
 
 def test_obtener_usuario_actual_sin_token():

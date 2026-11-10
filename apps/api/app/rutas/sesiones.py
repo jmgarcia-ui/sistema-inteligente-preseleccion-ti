@@ -11,6 +11,7 @@ from app.servicios.tokens import generar_token_acceso
 from app.servicios.usuarios import autenticar_usuario
 from app.modelos import Usuario
 from app.autorizacion import obtener_usuario_actual
+from app.servicios.cuentas import ahora
 #creamos la ruta
 router = APIRouter(prefix="/autenticacion", tags=["autenticacion"])
 
@@ -24,10 +25,14 @@ def iniciar_sesion(
   if not usuario:
     raise HTTPException(status_code=401, detail="Correo o contraseña incorrectos")
 
+  #para la columna "Último acceso" de la gestión de usuarios
+  usuario.ultimo_acceso_en = ahora()
+  sesion.commit()
+
   token = generar_token_acceso(usuario.id)
 
   return RespuestaToken(token_acceso=token)
 
 @router.get("/yo", response_model= RespuestaUsuarioActual)
 def obtener_yo(usuario: Annotated[Usuario, Depends(obtener_usuario_actual)]) -> RespuestaUsuarioActual:
-  return RespuestaUsuarioActual(id=usuario.id, nombres=usuario.nombres, apellidos=usuario.apellidos, correo=usuario.correo, activo=usuario.activo)
+  return RespuestaUsuarioActual(id=usuario.id, nombres=usuario.nombres, apellidos=usuario.apellidos, correo=usuario.correo, activo=usuario.activo, rol=usuario.rol.nombre)

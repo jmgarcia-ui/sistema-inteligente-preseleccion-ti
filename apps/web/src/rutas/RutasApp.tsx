@@ -11,6 +11,8 @@ import CandidatosReclutador from "../pages/CandidatosReclutador";
 import ActividadReclutador from "../pages/ActividadReclutador";
 import DisenoPanel from "../componentes/panel/DisenoPanel";
 import EditorVacante from "../pages/EditorVacante";
+import UsuariosAdmin from "../pages/UsuariosAdmin";
+import CrearContrasena from "../pages/CrearContrasena";
 
 export default function RutasApp() {
   return (
@@ -19,6 +21,7 @@ export default function RutasApp() {
       <Route path="/vacantes" element={<Vacantes />} />
       <Route path="/vacantes/:idVacante" element={<Postulacion />} />
       <Route path="/iniciar-sesion" element={<InicioSesion />} />
+      <Route path="/crear-contrasena" element={<CrearContrasena />} />
       <Route element={<RutaProtegida/>}>
         <Route element={<DisenoPanel />}>
           <Route path="/reclutador/resumen" element={<ResumenReclutador />} />
@@ -27,6 +30,7 @@ export default function RutasApp() {
           <Route path="/reclutador/vacantes/:idVacante/editar" element={<EditorVacante />} />
           <Route path="/reclutador/candidatos" element={<CandidatosReclutador />} />
           <Route path="/reclutador/actividad" element={<ActividadReclutador />} />
+          <Route path="/reclutador/usuarios" element={<UsuariosAdmin />} />
         </Route>
       </Route>
       <Route path="*" element={<NoEncontrada />} />

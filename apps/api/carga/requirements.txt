@@ -1,0 +1,2 @@
+#solo para las pruebas de carga; no se despliega con la API
+locust==2.47.0

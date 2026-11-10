@@ -33,6 +33,12 @@ function UsuarioProvider({ children }: props) {
     localStorage.setItem(CLAVE_TOKEN, JSON.stringify(respuesta.token));
   }
 
+  async function entrarConToken(nuevo: RespuestaToken) {
+    setUsuario(await obtenerUsuarioActual(nuevo));
+    setToken(nuevo);
+    localStorage.setItem(CLAVE_TOKEN, JSON.stringify(nuevo));
+  }
+
   //useCallback mantiene la misma función entre renders: así puede ir en las dependencias de un useEffect
   const cerrarSesion = useCallback(() => {
     setUsuario(null);
@@ -57,7 +63,7 @@ function UsuarioProvider({ children }: props) {
   }, []);
 
   return (
-    <UsuarioContext.Provider value={{ usuario, token, iniciarSesion, cargando, cerrarSesion }}>{children}</UsuarioContext.Provider>
+    <UsuarioContext.Provider value={{ usuario, token, iniciarSesion, entrarConToken, cargando, cerrarSesion }}>{children}</UsuarioContext.Provider>
   );
 }
 

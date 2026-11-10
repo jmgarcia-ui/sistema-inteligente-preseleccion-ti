@@ -1,0 +1,2175 @@
+{
+  "ejecutado_en": "2026-10-21 20:31:23",
+  "resultados": [
+    {
+      "id": "CV01",
+      "vacante": 1,
+      "paginas_documento": 1,
+      "tamano_kb": 2.6,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 17,
+      "segundos_lectura": 6.2,
+      "estado_analisis": "listo",
+      "segundos_analisis": 4.5,
+      "segundos_total": 10.7,
+      "recomendacion": "pasa",
+      "motivo": "El candidato cumple con los requisitos imprescindibles de experiencia en Node.js y bases de datos NoSQL.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Diseñé y mantuve microservicios en Node.js 20 con Express y NestJS que procesan 2 millones de transacciones al mes.",
+          "pagina": 1,
+          "explicacion": "El candidato tiene experiencia sólida en desarrollo con Node.js."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Modelé colecciones en MongoDB con índices compuestos y agregaciones, reduciendo el tiempo de consulta en 60 %.",
+          "pagina": 1,
+          "explicacion": "El candidato ha trabajado con MongoDB, que es una base de datos NoSQL."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1154,
+      "tokens_salida": 225
+    },
+    {
+      "id": "CV02",
+      "vacante": 1,
+      "paginas_documento": 1,
+      "tamano_kb": 2.6,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 23,
+      "segundos_lectura": 5.64,
+      "estado_analisis": "listo",
+      "segundos_analisis": 3.92,
+      "segundos_total": 9.56,
+      "recomendacion": "pasa",
+      "motivo": "Lucía cumple con el requisito de Node.js y tiene experiencia parcial con bases de datos NoSQL, lo que es razonable para avanzar en el proceso.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "· Node.js",
+          "pagina": 1,
+          "explicacion": "El CV menciona explícitamente experiencia con Node.js."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "parcial",
+          "cita": "· Diseño tablas en Amazon DynamoDB (NoSQL) con claves de partición y GSI para 500 mil productos.",
+          "pagina": 1,
+          "explicacion": "El CV menciona experiencia con DynamoDB, que es una base de datos NoSQL, pero no menciona MongoDB."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1137,
+      "tokens_salida": 217
+    },
+    {
+      "id": "CV03",
+      "vacante": 1,
+      "paginas_documento": 1,
+      "tamano_kb": 2.7,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 25,
+      "segundos_lectura": 5.62,
+      "estado_analisis": "listo",
+      "segundos_analisis": 4.83,
+      "segundos_total": 10.45,
+      "recomendacion": "no_pasa",
+      "motivo": "El candidato cumple con el requisito de Node.js, pero no presenta evidencia de experiencia con bases de datos NoSQL, que es un requisito imprescindible.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollador Node.js",
+          "pagina": 1,
+          "explicacion": "El candidato tiene experiencia como desarrollador Node.js."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia con bases de datos NoSQL en el CV."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1114,
+      "tokens_salida": 255
+    },
+    {
+      "id": "CV04",
+      "vacante": 1,
+      "paginas_documento": 1,
+      "tamano_kb": 2.3,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 14,
+      "segundos_lectura": 5.49,
+      "estado_analisis": "listo",
+      "segundos_analisis": 4.09,
+      "segundos_total": 9.59,
+      "recomendacion": "no_pasa",
+      "motivo": "No cumple con el requisito imprescindible de experiencia en Node.js, lo cual es fundamental para la vacante.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia con Node.js en el CV."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Administro colecciones de MongoDB para el historial de clientes y sus reportes.",
+          "pagina": 1,
+          "explicacion": "Tiene experiencia con bases de datos NoSQL, específicamente MongoDB."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1052,
+      "tokens_salida": 252
+    },
+    {
+      "id": "CV05",
+      "vacante": 1,
+      "paginas_documento": 1,
+      "tamano_kb": 76.6,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 11,
+      "segundos_lectura": 5.79,
+      "estado_analisis": "listo",
+      "segundos_analisis": 3.84,
+      "segundos_total": 9.63,
+      "recomendacion": "pasa",
+      "motivo": "El candidato cumple con todos los requisitos imprescindibles de experiencia en Node.js y bases de datos NoSQL.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo el backend de citas médicas con Node.js 18 y Fastify.",
+          "pagina": 1,
+          "explicacion": "El candidato tiene experiencia clara en desarrollo con Node.js."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Uso MongoDB con Mongoose para historias clínicas y Firebase Firestore para notificaciones.",
+          "pagina": 1,
+          "explicacion": "El candidato tiene experiencia con bases de datos NoSQL, específicamente MongoDB."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 991,
+      "tokens_salida": 204
+    },
+    {
+      "id": "CV06",
+      "vacante": 1,
+      "paginas_documento": 1,
+      "tamano_kb": 2.3,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 12,
+      "segundos_lectura": 5.53,
+      "estado_analisis": "listo",
+      "segundos_analisis": 4.15,
+      "segundos_total": 9.68,
+      "recomendacion": "no_pasa",
+      "motivo": "El candidato no cumple con los requisitos imprescindibles de experiencia en Node.js y bases de datos NoSQL.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "El CV no menciona experiencia con Node.js."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "El CV no menciona experiencia con bases de datos NoSQL."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1019,
+      "tokens_salida": 245
+    },
+    {
+      "id": "CV07",
+      "vacante": 2,
+      "paginas_documento": 3,
+      "tamano_kb": 4.0,
+      "estado_lectura": "leido",
+      "paginas_leidas": 2,
+      "parrafos": 21,
+      "segundos_lectura": 6.74,
+      "estado_analisis": "listo",
+      "segundos_analisis": 7.71,
+      "segundos_total": 14.45,
+      "recomendacion": "pasa",
+      "motivo": "Mariana cumple con todos los requisitos imprescindibles y tiene experiencia relevante en tecnologías solicitadas.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Ingeniería de Software, Universidad Peruana de Ciencias Aplicadas (2018)",
+          "pagina": 2,
+          "explicacion": "Mariana es egresada en Ingeniería de Software."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "6 años como analista desarrolladora en banca y retail.",
+          "pagina": 1,
+          "explicacion": "Mariana tiene más de 3 años de experiencia como analista desarrolladora."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Lidero el desarrollo del portal de clientes con React 18",
+          "pagina": 1,
+          "explicacion": "Mariana tiene experiencia en React.js versión 18."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Gestiono el estado global con Redux Toolkit y Context API.",
+          "pagina": 1,
+          "explicacion": "Mariana tiene experiencia utilizando Redux y Context API."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Next.js 14 (App Router)",
+          "pagina": 1,
+          "explicacion": "Mariana tiene experiencia en Next.js versión 14."
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Construí un BFF en Node.js 18 con Express",
+          "pagina": 1,
+          "explicacion": "Mariana tiene experiencia en Node.js versión 18."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "Mariana tiene conocimiento de SonarQube. (Cita no encontrada en el CV.)"
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Configuro las rutas de la aplicación interna con React Router 6.",
+          "pagina": 1,
+          "explicacion": "Mariana tiene conocimiento de React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "estilos en SASS/SCSS con metodología BEM.",
+          "pagina": 1,
+          "explicacion": "Mariana tiene conocimiento de SASS/SCSS."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Trabajo con Git bajo el flujo gitflow, en sprints de Scrum gestionados en Jira.",
+          "pagina": 1,
+          "explicacion": "Mariana maneja Git y trabaja en Scrum con Jira."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "parcial",
+          "cita": "Desplegué los servicios en AWS (S3, CloudFront, Lambda).",
+          "pagina": 1,
+          "explicacion": "Mariana tiene conocimientos de AWS, pero no se menciona experiencia en backend Java."
+        }
+      ],
+      "avisos": [
+        "Requisito 7: la cita propuesta no aparece en el CV y se descartó. Revísalo a mano.",
+        "La IA propone que pasa, pero hay requisitos imprescindibles sin evidencia comprobada (7). Revisa antes de decidir.",
+        "Solo se leyeron 2 de 3 páginas del CV: lo que esté después no se analizó."
+      ],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1631,
+      "tokens_salida": 578
+    },
+    {
+      "id": "CV08",
+      "vacante": 2,
+      "paginas_documento": 1,
+      "tamano_kb": 2.4,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 16,
+      "segundos_lectura": 5.62,
+      "estado_analisis": "listo",
+      "segundos_analisis": 8.23,
+      "segundos_total": 13.86,
+      "recomendacion": "no_pasa",
+      "motivo": "El candidato no cumple con el requisito de conocimiento de SonarQube y no tiene experiencia en Next.js 13, que son imprescindibles.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Ingeniería de Sistemas, Universidad de Lima (2020)",
+          "pagina": 1,
+          "explicacion": "El candidato es egresado de Ingeniería de Sistemas."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "4 años de experiencia en aplicaciones web corporativas.",
+          "pagina": 1,
+          "explicacion": "El candidato tiene 4 años de experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo el autoservicio web con React 18 y Redux.",
+          "pagina": 1,
+          "explicacion": "El candidato tiene experiencia en React.js 18."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo el autoservicio web con React 18 y Redux.",
+          "pagina": 1,
+          "explicacion": "El candidato utiliza Redux en su trabajo."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "parcial",
+          "cita": "Mantengo un sitio en Next.js 12 con Pages Router (aún no migrado a la versión 13).",
+          "pagina": 1,
+          "explicacion": "El candidato tiene experiencia en Next.js, pero no en la versión 13."
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo endpoints en Node.js 18 para el BFF.",
+          "pagina": 1,
+          "explicacion": "El candidato tiene experiencia en Node.js 18."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de SonarQube."
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Implemento la navegación con React Router y estilos con SCSS.",
+          "pagina": 1,
+          "explicacion": "El candidato tiene conocimiento de React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Implemento la navegación con React Router y estilos con SCSS.",
+          "pagina": 1,
+          "explicacion": "El candidato utiliza SCSS para estilos."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "uso de Git con gitflow en equipos Scrum con Jira.",
+          "pagina": 1,
+          "explicacion": "El candidato maneja Git y ha trabajado en Scrum con Jira."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de AWS ni backend en Java."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1488,
+      "tokens_salida": 649
+    },
+    {
+      "id": "CV09",
+      "vacante": 2,
+      "paginas_documento": 1,
+      "tamano_kb": 2.3,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 14,
+      "segundos_lectura": 5.71,
+      "estado_analisis": "listo",
+      "segundos_analisis": 8.83,
+      "segundos_total": 14.54,
+      "recomendacion": "no_pasa",
+      "motivo": "Valeria no cumple con varios requisitos imprescindibles, como la experiencia como analista desarrollador, y no tiene experiencia en Next.js ni en Node.js.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Ingeniería de Sistemas, Universidad Señor de Sipán (egresada 2024)",
+          "pagina": 1,
+          "explicacion": "Valeria es egresada de Ingeniería de Sistemas."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo pantallas con React 18 usando Context API para el estado.",
+          "pagina": 1,
+          "explicacion": "Tiene experiencia con React.js >= 18."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo pantallas con React 18 usando Context API para el estado.",
+          "pagina": 1,
+          "explicacion": "Utiliza Context API para el manejo de estado."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en Next.js."
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en Node.js."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de SonarQube."
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Configuro rutas con React Router",
+          "pagina": 1,
+          "explicacion": "Conoce React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Configuro rutas con React Router y estilos con SCSS.",
+          "pagina": 1,
+          "explicacion": "Utiliza SCSS para estilos."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Versiono el código con Git y GitHub.",
+          "pagina": 1,
+          "explicacion": "Maneja Git para control de versiones."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de AWS o backend en Java."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1440,
+      "tokens_salida": 609
+    },
+    {
+      "id": "CV10",
+      "vacante": 2,
+      "paginas_documento": 1,
+      "tamano_kb": 2.5,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 23,
+      "segundos_lectura": 5.59,
+      "estado_analisis": "listo",
+      "segundos_analisis": 7.69,
+      "segundos_total": 13.28,
+      "recomendacion": "no_pasa",
+      "motivo": "Fernando no cumple con varios requisitos imprescindibles, como la experiencia en React.js, Next.js y Node.js.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Ingeniería Informática, Universidad Nacional Mayor de San Marcos (2018)",
+          "pagina": 1,
+          "explicacion": "Fernando es egresado en Ingeniería Informática."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "5 años de experiencia en sistemas financieros.",
+          "pagina": 1,
+          "explicacion": "Fernando tiene más de 3 años de experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en React.js."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia utilizando Redux o Context API."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en Next.js."
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en Node.js."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Reviso la calidad del código con SonarQube en cada pull request.",
+          "pagina": 1,
+          "explicacion": "Fernando tiene conocimiento de SonarQube."
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de SASS o SCSS."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Trabajo con Git (gitflow) en sprints de Scrum registrados en Jira.",
+          "pagina": 1,
+          "explicacion": "Fernando maneja Git y trabaja en Scrum."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "Fernando tiene conocimientos de AWS. (Cita no encontrada en el CV.)"
+        }
+      ],
+      "avisos": [
+        "Requisito 11: la cita propuesta no aparece en el CV y se descartó. Revísalo a mano."
+      ],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1499,
+      "tokens_salida": 559
+    },
+    {
+      "id": "CV11",
+      "vacante": 2,
+      "paginas_documento": 1,
+      "tamano_kb": 2.4,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 15,
+      "segundos_lectura": 3.7,
+      "estado_analisis": "listo",
+      "segundos_analisis": 7.84,
+      "segundos_total": 11.54,
+      "recomendacion": "no_pasa",
+      "motivo": "No cumple con el requisito imprescindible de ser egresado en Ingeniería de Software o carreras afines.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "parcial",
+          "cita": "Ingeniería de Software, Universidad Tecnológica del Perú (estudiante de 8.º ciclo, aún no egresada)",
+          "pagina": 1,
+          "explicacion": "Estudiante de Ingeniería de Software, pero aún no ha egresado."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "4 años de experiencia mientras termino la carrera.",
+          "pagina": 1,
+          "explicacion": "Cumple con más de 3 años de experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Next.js 14, React 18",
+          "pagina": 1,
+          "explicacion": "Tiene experiencia en React.js 18."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Redux Toolkit",
+          "pagina": 1,
+          "explicacion": "Utiliza Redux Toolkit, lo que es equivalente a Redux."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Next.js 14",
+          "pagina": 1,
+          "explicacion": "Tiene experiencia en Next.js 14."
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Node.js 20",
+          "pagina": 1,
+          "explicacion": "Tiene experiencia en Node.js 20."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "resuelvo los hallazgos de SonarQube",
+          "pagina": 1,
+          "explicacion": "Menciona experiencia con SonarQube."
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "configuro React Router en el panel administrativo",
+          "pagina": 1,
+          "explicacion": "Menciona experiencia con React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Mantengo los estilos en SASS",
+          "pagina": 1,
+          "explicacion": "Menciona experiencia con SASS."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Trabajo con Git (gitflow), Scrum y Jira",
+          "pagina": 1,
+          "explicacion": "Menciona experiencia con Git y trabajo en Scrum."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No menciona conocimientos de AWS ni backend en Java."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1492,
+      "tokens_salida": 576
+    },
+    {
+      "id": "CV12",
+      "vacante": 2,
+      "paginas_documento": 1,
+      "tamano_kb": 2.9,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 29,
+      "segundos_lectura": 31.1,
+      "estado_analisis": "listo",
+      "segundos_analisis": 7.97,
+      "segundos_total": 39.06,
+      "recomendacion": "no_pasa",
+      "motivo": "Sebastián cumple con todos los requisitos imprescindibles excepto por la falta de experiencia en AWS y backend en Java, que son deseables pero no imprescindibles.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Ingeniería de Sistemas e Informática, Universidad Tecnológica del Perú (2019)",
+          "pagina": 1,
+          "explicacion": "Sebastián es egresado de Ingeniería de Sistemas e Informática."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "5 años como analista desarrollador en proyectos de transformación digital.",
+          "pagina": 1,
+          "explicacion": "Tiene más de 3 años de experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo aplicaciones con React 18",
+          "pagina": 1,
+          "explicacion": "Tiene experiencia comprobada en React.js 18."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "usando Context API y Redux",
+          "pagina": 1,
+          "explicacion": "Utiliza Redux y Context API en sus desarrollos."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "Tiene experiencia en Next.js 13. (Cita no encontrada en el CV.)"
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo servicios BFF en Node.js 18",
+          "pagina": 1,
+          "explicacion": "Tiene experiencia en Node.js 18."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Corrijo issues de SonarQube",
+          "pagina": 1,
+          "explicacion": "Tiene conocimiento en SonarQube."
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Implemento rutas con React Router",
+          "pagina": 1,
+          "explicacion": "Conoce y utiliza React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "estilos con SCSS modular",
+          "pagina": 1,
+          "explicacion": "Utiliza SCSS para estilos."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "trabajo con Git gitflow, Scrum y Jira",
+          "pagina": 1,
+          "explicacion": "Maneja Git y tiene experiencia en Scrum y Jira."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en AWS ni backend en Java."
+        }
+      ],
+      "avisos": [
+        "Requisito 5: la cita propuesta no aparece en el CV y se descartó. Revísalo a mano."
+      ],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1566,
+      "tokens_salida": 585,
+      "nota_tiempo": "La lectura incluye ~25 s de espera: Azure (plan gratuito F0) devolvió 429 por llamadas simultáneas de otra prueba y el script reintentó."
+    },
+    {
+      "id": "CV13",
+      "vacante": 3,
+      "paginas_documento": 1,
+      "tamano_kb": 2.4,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 16,
+      "segundos_lectura": 5.67,
+      "estado_analisis": "listo",
+      "segundos_analisis": 4.88,
+      "segundos_total": 10.55,
+      "recomendacion": "pasa",
+      "motivo": "Camila cumple con todos los requisitos imprescindibles y tiene experiencia relevante en proyectos académicos.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Estudiante de 8.º ciclo de Ingeniería de Sistemas",
+          "pagina": 1,
+          "explicacion": "Camila es estudiante de 8.º ciclo de Ingeniería de Sistemas."
+        },
+        {
+          "numero": 2,
+          "requisito": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollé una API REST con Python (FastAPI) y un frontend en HTML, CSS y JavaScript.",
+          "pagina": 1,
+          "explicacion": "Demuestra conocimientos básicos de Python y desarrollo web."
+        },
+        {
+          "numero": 3,
+          "requisito": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "versioné el código en GitHub.",
+          "pagina": 1,
+          "explicacion": "Menciona el uso de GitHub para control de versiones."
+        },
+        {
+          "numero": 4,
+          "requisito": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Me interesa aprender sobre automatización de procesos, integración de APIs y metodologías ágiles.",
+          "pagina": 1,
+          "explicacion": "Expresa interés en automatización, APIs y metodologías ágiles."
+        },
+        {
+          "numero": 5,
+          "requisito": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Curso de Python para automatización (Platzi, 2025).",
+          "pagina": 1,
+          "explicacion": "Menciona un curso relacionado con automatización."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1595,
+      "tokens_salida": 332
+    },
+    {
+      "id": "CV14",
+      "vacante": 3,
+      "paginas_documento": 1,
+      "tamano_kb": 2.3,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 15,
+      "segundos_lectura": 3.69,
+      "estado_analisis": "listo",
+      "segundos_analisis": 5.81,
+      "segundos_total": 9.49,
+      "recomendacion": "no_pasa",
+      "motivo": "Mateo no cumple con el requisito imprescindible de estar en el séptimo ciclo o más avanzado en su carrera, y no presenta evidencia de experiencia con herramientas de control de versiones.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines.",
+          "obligatorio": false,
+          "resultado": "parcial",
+          "cita": "Estudiante de 4.º ciclo de Ingeniería de Software",
+          "pagina": 1,
+          "explicacion": "Mateo es estudiante de 4.º ciclo, lo que es un avance, pero no cumple con el requisito de estar desde el séptimo ciclo."
+        },
+        {
+          "numero": 2,
+          "requisito": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Programé en Python un script que consulta una API pública",
+          "pagina": 1,
+          "explicacion": "Mateo tiene conocimientos básicos de Python y desarrollo web con HTML y CSS."
+        },
+        {
+          "numero": 3,
+          "requisito": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos.",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia con herramientas de control de versiones ni fundamentos de bases de datos."
+        },
+        {
+          "numero": 4,
+          "requisito": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Quiero aprender sobre APIs, pruebas de software y metodologías ágiles.",
+          "pagina": 1,
+          "explicacion": "Mateo muestra interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles."
+        },
+        {
+          "numero": 5,
+          "requisito": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables.",
+          "obligatorio": false,
+          "resultado": "parcial",
+          "cita": "Hice una página sencilla en HTML y CSS para mostrar los resultados.",
+          "pagina": 1,
+          "explicacion": "Mateo tiene un proyecto personal relacionado, pero no se menciona experiencia previa formal."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1549,
+      "tokens_salida": 463
+    },
+    {
+      "id": "CV15",
+      "vacante": 3,
+      "paginas_documento": 1,
+      "tamano_kb": 2.3,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 16,
+      "segundos_lectura": 5.61,
+      "estado_analisis": "listo",
+      "segundos_analisis": 5.68,
+      "segundos_total": 11.3,
+      "recomendacion": "no_pasa",
+      "motivo": "El candidato no cumple con los requisitos imprescindibles de conocimientos básicos de Python y desarrollo web, ni muestra interés en aprender sobre automatización y pruebas de software.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines.",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona que sea estudiante universitario o egresado de las carreras requeridas."
+        },
+        {
+          "numero": 2,
+          "requisito": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript.",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se evidencia conocimiento de Python ni desarrollo web (HTML, CSS o JavaScript)."
+        },
+        {
+          "numero": 3,
+          "requisito": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos.",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona familiaridad con herramientas de control de versiones ni fundamentos de bases de datos."
+        },
+        {
+          "numero": 4,
+          "requisito": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles.",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se evidencia interés por aprender sobre automatización, APIs, pruebas de software o metodologías ágiles."
+        },
+        {
+          "numero": 5,
+          "requisito": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables.",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se mencionan cursos, proyectos académicos o experiencia previa relacionada con el desarrollo de software."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1508,
+      "tokens_salida": 396
+    },
+    {
+      "id": "CV16",
+      "vacante": 3,
+      "paginas_documento": 3,
+      "tamano_kb": 3.8,
+      "estado_lectura": "leido",
+      "paginas_leidas": 2,
+      "parrafos": 15,
+      "segundos_lectura": 6.78,
+      "estado_analisis": "listo",
+      "segundos_analisis": 6.2,
+      "segundos_total": 12.98,
+      "recomendacion": "pasa",
+      "motivo": "Todos los requisitos imprescindibles están cumplidos, mostrando una sólida base en desarrollo de software y automatización.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Egresada de Ingeniería Industrial que se reorientó al desarrollo de software y la automatización de procesos.",
+          "pagina": 1,
+          "explicacion": "Ximena es egresada de Ingeniería Industrial, cumpliendo con el requisito deseable."
+        },
+        {
+          "numero": 2,
+          "requisito": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Automaticé la consolidación de reportes de producción con Python (pandas) y una API interna.",
+          "pagina": 1,
+          "explicacion": "Demuestra conocimientos básicos de Python y desarrollo web."
+        },
+        {
+          "numero": 3,
+          "requisito": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Construí un tablero web sencillo con HTML, CSS y JavaScript.",
+          "pagina": 1,
+          "explicacion": "Muestra experiencia en desarrollo web con HTML, CSS y JavaScript."
+        },
+        {
+          "numero": 4,
+          "requisito": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Participé en un equipo ágil con tablero Kanban y reuniones diarias.",
+          "pagina": 1,
+          "explicacion": "Indica interés por aprender sobre metodologías ágiles."
+        },
+        {
+          "numero": 5,
+          "requisito": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Enseñé fundamentos de programación en Python a escolares.",
+          "pagina": 1,
+          "explicacion": "Demuestra experiencia relacionada y un interés en la programación."
+        }
+      ],
+      "avisos": [
+        "Solo se leyeron 2 de 3 páginas del CV: lo que esté después no se analizó."
+      ],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1603,
+      "tokens_salida": 347
+    },
+    {
+      "id": "CV17",
+      "vacante": 3,
+      "paginas_documento": 1,
+      "tamano_kb": 2.5,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 21,
+      "segundos_lectura": 6.07,
+      "estado_analisis": "listo",
+      "segundos_analisis": 5.41,
+      "segundos_total": 11.48,
+      "recomendacion": "pasa",
+      "motivo": "Cumple con todos los requisitos imprescindibles y tiene experiencia académica relevante que respalda su perfil.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Estudiante de 7.º ciclo de Ingeniería de Software",
+          "pagina": 1,
+          "explicacion": "Cumple con el requisito de ser estudiante universitario desde el séptimo ciclo."
+        },
+        {
+          "numero": 2,
+          "requisito": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "· Python\n· JavaScript\n· HTML\n· CSS",
+          "pagina": 1,
+          "explicacion": "Demuestra conocimientos básicos de Python y desarrollo web (HTML, CSS, JavaScript)."
+        },
+        {
+          "numero": 3,
+          "requisito": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Versioné el proyecto con Git y GitHub",
+          "pagina": 1,
+          "explicacion": "Muestra familiaridad con herramientas de control de versiones como Git y GitHub."
+        },
+        {
+          "numero": 4,
+          "requisito": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "interesado en APIs, pruebas y trabajo ágil",
+          "pagina": 1,
+          "explicacion": "Manifiesta interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles."
+        },
+        {
+          "numero": 5,
+          "requisito": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables.",
+          "obligatorio": false,
+          "resultado": "parcial",
+          "cita": "Desarrollé el frontend con HTML, CSS y JavaScript y scripts de apoyo en Python.",
+          "pagina": 1,
+          "explicacion": "Presenta experiencia en un proyecto académico, pero no menciona experiencia previa relacionada de forma directa."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1599,
+      "tokens_salida": 350
+    },
+    {
+      "id": "CV18",
+      "vacante": 3,
+      "paginas_documento": 1,
+      "tamano_kb": 68.3,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 10,
+      "segundos_lectura": 4.3,
+      "estado_analisis": "listo",
+      "segundos_analisis": 5.45,
+      "segundos_total": 9.75,
+      "recomendacion": "no_pasa",
+      "motivo": "Brenda no cumple con los requisitos imprescindibles de conocimientos básicos de desarrollo web y no evidencia interés por aprender sobre automatización y pruebas de software.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines.",
+          "obligatorio": false,
+          "resultado": "parcial",
+          "cita": "Estudiante de Ingeniería de Sistemas.",
+          "pagina": 1,
+          "explicacion": "Brenda es estudiante de Ingeniería de Sistemas, pero no se indica el ciclo."
+        },
+        {
+          "numero": 2,
+          "requisito": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript.",
+          "obligatorio": true,
+          "resultado": "parcial",
+          "cita": "Python (básico)",
+          "pagina": 1,
+          "explicacion": "Brenda tiene conocimientos básicos de Python, pero no menciona desarrollo web."
+        },
+        {
+          "numero": 3,
+          "requisito": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos.",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona familiaridad con herramientas de control de versiones ni bases de datos."
+        },
+        {
+          "numero": 4,
+          "requisito": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles.",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se evidencia interés por aprender sobre automatización, APIs, pruebas de software o metodologías ágiles."
+        },
+        {
+          "numero": 5,
+          "requisito": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables.",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se mencionan cursos, proyectos académicos o experiencia previa relacionada."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1458,
+      "tokens_salida": 392
+    },
+    {
+      "id": "CV01-V",
+      "vacante": 1,
+      "paginas_documento": 1,
+      "tamano_kb": 2.6,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 18,
+      "segundos_lectura": 5.91,
+      "estado_analisis": "listo",
+      "segundos_analisis": 3.55,
+      "segundos_total": 9.47,
+      "recomendacion": "pasa",
+      "motivo": "Ambos requisitos imprescindibles están cumplidos con claridad en el CV.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Diseñé y mantuve microservicios en Node.js 20 con Express y NestJS que procesan 2 millones de transacciones al mes.",
+          "pagina": 1,
+          "explicacion": "El candidato tiene experiencia sólida en desarrollo con Node.js."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Migré el historial de pedidos de MySQL a MongoDB Atlas.",
+          "pagina": 1,
+          "explicacion": "El candidato ha trabajado con bases de datos NoSQL, específicamente MongoDB."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1179,
+      "tokens_salida": 205
+    },
+    {
+      "id": "CV02-V",
+      "vacante": 1,
+      "paginas_documento": 1,
+      "tamano_kb": 2.7,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 23,
+      "segundos_lectura": 5.6,
+      "estado_analisis": "listo",
+      "segundos_analisis": 3.91,
+      "segundos_total": 9.51,
+      "recomendacion": "pasa",
+      "motivo": "El candidato cumple con el requisito de Node.js y tiene experiencia parcial en bases de datos NoSQL, lo que es razonable para avanzar en el proceso.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Construyo funciones serverless en Node.js 18 sobre AWS Lambda para el catálogo de productos.",
+          "pagina": 1,
+          "explicacion": "El candidato tiene experiencia clara en desarrollo con Node.js."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "parcial",
+          "cita": "Diseño tablas en Amazon DynamoDB (NoSQL) con claves de partición y GSI para 500 mil productos.",
+          "pagina": 1,
+          "explicacion": "El candidato menciona experiencia con DynamoDB, que es una base de datos NoSQL, pero no menciona MongoDB u otras soluciones NoSQL."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1149,
+      "tokens_salida": 236
+    },
+    {
+      "id": "CV03-V",
+      "vacante": 1,
+      "paginas_documento": 1,
+      "tamano_kb": 2.7,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 26,
+      "segundos_lectura": 6.98,
+      "estado_analisis": "listo",
+      "segundos_analisis": 4.55,
+      "segundos_total": 11.54,
+      "recomendacion": "no_pasa",
+      "motivo": "El candidato cumple con la experiencia en Node.js, pero no presenta evidencia de experiencia con bases de datos NoSQL, que es un requisito imprescindible.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Node.js",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollador Node.js Seguros del Pacífico",
+          "pagina": 1,
+          "explicacion": "El CV menciona experiencia como Desarrollador Node.js."
+        },
+        {
+          "numero": 2,
+          "requisito": "Base de datos NoSQL",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia con bases de datos NoSQL en el CV."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1133,
+      "tokens_salida": 265
+    },
+    {
+      "id": "CV07-V",
+      "vacante": 2,
+      "paginas_documento": 3,
+      "tamano_kb": 4.1,
+      "estado_lectura": "leido",
+      "paginas_leidas": 2,
+      "parrafos": 21,
+      "segundos_lectura": 6.68,
+      "estado_analisis": "listo",
+      "segundos_analisis": 7.45,
+      "segundos_total": 14.13,
+      "recomendacion": "pasa",
+      "motivo": "Cumple con todos los requisitos imprescindibles y tiene experiencia adicional en AWS, lo que es un plus.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Ingeniería de Software, Universidad Peruana de Ciencias Aplicadas (2018)",
+          "pagina": 2,
+          "explicacion": "Cumple con el requisito de formación en Ingeniería de Software."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "6 años como analista desarrolladora en banca y retail.",
+          "pagina": 1,
+          "explicacion": "Tiene más de 3 años de experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Lidero el desarrollo del portal de clientes con React 18",
+          "pagina": 1,
+          "explicacion": "Demuestra experiencia en React.js versión 18."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Gestiono el estado global con Redux Toolkit y Context API.",
+          "pagina": 1,
+          "explicacion": "Cumple con la experiencia en Redux y Context API."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Next.js 14 (App Router)",
+          "pagina": 1,
+          "explicacion": "Cumple con la experiencia en Next.js versión 13 o superior."
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Construí un BFF en Node.js 18 con Express",
+          "pagina": 1,
+          "explicacion": "Cumple con la experiencia en Node.js versión 16 o superior."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "Cumple con el conocimiento de SonarQube. (Cita no encontrada en el CV.)"
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Configuro las rutas de la aplicación interna con React Router 6.",
+          "pagina": 1,
+          "explicacion": "Cumple con el conocimiento de React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "estilos en SASS/SCSS con metodología BEM.",
+          "pagina": 1,
+          "explicacion": "Cumple con el conocimiento de SASS o SCSS."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Trabajo con Git bajo el flujo gitflow, en sprints de Scrum gestionados en Jira.",
+          "pagina": 1,
+          "explicacion": "Cumple con el manejo de Git y trabajo en Scrum."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Desplegué los servicios en AWS (S3, CloudFront, Lambda).",
+          "pagina": 1,
+          "explicacion": "Cumple con el conocimiento deseable de AWS."
+        }
+      ],
+      "avisos": [
+        "Requisito 7: la cita propuesta no aparece en el CV y se descartó. Revísalo a mano.",
+        "La IA propone que pasa, pero hay requisitos imprescindibles sin evidencia comprobada (7). Revisa antes de decidir.",
+        "Solo se leyeron 2 de 3 páginas del CV: lo que esté después no se analizó."
+      ],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1649,
+      "tokens_salida": 586
+    },
+    {
+      "id": "CV08-V",
+      "vacante": 2,
+      "paginas_documento": 1,
+      "tamano_kb": 2.5,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 16,
+      "segundos_lectura": 5.74,
+      "estado_analisis": "listo",
+      "segundos_analisis": 7.12,
+      "segundos_total": 12.86,
+      "recomendacion": "pasa",
+      "motivo": "Rosa cumple con todos los requisitos imprescindibles, aunque tiene experiencia parcial en Next.js y conocimientos limitados en AWS.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Ingeniería de Sistemas, Universidad de Lima (2020)",
+          "pagina": 1,
+          "explicacion": "Rosa es egresada de Ingeniería de Sistemas."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "4 años de experiencia en aplicaciones web corporativas.",
+          "pagina": 1,
+          "explicacion": "Rosa tiene 4 años de experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo el autoservicio web con React 18 y Redux.",
+          "pagina": 1,
+          "explicacion": "Rosa tiene experiencia en React.js 18."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo el autoservicio web con React 18 y Redux.",
+          "pagina": 1,
+          "explicacion": "Rosa utiliza Redux en su trabajo."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "parcial",
+          "cita": "Mantengo un sitio en Next.js 12 con Pages Router (aún no migrado a la versión 13).",
+          "pagina": 1,
+          "explicacion": "Rosa tiene experiencia en Next.js, pero no en la versión 13."
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo endpoints en Node.js 18 para el BFF.",
+          "pagina": 1,
+          "explicacion": "Rosa tiene experiencia en Node.js 18."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de SonarQube."
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Implemento la navegación con React Router",
+          "pagina": 1,
+          "explicacion": "Rosa tiene conocimiento de React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "estilos con SCSS.",
+          "pagina": 1,
+          "explicacion": "Rosa utiliza SCSS en su trabajo."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "uso de Git con gitflow en equipos Scrum con Jira.",
+          "pagina": 1,
+          "explicacion": "Rosa maneja Git y trabaja en Scrum con Jira."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "parcial",
+          "cita": "AWS S3",
+          "pagina": 1,
+          "explicacion": "Rosa tiene conocimientos de AWS, pero no menciona backend en Java."
+        }
+      ],
+      "avisos": [
+        "La IA propone que pasa, pero hay requisitos imprescindibles sin evidencia comprobada (7). Revisa antes de decidir."
+      ],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1507,
+      "tokens_salida": 549
+    },
+    {
+      "id": "CV10-V",
+      "vacante": 2,
+      "paginas_documento": 1,
+      "tamano_kb": 2.6,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 24,
+      "segundos_lectura": 5.7,
+      "estado_analisis": "listo",
+      "segundos_analisis": 7.86,
+      "segundos_total": 13.56,
+      "recomendacion": "no_pasa",
+      "motivo": "No cumple con varios requisitos imprescindibles, como la experiencia en React.js, Next.js y Node.js.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Ingeniería Informática, Universidad Nacional Mayor de San Marcos (2018)",
+          "pagina": 1,
+          "explicacion": "Wei es egresado de Ingeniería Informática."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Analista desarrollador backend Java con 5 años de experiencia en sistemas financieros.",
+          "pagina": 1,
+          "explicacion": "Tiene más de 3 años de experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en React.js."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia utilizando Redux o Context API."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en Next.js."
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona experiencia en Node.js."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Reviso la calidad del código con SonarQube en cada pull request.",
+          "pagina": 1,
+          "explicacion": "Conoce SonarQube."
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona conocimiento de SASS o SCSS."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Trabajo con Git (gitflow) en sprints de Scrum registrados en Jira.",
+          "pagina": 1,
+          "explicacion": "Maneja Git y trabaja en Scrum."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "Tiene conocimientos de AWS. (Cita no encontrada en el CV.)"
+        }
+      ],
+      "avisos": [
+        "Requisito 11: la cita propuesta no aparece en el CV y se descartó. Revísalo a mano."
+      ],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1512,
+      "tokens_salida": 564
+    },
+    {
+      "id": "CV12-V",
+      "vacante": 2,
+      "paginas_documento": 1,
+      "tamano_kb": 2.9,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 31,
+      "segundos_lectura": 5.73,
+      "estado_analisis": "listo",
+      "segundos_analisis": 6.66,
+      "segundos_total": 12.39,
+      "recomendacion": "pasa",
+      "motivo": "Sofía cumple con todos los requisitos imprescindibles para la vacante, demostrando experiencia y conocimientos relevantes en las tecnologías solicitadas.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Técnico o universitario egresado en Ingeniería de Software, Sistemas, Informática o carreras afines.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Ingeniería de Sistemas e Informática, Universidad Tecnológica del Perú (2019)",
+          "pagina": 1,
+          "explicacion": "Sofía es egresada de Ingeniería de Sistemas e Informática."
+        },
+        {
+          "numero": 2,
+          "requisito": "Mínimo 3 años de experiencia como analista desarrollador.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "5 años como analista desarrollador en proyectos de transformación digital.",
+          "pagina": 1,
+          "explicacion": "Sofía tiene 5 años de experiencia como analista desarrollador."
+        },
+        {
+          "numero": 3,
+          "requisito": "Experiencia en React.js >= 18",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo aplicaciones con React 18",
+          "pagina": 1,
+          "explicacion": "Sofía tiene experiencia en React.js 18."
+        },
+        {
+          "numero": 4,
+          "requisito": "Experiencia utilizando Redux o Context API",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "usando Context API y Redux",
+          "pagina": 1,
+          "explicacion": "Sofía utiliza Redux y Context API en su trabajo."
+        },
+        {
+          "numero": 5,
+          "requisito": "Experiencia en Next.js >= 13",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "Sofía tiene experiencia en Next.js 13. (Cita no encontrada en el CV.)"
+        },
+        {
+          "numero": 6,
+          "requisito": "Experiencia en Node.js >= 16",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollo servicios BFF en Node.js 18",
+          "pagina": 1,
+          "explicacion": "Sofía tiene experiencia en Node.js 18."
+        },
+        {
+          "numero": 7,
+          "requisito": "Conocimiento de SonnarQube",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Corrijo issues de SonarQube",
+          "pagina": 1,
+          "explicacion": "Sofía tiene conocimiento de SonarQube."
+        },
+        {
+          "numero": 8,
+          "requisito": "Conocimiento de React Router",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Implemento rutas con React Router",
+          "pagina": 1,
+          "explicacion": "Sofía tiene conocimiento de React Router."
+        },
+        {
+          "numero": 9,
+          "requisito": "Conocimiento de SASS o SCSS",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "estilos con SCSS modular",
+          "pagina": 1,
+          "explicacion": "Sofía tiene conocimiento de SCSS."
+        },
+        {
+          "numero": 10,
+          "requisito": "Manejo de Git (gitflow) y trabajo en scrum, jira",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "trabajo con Git gitflow, Scrum y Jira",
+          "pagina": 1,
+          "explicacion": "Sofía maneja Git y trabaja en Scrum con Jira."
+        },
+        {
+          "numero": 11,
+          "requisito": "Deseable conocimientos de AWS y backend(java)",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No evaluado."
+        }
+      ],
+      "avisos": [
+        "Requisito 5: la cita propuesta no aparece en el CV y se descartó. Revísalo a mano.",
+        "La IA no evaluó el requisito 11: revísalo a mano.",
+        "La IA propone que pasa, pero hay requisitos imprescindibles sin evidencia comprobada (5). Revisa antes de decidir."
+      ],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1598,
+      "tokens_salida": 504
+    },
+    {
+      "id": "CV13-V",
+      "vacante": 3,
+      "paginas_documento": 1,
+      "tamano_kb": 2.5,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 16,
+      "segundos_lectura": 3.92,
+      "estado_analisis": "listo",
+      "segundos_analisis": 5.7,
+      "segundos_total": 9.62,
+      "recomendacion": "pasa",
+      "motivo": "Carlos cumple con todos los requisitos imprescindibles y tiene experiencia relevante en proyectos académicos.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Estudiante de 8.º ciclo de Ingeniería de Sistemas con interés en automatización, APIs y pruebas de software.",
+          "pagina": 1,
+          "explicacion": "Carlos es estudiante de 8.º ciclo de Ingeniería de Sistemas."
+        },
+        {
+          "numero": 2,
+          "requisito": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Desarrollé una API REST con Python (FastAPI) y un frontend en HTML, CSS y JavaScript.",
+          "pagina": 1,
+          "explicacion": "Carlos tiene conocimientos básicos de Python y desarrollo web."
+        },
+        {
+          "numero": 3,
+          "requisito": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "versione el código en GitHub.",
+          "pagina": 1,
+          "explicacion": "Carlos está familiarizado con herramientas de control de versiones como Git y GitHub."
+        },
+        {
+          "numero": 4,
+          "requisito": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Me interesa aprender sobre automatización de procesos, integración de APIs y metodologías ágiles.",
+          "pagina": 1,
+          "explicacion": "Carlos muestra interés por aprender sobre automatización, APIs y metodologías ágiles."
+        },
+        {
+          "numero": 5,
+          "requisito": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Curso de Python para automatización (Platzi, 2025).",
+          "pagina": 1,
+          "explicacion": "Carlos tiene cursos y proyectos académicos relacionados."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1616,
+      "tokens_salida": 347
+    },
+    {
+      "id": "CV15-V",
+      "vacante": 3,
+      "paginas_documento": 1,
+      "tamano_kb": 2.3,
+      "estado_lectura": "leido",
+      "paginas_leidas": 1,
+      "parrafos": 19,
+      "segundos_lectura": 5.66,
+      "estado_analisis": "listo",
+      "segundos_analisis": 6.19,
+      "segundos_total": 11.85,
+      "recomendacion": "no_pasa",
+      "motivo": "No cumple con los requisitos imprescindibles de conocimientos básicos de Python y desarrollo web, así como el interés por aprender sobre automatización y pruebas de software.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines.",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona que sea estudiante de Ingeniería de Sistemas, Ingeniería de Software o carreras afines."
+        },
+        {
+          "numero": 2,
+          "requisito": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript.",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se evidencia conocimiento de Python ni desarrollo web (HTML, CSS o JavaScript)."
+        },
+        {
+          "numero": 3,
+          "requisito": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos.",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se menciona familiaridad con herramientas de control de versiones ni fundamentos de bases de datos."
+        },
+        {
+          "numero": 4,
+          "requisito": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles.",
+          "obligatorio": true,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se evidencia interés por aprender sobre automatización, APIs, pruebas de software o metodologías ágiles."
+        },
+        {
+          "numero": 5,
+          "requisito": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables.",
+          "obligatorio": false,
+          "resultado": "sin_evidencia",
+          "cita": null,
+          "pagina": null,
+          "explicacion": "No se mencionan cursos, proyectos académicos o experiencia previa relacionada con desarrollo de software."
+        }
+      ],
+      "avisos": [],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1546,
+      "tokens_salida": 413
+    },
+    {
+      "id": "CV16-V",
+      "vacante": 3,
+      "paginas_documento": 3,
+      "tamano_kb": 3.8,
+      "estado_lectura": "leido",
+      "paginas_leidas": 2,
+      "parrafos": 16,
+      "segundos_lectura": 6.63,
+      "estado_analisis": "listo",
+      "segundos_analisis": 5.73,
+      "segundos_total": 12.36,
+      "recomendacion": "pasa",
+      "motivo": "Todos los requisitos imprescindibles están cumplidos. Además, cuenta con experiencia relevante en automatización y desarrollo web.",
+      "evidencias": [
+        {
+          "numero": 1,
+          "requisito": "Estudiante universitario(a) desde el séptimo ciclo o egresados de Ingeniería de Sistemas, Ingeniería de Software, Ingeniería Industrial, Ingeniería Empresarial o carreras afines.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Egresada de Ingeniería Industrial que se reorientó al desarrollo de software y la automatización de procesos.",
+          "pagina": 1,
+          "explicacion": "Cumple con el requisito de ser egresada de una carrera afín."
+        },
+        {
+          "numero": 2,
+          "requisito": "Conocimientos básicos de Python y desarrollo web: HTML, CSS o JavaScript.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Automaticé la consolidación de reportes de producción con Python (pandas) y una API interna.",
+          "pagina": 1,
+          "explicacion": "Demuestra conocimientos básicos de Python y desarrollo web."
+        },
+        {
+          "numero": 3,
+          "requisito": "Familiaridad con herramientas de control de versiones como Git, GitHub o GitLab, así como fundamentos de bases de datos.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Construí un tablero web sencillo con HTML, CSS y JavaScript.",
+          "pagina": 1,
+          "explicacion": "Cumple con el requisito de desarrollo web: HTML, CSS y JavaScript."
+        },
+        {
+          "numero": 4,
+          "requisito": "Interés por aprender sobre automatización, APIs, pruebas de software y metodologías ágiles.",
+          "obligatorio": true,
+          "resultado": "cumple",
+          "cita": "Participé en un equipo ágil con tablero Kanban y reuniones diarias.",
+          "pagina": 1,
+          "explicacion": "Muestra interés por aprender sobre metodologías ágiles."
+        },
+        {
+          "numero": 5,
+          "requisito": "Se valorarán cursos, proyectos académicos, proyectos personales o alguna experiencia previa relacionada, pero no son indispensables.",
+          "obligatorio": false,
+          "resultado": "cumple",
+          "cita": "Enseñé fundamentos de programación en Python a escolares.",
+          "pagina": 1,
+          "explicacion": "La experiencia en enseñanza y proyectos demuestra interés en el área."
+        }
+      ],
+      "avisos": [
+        "Solo se leyeron 2 de 3 páginas del CV: lo que esté después no se analizó."
+      ],
+      "modelo": "gpt-4o-mini-2024-07-18",
+      "tokens_entrada": 1629,
+      "tokens_salida": 350
+    }
+  ]
+}

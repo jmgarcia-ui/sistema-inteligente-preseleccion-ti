@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definiciones_AsIs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="17.11.1">
+  <bpmn:collaboration id="Colaboracion_AsIs">
+    <bpmn:participant id="Pool_Postulante" name="Postulante" processRef="Proceso_Postulante" />
+    <bpmn:participant id="Pool_Cisdeco" name="CISDECO – Preselección de Técnicos de Soporte (AS-IS)" processRef="Proceso_Cisdeco" />
+    <bpmn:messageFlow id="Mensaje_Cv" name="CV digital" sourceRef="Tarea_EnviarCv" targetRef="Tarea_RecibirCv" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Proceso_Postulante" isExecutable="false">
+    <bpmn:startEvent id="Inicio_Postulante" name="Convocatoria publicada">
+      <bpmn:outgoing>Flujo_P1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sendTask id="Tarea_EnviarCv" name="Preparar y enviar CV (PDF/Word) por correo">
+      <bpmn:incoming>Flujo_P1</bpmn:incoming>
+      <bpmn:outgoing>Flujo_P2</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Fin_Postulante" name="Postulación enviada">
+      <bpmn:incoming>Flujo_P2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flujo_P1" sourceRef="Inicio_Postulante" targetRef="Tarea_EnviarCv" />
+    <bpmn:sequenceFlow id="Flujo_P2" sourceRef="Tarea_EnviarCv" targetRef="Fin_Postulante" />
+    <bpmn:textAnnotation id="Nota_SinRespuesta">
+      <bpmn:text>No recibe ninguna respuesta si es descartado</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Asoc_SinRespuesta" sourceRef="Fin_Postulante" targetRef="Nota_SinRespuesta" />
+  </bpmn:process>
+
+  <bpmn:process id="Proceso_Cisdeco" isExecutable="false">
+    <bpmn:laneSet id="Carriles_Cisdeco">
+      <bpmn:lane id="Carril_Gerente" name="Gerente General">
+        <bpmn:flowNodeRef>Inicio_Cisdeco</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Tarea_RecibirCv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Timer_Cierre</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Tarea_Descargar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Tarea_LeerCv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gw_Perfil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Tarea_Potenciales</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Tarea_Descartar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gw_Union</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gw_Quedan</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Tarea_Rerevisar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Tarea_Consolidar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Fin_Cisdeco</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Inicio_Cisdeco" name="Convocatoria abierta">
+      <bpmn:outgoing>Flujo_C1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:receiveTask id="Tarea_RecibirCv" name="Recibir CVs en bandeja de entrada">
+      <bpmn:incoming>Flujo_C1</bpmn:incoming>
+      <bpmn:outgoing>Flujo_C2</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics />
+      <bpmn:dataOutputAssociation id="Datos_RecibirABandeja">
+        <bpmn:targetRef>Almacen_Correo</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:receiveTask>
+    <bpmn:intermediateCatchEvent id="Timer_Cierre" name="Cierre de convocatoria (3-5 días)">
+      <bpmn:incoming>Flujo_C2</bpmn:incoming>
+      <bpmn:outgoing>Flujo_C3</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="Def_TimerCierre" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Tarea_Descargar" name="Descargar adjuntos y organizar en carpetas">
+      <bpmn:incoming>Flujo_C3</bpmn:incoming>
+      <bpmn:outgoing>Flujo_C4</bpmn:outgoing>
+      <bpmn:property id="Prop_Descargar" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Datos_BandejaADescargar">
+        <bpmn:sourceRef>Almacen_Correo</bpmn:sourceRef>
+        <bpmn:targetRef>Prop_Descargar</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="Datos_DescargarACvs">
+        <bpmn:targetRef>Objeto_Cvs</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:task id="Tarea_LeerCv" name="Leer CV (experiencia y formación)">
+      <bpmn:incoming>Flujo_C4</bpmn:incoming>
+      <bpmn:incoming>Flujo_QuedanSi</bpmn:incoming>
+      <bpmn:outgoing>Flujo_C5</bpmn:outgoing>
+      <bpmn:property id="Prop_Leer" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Datos_CvsALeer">
+        <bpmn:sourceRef>Objeto_Cvs</bpmn:sourceRef>
+        <bpmn:targetRef>Prop_Leer</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gw_Perfil" name="¿Cumple perfil mínimo?">
+      <bpmn:incoming>Flujo_C5</bpmn:incoming>
+      <bpmn:outgoing>Flujo_PerfilSi</bpmn:outgoing>
+      <bpmn:outgoing>Flujo_PerfilNo</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Tarea_Potenciales" name="Mover a carpeta &#34;Candidatos Potenciales&#34;">
+      <bpmn:incoming>Flujo_PerfilSi</bpmn:incoming>
+      <bpmn:outgoing>Flujo_C6</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="Datos_APotenciales">
+        <bpmn:targetRef>Almacen_Potenciales</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:task id="Tarea_Descartar" name="Archivar como &#34;Descartado&#34;">
+      <bpmn:incoming>Flujo_PerfilNo</bpmn:incoming>
+      <bpmn:outgoing>Flujo_C7</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="Datos_ADescartados">
+        <bpmn:targetRef>Almacen_Descartados</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gw_Union">
+      <bpmn:incoming>Flujo_C6</bpmn:incoming>
+      <bpmn:incoming>Flujo_C7</bpmn:incoming>
+      <bpmn:outgoing>Flujo_C8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gw_Quedan" name="¿Quedan CVs por revisar?">
+      <bpmn:incoming>Flujo_C8</bpmn:incoming>
+      <bpmn:outgoing>Flujo_QuedanSi</bpmn:outgoing>
+      <bpmn:outgoing>Flujo_QuedanNo</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Tarea_Rerevisar" name="Re-revisar y comparar certificaciones de potenciales">
+      <bpmn:incoming>Flujo_QuedanNo</bpmn:incoming>
+      <bpmn:outgoing>Flujo_C9</bpmn:outgoing>
+      <bpmn:property id="Prop_Rerevisar" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="Datos_PotencialesARerevisar">
+        <bpmn:sourceRef>Almacen_Potenciales</bpmn:sourceRef>
+        <bpmn:targetRef>Prop_Rerevisar</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:task id="Tarea_Consolidar" name="Consolidar lista corta en hoja de trabajo">
+      <bpmn:incoming>Flujo_C9</bpmn:incoming>
+      <bpmn:outgoing>Flujo_C10</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="Datos_AListaCorta">
+        <bpmn:targetRef>Objeto_ListaCorta</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:endEvent id="Fin_Cisdeco" name="Lista corta lista para entrevistas">
+      <bpmn:incoming>Flujo_C10</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flujo_C1" sourceRef="Inicio_Cisdeco" targetRef="Tarea_RecibirCv" />
+    <bpmn:sequenceFlow id="Flujo_C2" sourceRef="Tarea_RecibirCv" targetRef="Timer_Cierre" />
+    <bpmn:sequenceFlow id="Flujo_C3" sourceRef="Timer_Cierre" targetRef="Tarea_Descargar" />
+    <bpmn:sequenceFlow id="Flujo_C4" sourceRef="Tarea_Descargar" targetRef="Tarea_LeerCv" />
+    <bpmn:sequenceFlow id="Flujo_C5" sourceRef="Tarea_LeerCv" targetRef="Gw_Perfil" />
+    <bpmn:sequenceFlow id="Flujo_PerfilSi" name="Sí" sourceRef="Gw_Perfil" targetRef="Tarea_Potenciales" />
+    <bpmn:sequenceFlow id="Flujo_PerfilNo" name="No" sourceRef="Gw_Perfil" targetRef="Tarea_Descartar" />
+    <bpmn:sequenceFlow id="Flujo_C6" sourceRef="Tarea_Potenciales" targetRef="Gw_Union" />
+    <bpmn:sequenceFlow id="Flujo_C7" sourceRef="Tarea_Descartar" targetRef="Gw_Union" />
+    <bpmn:sequenceFlow id="Flujo_C8" sourceRef="Gw_Union" targetRef="Gw_Quedan" />
+    <bpmn:sequenceFlow id="Flujo_QuedanSi" name="Sí" sourceRef="Gw_Quedan" targetRef="Tarea_LeerCv" />
+    <bpmn:sequenceFlow id="Flujo_QuedanNo" name="No" sourceRef="Gw_Quedan" targetRef="Tarea_Rerevisar" />
+    <bpmn:sequenceFlow id="Flujo_C9" sourceRef="Tarea_Rerevisar" targetRef="Tarea_Consolidar" />
+    <bpmn:sequenceFlow id="Flujo_C10" sourceRef="Tarea_Consolidar" targetRef="Fin_Cisdeco" />
+
+    <bpmn:dataStoreReference id="Almacen_Correo" name="Bandeja del correo institucional" />
+    <bpmn:dataObjectReference id="Objeto_Cvs" name="CVs (PDF/Word)" dataObjectRef="DataObject_Cvs" />
+    <bpmn:dataObject id="DataObject_Cvs" isCollection="true" />
+    <bpmn:dataStoreReference id="Almacen_Potenciales" name="Carpeta &#34;Candidatos Potenciales&#34;" />
+    <bpmn:dataStoreReference id="Almacen_Descartados" name="Carpeta &#34;Descartado&#34;" />
+    <bpmn:dataObjectReference id="Objeto_ListaCorta" name="Lista corta (5-10 candidatos)" dataObjectRef="DataObject_ListaCorta" />
+    <bpmn:dataObject id="DataObject_ListaCorta" />
+
+    <bpmn:textAnnotation id="Nota_Descargar"><bpmn:text>≈1 min por CV</bpmn:text></bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Nota_Leer"><bpmn:text>3-4 min por CV (≈150 CVs)</bpmn:text></bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Nota_Rerevisar"><bpmn:text>2-3 min por CV apto (20-30 CVs)</bpmn:text></bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Nota_Consolidar"><bpmn:text>30-45 min</bpmn:text></bpmn:textAnnotation>
+    <bpmn:association id="Asoc_Descargar" sourceRef="Tarea_Descargar" targetRef="Nota_Descargar" />
+    <bpmn:association id="Asoc_Leer" sourceRef="Tarea_LeerCv" targetRef="Nota_Leer" />
+    <bpmn:association id="Asoc_Rerevisar" sourceRef="Tarea_Rerevisar" targetRef="Nota_Rerevisar" />
+    <bpmn:association id="Asoc_Consolidar" sourceRef="Tarea_Consolidar" targetRef="Nota_Consolidar" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="Diagrama_AsIs">
+    <bpmndi:BPMNPlane id="Plano_AsIs" bpmnElement="Colaboracion_AsIs">
+      <!-- pool del postulante -->
+      <bpmndi:BPMNShape id="Pool_Postulante_di" bpmnElement="Pool_Postulante" isHorizontal="true">
+        <dc:Bounds x="150" y="60" width="1900" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Inicio_Postulante_di" bpmnElement="Inicio_Postulante">
+        <dc:Bounds x="232" y="127" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="210" y="170" width="80" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Tarea_EnviarCv_di" bpmnElement="Tarea_EnviarCv">
+        <dc:Bounds x="320" y="105" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Fin_Postulante_di" bpmnElement="Fin_Postulante">
+        <dc:Bounds x="532" y="127" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="510" y="170" width="80" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Nota_SinRespuesta_di" bpmnElement="Nota_SinRespuesta">
+        <dc:Bounds x="630" y="80" width="200" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flujo_P1_di" bpmnElement="Flujo_P1">
+        <di:waypoint x="268" y="145" /><di:waypoint x="320" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_P2_di" bpmnElement="Flujo_P2">
+        <di:waypoint x="460" y="145" /><di:waypoint x="532" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Asoc_SinRespuesta_di" bpmnElement="Asoc_SinRespuesta">
+        <di:waypoint x="565" y="136" /><di:waypoint x="630" y="105" />
+      </bpmndi:BPMNEdge>
+
+      <!-- pool de CISDECO -->
+      <bpmndi:BPMNShape id="Pool_Cisdeco_di" bpmnElement="Pool_Cisdeco" isHorizontal="true">
+        <dc:Bounds x="150" y="290" width="1900" height="520" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Carril_Gerente_di" bpmnElement="Carril_Gerente" isHorizontal="true">
+        <dc:Bounds x="180" y="290" width="1870" height="520" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Inicio_Cisdeco_di" bpmnElement="Inicio_Cisdeco">
+        <dc:Bounds x="232" y="432" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="210" y="475" width="80" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Tarea_RecibirCv_di" bpmnElement="Tarea_RecibirCv">
+        <dc:Bounds x="320" y="410" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Almacen_Correo_di" bpmnElement="Almacen_Correo">
+        <dc:Bounds x="365" y="580" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="335" y="637" width="110" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Timer_Cierre_di" bpmnElement="Timer_Cierre">
+        <dc:Bounds x="522" y="432" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="495" y="475" width="90" height="40" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Tarea_Descargar_di" bpmnElement="Tarea_Descargar">
+        <dc:Bounds x="620" y="410" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Objeto_Cvs_di" bpmnElement="Objeto_Cvs">
+        <dc:Bounds x="672" y="580" width="36" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="645" y="637" width="90" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Tarea_LeerCv_di" bpmnElement="Tarea_LeerCv">
+        <dc:Bounds x="820" y="410" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gw_Perfil_di" bpmnElement="Gw_Perfil" isMarkerVisible="true">
+        <dc:Bounds x="1015" y="425" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1068" y="436" width="80" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Tarea_Potenciales_di" bpmnElement="Tarea_Potenciales">
+        <dc:Bounds x="1110" y="310" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Tarea_Descartar_di" bpmnElement="Tarea_Descartar">
+        <dc:Bounds x="1110" y="520" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Almacen_Descartados_di" bpmnElement="Almacen_Descartados">
+        <dc:Bounds x="1155" y="645" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1215" y="660" width="100" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gw_Union_di" bpmnElement="Gw_Union" isMarkerVisible="true">
+        <dc:Bounds x="1305" y="425" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gw_Quedan_di" bpmnElement="Gw_Quedan" isMarkerVisible="true">
+        <dc:Bounds x="1405" y="425" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1385" y="390" width="90" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Almacen_Potenciales_di" bpmnElement="Almacen_Potenciales">
+        <dc:Bounds x="1455" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1515" y="316" width="110" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Tarea_Rerevisar_di" bpmnElement="Tarea_Rerevisar">
+        <dc:Bounds x="1520" y="410" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Tarea_Consolidar_di" bpmnElement="Tarea_Consolidar">
+        <dc:Bounds x="1720" y="410" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Objeto_ListaCorta_di" bpmnElement="Objeto_ListaCorta">
+        <dc:Bounds x="1772" y="580" width="36" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1745" y="637" width="90" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Fin_Cisdeco_di" bpmnElement="Fin_Cisdeco">
+        <dc:Bounds x="1942" y="432" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1915" y="475" width="90" height="27" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="Nota_Descargar_di" bpmnElement="Nota_Descargar">
+        <dc:Bounds x="640" y="310" width="110" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Nota_Leer_di" bpmnElement="Nota_Leer">
+        <dc:Bounds x="840" y="310" width="130" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Nota_Rerevisar_di" bpmnElement="Nota_Rerevisar">
+        <dc:Bounds x="1530" y="580" width="140" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Nota_Consolidar_di" bpmnElement="Nota_Consolidar">
+        <dc:Bounds x="1740" y="310" width="90" height="30" />
+      </bpmndi:BPMNShape>
+
+      <!-- flujos de secuencia -->
+      <bpmndi:BPMNEdge id="Flujo_C1_di" bpmnElement="Flujo_C1">
+        <di:waypoint x="268" y="450" /><di:waypoint x="320" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_C2_di" bpmnElement="Flujo_C2">
+        <di:waypoint x="460" y="450" /><di:waypoint x="522" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_C3_di" bpmnElement="Flujo_C3">
+        <di:waypoint x="558" y="450" /><di:waypoint x="620" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_C4_di" bpmnElement="Flujo_C4">
+        <di:waypoint x="760" y="450" /><di:waypoint x="820" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_C5_di" bpmnElement="Flujo_C5">
+        <di:waypoint x="960" y="450" /><di:waypoint x="1015" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_PerfilSi_di" bpmnElement="Flujo_PerfilSi">
+        <di:waypoint x="1040" y="425" /><di:waypoint x="1040" y="350" /><di:waypoint x="1110" y="350" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1048" y="385" width="15" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_PerfilNo_di" bpmnElement="Flujo_PerfilNo">
+        <di:waypoint x="1040" y="475" /><di:waypoint x="1040" y="560" /><di:waypoint x="1110" y="560" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1048" y="505" width="17" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_C6_di" bpmnElement="Flujo_C6">
+        <di:waypoint x="1250" y="350" /><di:waypoint x="1330" y="350" /><di:waypoint x="1330" y="425" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_C7_di" bpmnElement="Flujo_C7">
+        <di:waypoint x="1250" y="560" /><di:waypoint x="1330" y="560" /><di:waypoint x="1330" y="475" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_C8_di" bpmnElement="Flujo_C8">
+        <di:waypoint x="1355" y="450" /><di:waypoint x="1405" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_QuedanSi_di" bpmnElement="Flujo_QuedanSi">
+        <di:waypoint x="1430" y="475" /><di:waypoint x="1430" y="760" /><di:waypoint x="890" y="760" /><di:waypoint x="890" y="490" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1438" y="700" width="15" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_QuedanNo_di" bpmnElement="Flujo_QuedanNo">
+        <di:waypoint x="1455" y="450" /><di:waypoint x="1520" y="450" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1477" y="432" width="17" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_C9_di" bpmnElement="Flujo_C9">
+        <di:waypoint x="1660" y="450" /><di:waypoint x="1720" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flujo_C10_di" bpmnElement="Flujo_C10">
+        <di:waypoint x="1860" y="450" /><di:waypoint x="1942" y="450" />
+      </bpmndi:BPMNEdge>
+
+      <!-- datos -->
+      <bpmndi:BPMNEdge id="Datos_RecibirABandeja_di" bpmnElement="Datos_RecibirABandeja">
+        <di:waypoint x="390" y="490" /><di:waypoint x="390" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Datos_BandejaADescargar_di" bpmnElement="Datos_BandejaADescargar">
+        <di:waypoint x="415" y="600" /><di:waypoint x="650" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Datos_DescargarACvs_di" bpmnElement="Datos_DescargarACvs">
+        <di:waypoint x="690" y="490" /><di:waypoint x="690" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Datos_CvsALeer_di" bpmnElement="Datos_CvsALeer">
+        <di:waypoint x="708" y="600" /><di:waypoint x="860" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Datos_APotenciales_di" bpmnElement="Datos_APotenciales">
+        <di:waypoint x="1250" y="325" /><di:waypoint x="1455" y="325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Datos_ADescartados_di" bpmnElement="Datos_ADescartados">
+        <di:waypoint x="1180" y="600" /><di:waypoint x="1180" y="645" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Datos_PotencialesARerevisar_di" bpmnElement="Datos_PotencialesARerevisar">
+        <di:waypoint x="1490" y="355" /><di:waypoint x="1560" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Datos_AListaCorta_di" bpmnElement="Datos_AListaCorta">
+        <di:waypoint x="1790" y="490" /><di:waypoint x="1790" y="580" />
+      </bpmndi:BPMNEdge>
+
+      <!-- anotaciones -->
+      <bpmndi:BPMNEdge id="Asoc_Descargar_di" bpmnElement="Asoc_Descargar">
+        <di:waypoint x="690" y="410" /><di:waypoint x="690" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Asoc_Leer_di" bpmnElement="Asoc_Leer">
+        <di:waypoint x="890" y="410" /><di:waypoint x="890" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Asoc_Rerevisar_di" bpmnElement="Asoc_Rerevisar">
+        <di:waypoint x="1590" y="490" /><di:waypoint x="1590" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Asoc_Consolidar_di" bpmnElement="Asoc_Consolidar">
+        <di:waypoint x="1790" y="410" /><di:waypoint x="1790" y="340" />
+      </bpmndi:BPMNEdge>
+
+      <!-- mensaje entre pools -->
+      <bpmndi:BPMNEdge id="Mensaje_Cv_di" bpmnElement="Mensaje_Cv">
+        <di:waypoint x="390" y="185" /><di:waypoint x="390" y="410" />
+        <bpmndi:BPMNLabel><dc:Bounds x="400" y="250" width="50" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

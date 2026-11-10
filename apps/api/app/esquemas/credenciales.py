@@ -22,3 +22,5 @@ class RespuestaUsuarioActual(BaseModel):
   apellidos: str
   correo: EmailStr
   activo: bool
+  #administrador o reclutador: el panel muestra las secciones que corresponden
+  rol: str

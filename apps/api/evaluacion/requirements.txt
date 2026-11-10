@@ -1,0 +1,6 @@
+#paquetes extra solo para la evaluación del plan de calidad (no los necesita la API)
+reportlab
+pypdfium2
+pillow
+openpyxl
+python-docx
